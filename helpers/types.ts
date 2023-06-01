@@ -4,3 +4,10 @@ export type UserData = {
   whatsapp: string;
   sex: string;
 };
+
+export type QuizData = {
+  id: number;
+  question: string;
+  answers: string[];
+  // selected: number[];
+};
