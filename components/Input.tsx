@@ -1,7 +1,6 @@
 import { useId } from "react";
 
 type InputTextProps = {
-  id?: string;
   label?: string;
   placeholder?: string;
   text?: string;
@@ -10,9 +9,9 @@ type InputTextProps = {
 };
 
 export function InputText(props: InputTextProps) {
-  const { className, label, placeholder, text, onText, id: propsId } = props;
+  const { className, label, placeholder, text, onText } = props;
 
-  const id = propsId || useId();
+  const id = useId();
 
   return (
     <div className={className}>

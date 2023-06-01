@@ -51,9 +51,7 @@ export default function MainPage() {
           onClick={(user) => hiddenScreen(() => setStageIndex((it) => it + 1))}
         />
       )}
-      {stageIndex === 2 && (
-        <QuizPage onClick={() => hiddenScreen(() => setStageIndex(0))} />
-      )}
+      {stageIndex === 2 && <QuizPage />}
     </main>
   );
 }

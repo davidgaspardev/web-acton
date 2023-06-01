@@ -6,12 +6,12 @@ import { useEffect, useId, useState } from "react";
 import { quizList } from "@/helpers/data";
 import { getPercentageByMeta } from "@/helpers/math";
 
-type QuizPagePros = {
-  onClick: () => void;
-};
+// type QuizPagePros = {
+//   onClick: () => void;
+// };
 
-export default function QuizPage(props: QuizPagePros) {
-  const { onClick } = props;
+export default function QuizPage(/*props: QuizPagePros*/) {
+  // const { onClick } = props;
   const [quizIndex, setQuizIndex] = useState(0);
 
   const id = useId();
@@ -45,11 +45,13 @@ export default function QuizPage(props: QuizPagePros) {
           <h3 className="opacity-75">{quizList[quizIndex].question}</h3>
 
           <div className="py-5">
-            {quizList[quizIndex].answers.map((answer) => (
+            {quizList[quizIndex].answers.map((answer, index) => (
               <div
+                key={index}
                 onClick={() => {
                   if (quizList.length - 1 === quizIndex) {
                     alert("acabou");
+                    // onClick();
                     return;
                   }
                   hiddenQuiz(() => setQuizIndex((it) => it + 1));
