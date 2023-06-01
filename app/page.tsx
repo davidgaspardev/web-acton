@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useId, useState } from "react";
 import { InputSubmit, InputText } from "@/components/Input";
 import ActonLogo from "../assets/acton-logo.png";
 import ActonButton from "../assets/acton-button.png";
@@ -10,10 +10,38 @@ import ActonLogin from "../assets/acton-login.png";
 import { UserData } from "@/helpers/types";
 
 export default function MainPage() {
+  const [stageIndex, setStageIndex] = useState(0);
+  const id = useId();
+
+  function hiddenScreen(callback: () => void) {
+    const mainElement = document.getElementById(id) as HTMLElement;
+    mainElement.style.opacity = "0";
+
+    setTimeout(callback, 150);
+  }
+
+  function showScreen() {
+    const mainElement = document.getElementById(id) as HTMLElement;
+    mainElement.style.opacity = "1";
+  }
+
+  useEffect(() => {
+    if (stageIndex > 0) showScreen();
+  }, [stageIndex]);
+
   return (
-    <main className="bg-white w-full h-screen flex flex-col items-center justify-center">
-      {/* <StarterStage onClick={() => {}} /> */}
-      <LoginStage onClick={(user) => console.log("user:", user)} />
+    <main
+      id={id}
+      className="bg-white w-full h-screen flex flex-col items-center justify-center transition-opacity duration-150 ease-linear"
+    >
+      {stageIndex === 0 && (
+        <StarterStage
+          onClick={() => hiddenScreen(() => setStageIndex((it) => it + 1))}
+        />
+      )}
+      {stageIndex === 1 && (
+        <LoginStage onClick={(user) => console.log("user:", user)} />
+      )}
     </main>
   );
 }
