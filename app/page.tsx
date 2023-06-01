@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { useEffect, useId, useState } from "react";
 import { InputSubmit, InputText } from "@/components/Input";
 import ActonLogo from "../assets/acton-logo.png";
@@ -8,10 +9,16 @@ import ActonButton from "../assets/acton-button.png";
 import ActonAvatar from "../assets/acton-avatar.gif";
 import ActonLogin from "../assets/acton-login.png";
 import { UserData } from "@/helpers/types";
+import QuizPage from "./quiz/page";
 
+/**
+ *
+ * Link reference: https://sistemaacton.tfx.company/
+ */
 export default function MainPage() {
   const [stageIndex, setStageIndex] = useState(0);
   const id = useId();
+  // const router = useRouter();
 
   function hiddenScreen(callback: () => void) {
     const mainElement = document.getElementById(id) as HTMLElement;
@@ -40,7 +47,12 @@ export default function MainPage() {
         />
       )}
       {stageIndex === 1 && (
-        <LoginStage onClick={(user) => console.log("user:", user)} />
+        <LoginStage
+          onClick={(user) => hiddenScreen(() => setStageIndex((it) => it + 1))}
+        />
+      )}
+      {stageIndex === 2 && (
+        <QuizPage onClick={() => hiddenScreen(() => setStageIndex(0))} />
       )}
     </main>
   );
