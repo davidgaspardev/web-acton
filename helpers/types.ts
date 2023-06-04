@@ -9,5 +9,5 @@ export type QuizData = {
   id: number;
   question: string;
   answers: string[];
-  // selected: number[];
+  selected?: number;
 };
