@@ -55,7 +55,9 @@ export default function MainPage() {
           }}
         />
       )}
-      {stageIndex === 3 && <ResultStage />}
+      {stageIndex === 3 && (
+        <ResultStage user={userRef.current!} result={resultRef.current!} />
+      )}
     </main>
   );
 
