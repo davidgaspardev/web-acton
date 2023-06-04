@@ -98,7 +98,7 @@ type ProgressBarProps = {
 function ProgressBar(prps: ProgressBarProps) {
   const { percentage } = prps;
   return (
-    <div className="h-[80px]">
+    <div className="h-[50px]">
       <div className="w-full h-1 bg-[#D6D6D6] rounded-full">
         <div
           className={`bg-[#82A741] transition-all duration-300 ease-linear h-full rounded-full`}
@@ -107,6 +107,9 @@ function ProgressBar(prps: ProgressBarProps) {
           }}
         ></div>
       </div>
+      <h4 className="text-[#9AB766] text-center py-3">
+        {percentage.toPrecision(2)}%
+      </h4>
     </div>
   );
 }
