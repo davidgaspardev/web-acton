@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import ActonLogoSmall from "@/assets/acton-logo-small.png";
-import { useEffect, useId, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { quizList } from "@/helpers/data";
 import { getPercentageByMeta } from "@/helpers/math";
-import { QuizData } from "@/helpers/types";
+import { Callback, QuizData } from "@/helpers/types";
 
 type QuizPros = {
   onClick: (results: QuizData[]) => void;
@@ -17,21 +17,29 @@ export default function Quiz(props: QuizPros) {
 
   const id = useId();
 
-  function hiddenQuiz(callback: () => void) {
-    const quizElement = document.getElementById(id) as HTMLElement;
-    quizElement.style.opacity = "0";
+  const handleHiddenQuiz = useCallback(
+    (callback?: Callback) => {
+      const quizElement = document.getElementById(id) as HTMLElement;
+      quizElement.style.opacity = "0";
 
-    setTimeout(callback, 150);
-  }
+      if (callback) setTimeout(callback, 150);
+    },
+    [id]
+  );
 
-  function showQuiz() {
-    const quizElement = document.getElementById(id) as HTMLElement;
-    quizElement.style.opacity = "1";
-  }
+  const handleShowQuiz = useCallback(
+    (callback?: Callback) => {
+      const quizElement = document.getElementById(id) as HTMLElement;
+      quizElement.style.opacity = "1";
+
+      if (callback) setTimeout(callback, 150);
+    },
+    [id]
+  );
 
   useEffect(() => {
-    if (quizIndex > 0) showQuiz();
-  }, [quizIndex]);
+    if (quizIndex > 0) handleShowQuiz();
+  }, [quizIndex, handleShowQuiz]);
 
   return (
     <section className="flex flex-col items-center h-full w-full">
@@ -59,7 +67,7 @@ export default function Quiz(props: QuizPros) {
                   }
 
                   // Next question
-                  hiddenQuiz(() => setQuizIndex((it) => it + 1));
+                  handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
                 }}
                 className="bg-[#D7D7D7] text-[#654C8D] cursor-pointer m-3 h-[34px] flex items-center justify-center rounded-full transition-colors duration-250 ease-linear hover:bg-[#654C8D] hover:text-white"
               >

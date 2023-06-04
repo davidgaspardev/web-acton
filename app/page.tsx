@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
-import { QuizData, UserData } from "@/helpers/types";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import { Callback, QuizData, UserData } from "@/helpers/types";
 import QuizStage from "./QuizStage";
 import ResultStage from "./ResultStage";
 import LoginStage from "./LoginStage";
@@ -17,21 +17,29 @@ export default function MainPage() {
   const resultRef = useRef<QuizData[]>();
   const id = useId();
 
-  function hiddenScreen(callback: () => void) {
-    const mainElement = document.getElementById(id) as HTMLElement;
-    mainElement.style.opacity = "0";
+  const handleHiddenScreen = useCallback(
+    (callback?: Callback) => {
+      const mainElement = document.getElementById(id) as HTMLElement;
+      mainElement.style.opacity = "0";
 
-    setTimeout(callback, 150);
-  }
+      if (callback) setTimeout(callback, 150);
+    },
+    [id]
+  );
 
-  function showScreen() {
-    const mainElement = document.getElementById(id) as HTMLElement;
-    mainElement.style.opacity = "1";
-  }
+  const handleShowScreen = useCallback(
+    (callback?: Callback) => {
+      const mainElement = document.getElementById(id) as HTMLElement;
+      mainElement.style.opacity = "1";
+
+      if (callback) setTimeout(callback, 150);
+    },
+    [id]
+  );
 
   useEffect(() => {
-    if (stageIndex > 0) showScreen();
-  }, [stageIndex]);
+    if (stageIndex > 0) handleShowScreen();
+  }, [stageIndex, handleShowScreen]);
 
   return (
     <main
@@ -62,6 +70,8 @@ export default function MainPage() {
   );
 
   function nextStage(): void {
-    return hiddenScreen(() => setStageIndex((it) => it + 1));
+    return handleHiddenScreen(() =>
+      setStageIndex((currentStage) => currentStage + 1)
+    );
   }
 }

@@ -16,3 +16,5 @@ export type SpecialNeedData = {
   name: string;
   priority: number;
 };
+
+export type Callback<T = undefined> = (param: T) => void;
