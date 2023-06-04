@@ -1,4 +1,4 @@
-import { QuizData } from "./types";
+import { QuizData, SpecialNeedData } from "./types";
 
 export const quizList: QuizData[] = [
   {
@@ -105,5 +105,36 @@ export const quizList: QuizData[] = [
     question:
       "Por quanto tempo você já praticou exercicio fisico regular em academias na sua vida?",
     answers: ["Nunca Treinei", "6 meses", "1 ano", "2 anos", "3 anos"],
+  },
+];
+
+export const specialNeeds: SpecialNeedData[] = [
+  {
+    name: "Dor Física",
+    priority: 1,
+  },
+  {
+    name: "Problemas Cardíacos ou Pressão Alta",
+    priority: 1,
+  },
+  {
+    name: "Diabetes",
+    priority: 1,
+  },
+  {
+    name: "Qualidade de Vida",
+    priority: 1,
+  },
+  {
+    name: "Disposição",
+    priority: 1,
+  },
+  {
+    name: "Ansiedade",
+    priority: 1,
+  },
+  {
+    name: "Qualidade do Sono",
+    priority: 1,
   },
 ];

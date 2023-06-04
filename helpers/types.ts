@@ -11,3 +11,8 @@ export type QuizData = {
   answers: string[];
   selected?: number;
 };
+
+export type SpecialNeedData = {
+  name: string;
+  priority: number;
+};
