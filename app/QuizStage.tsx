@@ -49,7 +49,9 @@ export default function Quiz(props: QuizPros) {
         <h2 className="font-semibold text-[16pt] opacity-80">Sua saúde!</h2>
 
         <div id={id} className="flex-1 transaction-opacity duration-150 ease-linear">
-          <h3 className="opacity-75">{quizList[quizIndex].question}</h3>
+          <div className="h-[75px] flex flex-col justify-center">
+            <h3 className="opacity-75">{quizList[quizIndex].question}</h3>
+          </div>
 
           <div className="py-5">
             {quizList[quizIndex].answers.map((answer, index) => (
