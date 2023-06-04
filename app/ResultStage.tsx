@@ -12,13 +12,13 @@ export default function ResultStage(props: ResultStageProps) {
   useEffect(() => {
     console.log("User:", user);
     console.log("Result:", result);
-    for (const questionResult of result) {
-      // if (questionResult.id ==)
-    }
+    // for (const questionResult of result) {
+    //   // if (questionResult.id ==)
+    // }
   }, [user, result]);
   return (
     <div>
-      <h1>I'm here</h1>
+      <h1>I{"'"}m here</h1>
     </div>
   );
 }
