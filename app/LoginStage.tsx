@@ -11,10 +11,10 @@ type LoginStageProps = {
 export default function LoginStage(props: LoginStageProps) {
   const { onClick } = props;
 
-  const [fullname, setFullname] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [whatsapp, setWhatsapp] = useState<string>();
-  const [sex, setSex] = useState<string>();
+  const [fullname, setFullname] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [whatsapp, setWhatsapp] = useState<string>("");
+  const [sex, setSex] = useState<string>("");
 
   return (
     <form
