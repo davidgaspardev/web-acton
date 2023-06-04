@@ -14,6 +14,8 @@ type QuizPros = {
 export default function Quiz(props: QuizPros) {
   const { onClick } = props;
   const [quizIndex, setQuizIndex] = useState(0);
+  // Used only the question is hasMultiSelection
+  const [selectedList, setSelectedList] = useState<number[]>([]);
 
   const id = useId();
 
@@ -58,8 +60,20 @@ export default function Quiz(props: QuizPros) {
               <div
                 key={index}
                 onClick={() => {
+                  if (quizList[quizIndex].hasMultiSelection) {
+                    setSelectedList((selectedList) => {
+                      if (selectedList.includes(index)) {
+                        return selectedList.filter(
+                          (selectedIndex) => selectedIndex !== index
+                        );
+                      }
+                      return selectedList.concat([index]);
+                    });
+                    return;
+                  }
+
                   // Storage answer selected
-                  quizList[quizIndex].selected = index;
+                  quizList[quizIndex].selected = [index];
 
                   // Check if is the last question
                   if (quizList.length - 1 === quizIndex) {
@@ -71,11 +85,31 @@ export default function Quiz(props: QuizPros) {
                   // Next question
                   handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
                 }}
-                className="bg-[#D7D7D7] text-[#654C8D] cursor-pointer m-3 h-[34px] flex items-center justify-center rounded-full transition-colors duration-250 ease-linear hover:bg-[#654C8D] hover:text-white"
+                className={`${
+                  selectedList.includes(index)
+                    ? "bg-[#654C8D] text-[#D7D7D7]"
+                    : "bg-[#D7D7D7] text-[#654C8D]"
+                } cursor-pointer m-3 h-[34px] flex items-center justify-center rounded-full transition-colors duration-250 ease-linear hover:bg-[#654C8D] hover:text-white`}
               >
                 <h5>{answer}</h5>
               </div>
             ))}
+            {quizList[quizIndex].hasMultiSelection && (
+              <div
+                onClick={() => {
+                  // Storage answer selected
+                  quizList[quizIndex].selected = selectedList;
+
+                  setSelectedList([]);
+                  handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
+                }}
+                className={`${
+                  selectedList.length > 0 ? "opacity-100" : "opacity-0"
+                } transition-opacity duration-300 ease-linear m-3 h-[34px] flex items-center justify-center bg-[#829932] text-white rounded-full cursor-pointer`}
+              >
+                <h5>Avançar</h5>
+              </div>
+            )}
           </div>
         </div>
 

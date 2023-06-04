@@ -9,6 +9,7 @@ export const quizList: QuizData[] = [
   {
     id: 2,
     question: "Qual a dor que lhe icomoda atualmente?",
+    hasMultiSelection: true,
     answers: [
       "Pescoço",
       "Nas Costas ou Lombar",

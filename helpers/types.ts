@@ -9,7 +9,8 @@ export type QuizData = {
   id: number;
   question: string;
   answers: string[];
-  selected?: number;
+  hasMultiSelection?: boolean;
+  selected?: number[];
 };
 
 export type SpecialNeedData = {
