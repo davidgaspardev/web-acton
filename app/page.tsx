@@ -36,7 +36,7 @@ export default function MainPage() {
   return (
     <main
       id={id}
-      className="bg-white w-full h-screen flex flex-col items-center justify-center transition-opacity duration-150 ease-linear"
+      className="bg-white w-full h-[100dvh] flex flex-col items-center justify-center transition-opacity duration-150 ease-linear"
     >
       {stageIndex === 0 && <StarterStage onClick={() => nextStage()} />}
       {stageIndex === 1 && (

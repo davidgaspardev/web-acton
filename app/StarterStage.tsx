@@ -11,7 +11,7 @@ export default function StarterStage(props: StarterStageProps) {
   const { onClick } = props;
   return (
     <>
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col h-full">
         <div className="flex h-[150px] items-center justify-center w-[180px]">
           <Image src={ActonLogo} alt="Acton logo" />
         </div>

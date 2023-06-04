@@ -34,7 +34,7 @@ export default function Quiz(props: QuizPros) {
   }, [quizIndex]);
 
   return (
-    <section className="flex flex-col items-center h-screen w-full">
+    <section className="flex flex-col items-center h-full w-full">
       <Header />
 
       <div className="max-w-[360px] w-full p-4 flex flex-col flex-1">
