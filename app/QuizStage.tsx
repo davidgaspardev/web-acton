@@ -58,7 +58,7 @@ export default function Quiz(props: QuizPros) {
           <div className="py-5">
             {quizList[quizIndex].answers.map((answer, index) => (
               <div
-                key={index}
+                key={`${quizIndex}-${index}`}
                 onClick={() => {
                   if (quizList[quizIndex].hasMultiSelection) {
                     setSelectedList((selectedList) => {
