@@ -113,29 +113,36 @@ export const specialNeeds: SpecialNeedData[] = [
   {
     name: "Dor Física",
     priority: 1,
+    showName: "Dor Física",
   },
   {
     name: "Problemas Cardíacos ou Pressão Alta",
-    priority: 1,
+    priority: 100,
+    showName: "Cuidar da Saúde do coração",
   },
   {
     name: "Diabetes",
-    priority: 1,
+    priority: 90,
+    showName: "Cuidar da Diabetes",
   },
   {
     name: "Qualidade de Vida",
-    priority: 1,
+    priority: 60,
+    showName: "Melhorar a minha qualidade de vida",
   },
   {
     name: "Disposição",
-    priority: 1,
+    priority: 50,
+    showName: "Ter mais disposição",
   },
   {
     name: "Ansiedade",
-    priority: 1,
+    priority: 80,
+    showName: "Melhorar a Ansiedade",
   },
   {
     name: "Qualidade do Sono",
-    priority: 1,
+    priority: 70,
+    showName: "Dormir melhor",
   },
 ];
