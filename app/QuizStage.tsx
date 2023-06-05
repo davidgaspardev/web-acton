@@ -77,7 +77,6 @@ export default function Quiz(props: QuizPros) {
 
                   // Check if is the last question
                   if (quizList.length - 1 === quizIndex) {
-                    alert("acabou");
                     onClick(quizList);
                     return;
                   }
@@ -86,7 +85,7 @@ export default function Quiz(props: QuizPros) {
                   handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
                 }}
                 className={`${
-                  selectedList.includes(index)
+                  selectedList.includes(index) && selectedList.length > 0
                     ? "bg-[#654C8D] text-[#D7D7D7]"
                     : "bg-[#D7D7D7] text-[#654C8D]"
                 } cursor-pointer m-3 h-[34px] flex items-center justify-center rounded-full transition-colors duration-250 ease-linear hover:bg-[#654C8D] hover:text-white`}
