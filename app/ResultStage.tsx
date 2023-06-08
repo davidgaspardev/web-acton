@@ -11,11 +11,13 @@ import Image, { StaticImageData } from "next/image";
 import ViverBem from "../assets/viver-bem-logo.png";
 import VivaLeve from "../assets/viva-leve-logo.png";
 import VidaAtiva from "../assets/vida-ativa-logo.png";
+import ActonAvatar from "../assets/acton-avatar.gif";
 import { format } from "date-fns";
 
 type ResultStageProps = {
   user: UserData;
   result: QuizData[];
+  onFinish: (result: ResultInfoData) => void;
 };
 
 export default function ResultStage(props: ResultStageProps) {

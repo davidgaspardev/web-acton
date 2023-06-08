@@ -64,7 +64,13 @@ export default function MainPage() {
         />
       )}
       {stageIndex === 3 && (
-        <ResultStage user={userRef.current!} result={resultRef.current!} />
+        <ResultStage
+          user={userRef.current!}
+          result={resultRef.current!}
+          onFinish={() => {
+            resetStage();
+          }}
+        />
       )}
     </main>
   );
@@ -73,5 +79,15 @@ export default function MainPage() {
     return handleHiddenScreen(() =>
       setStageIndex((currentStage) => currentStage + 1)
     );
+  }
+
+  function prevStage(): void {
+    return handleHiddenScreen(() =>
+      setStageIndex((currentStage) => currentStage - 1)
+    );
+  }
+
+  function resetStage(): void {
+    return handleHiddenScreen(() => setStageIndex(0));
   }
 }
