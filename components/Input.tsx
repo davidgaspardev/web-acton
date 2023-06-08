@@ -38,7 +38,7 @@ export function InputSubmit(props: InputSubmitProps) {
 
   return (
     <input
-      className={`bg-white rounded-full h-[30px] w-[220px] cursor-pointer ${
+      className={`bg-white rounded-full h-[35px] w-[220px] cursor-pointer ${
         className || ""
       }`}
       type="submit"
