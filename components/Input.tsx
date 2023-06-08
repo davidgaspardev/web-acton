@@ -1,15 +1,29 @@
 import { useId } from "react";
 
-type InputTextProps = {
+type InputProps = {
   label?: string;
   placeholder?: string;
-  text?: string;
+  value?: string;
+  type?: "text" | "number" | "tel";
   className?: string;
-  onText: (text: string) => void;
+  onValue: (value: string) => void;
+  pattern?: string;
+  required?: boolean;
+  options?: string[];
 };
 
-export function InputText(props: InputTextProps) {
-  const { className, label, placeholder, text, onText } = props;
+export function Input(props: InputProps) {
+  const {
+    className,
+    label,
+    type,
+    placeholder,
+    value,
+    onValue,
+    required,
+    pattern,
+    options,
+  } = props;
 
   const id = useId();
 
@@ -19,11 +33,21 @@ export function InputText(props: InputTextProps) {
       <input
         className="bg-transparent border-b-2 text-white border-white px-2 py-1 placeholder:text-white/75 focus:outline-none"
         id={id}
-        type="text"
-        value={text}
+        type={type || "text"}
+        pattern={pattern}
+        value={value}
         placeholder={placeholder}
-        onChange={({ target }) => onText(target.value)}
+        onChange={({ target: { value } }) => onValue(value)}
+        required={required}
+        list={`options-${id}`}
       />
+      {options && options.length > 0 && (
+        <datalist id={`options-${id}`}>
+          {options.map((option) => (
+            <option key={option} value={option}></option>
+          ))}
+        </datalist>
+      )}
     </div>
   );
 }

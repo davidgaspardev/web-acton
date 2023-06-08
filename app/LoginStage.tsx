@@ -1,4 +1,4 @@
-import { InputSubmit, InputText } from "@/components/Input";
+import { InputSubmit, Input } from "@/components/Input";
 import { UserData } from "@/helpers/types";
 import { useState } from "react";
 import Image from "next/image";
@@ -39,25 +39,40 @@ export default function LoginStage(props: LoginStageProps) {
     >
       <Image className="mb-10" src={ActonLogin} alt="Acton login logo" width={100} />
 
-      <InputText
+      <Input
         className="mb-3"
         placeholder="Nome Completo"
-        text={fullname}
-        onText={setFullname}
+        value={fullname}
+        onValue={setFullname}
+        required={true}
       />
-      <InputText
+
+      <Input
         className="mb-3"
         placeholder="E-mail"
-        text={email}
-        onText={setEmail}
+        value={email}
+        onValue={setEmail}
+        required={true}
       />
-      <InputText
+
+      <Input
         className="mb-3"
         placeholder="Whatsapp"
-        text={whatsapp}
-        onText={setWhatsapp}
+        type="tel"
+        pattern="[0-9]{11}"
+        value={whatsapp}
+        onValue={setWhatsapp}
+        required={true}
       />
-      <InputText className="mb-4" placeholder="Sexo" text={sex} onText={setSex} />
+
+      <Input
+        className="mb-4"
+        placeholder="Sexo"
+        value={sex}
+        onValue={setSex}
+        required={true}
+        options={["Masculino", "Feminino"]}
+      />
 
       <InputSubmit className="mt-5 text-[#7C65B5]" name="Avançar" />
     </form>
