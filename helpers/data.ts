@@ -112,8 +112,8 @@ export const quizList: QuizData[] = [
 export const specialNeeds: SpecialNeedData[] = [
   {
     name: "Dor Física",
-    priority: 1,
-    showName: "Dor Física",
+    priority: 85,
+    showName: "Amenizar dores físicas",
   },
   {
     name: "Problemas Cardíacos ou Pressão Alta",
