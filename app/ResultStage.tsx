@@ -230,8 +230,8 @@ function Header(props: HeaderProps) {
       <Image
         src={ActonLogoSmall}
         alt="Acton logo small"
-        width={150}
-        className="py-2"
+        width={120}
+        className="pb-5"
       />
       <h1 className="text-xl font-medium text-[#40444D]">Análise concluída,</h1>
       <h2 className="text-[#40444D]">{username}</h2>
