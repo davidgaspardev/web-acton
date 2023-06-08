@@ -50,6 +50,7 @@ export default function LoginStage(props: LoginStageProps) {
       <Input
         className="mb-3"
         placeholder="E-mail"
+        type="email"
         value={email}
         onValue={setEmail}
         required={true}
