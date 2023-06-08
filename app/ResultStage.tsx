@@ -284,7 +284,7 @@ function SpecialNeeds(props: SpecialNeedsProps) {
   const { className, needs } = props;
   return (
     <div
-      className={`flex flex-col justify-center items-center ${
+      className={`flex relative flex-col justify-center items-center ${
         className ? className : ""
       }`.trim()}
     >
@@ -296,6 +296,13 @@ function SpecialNeeds(props: SpecialNeedsProps) {
           <h4 key={`need-${index}`}>{need}</h4>
         ))}
       </div>
+
+      <Image
+        className="absolute -bottom-8 -right-[55px]"
+        src={ActonAvatar}
+        width={200}
+        alt="ActonAvatar"
+      />
     </div>
   );
 }
