@@ -6,6 +6,12 @@ import {
   UserData,
 } from "@/helpers/types";
 import { useEffect, useState } from "react";
+import ActonLogoSmall from "../assets/acton-logo-small.png";
+import Image, { StaticImageData } from "next/image";
+import ViverBem from "../assets/viver-bem-logo.png";
+import VivaLeve from "../assets/viva-leve-logo.png";
+import VidaAtiva from "../assets/vida-ativa-logo.png";
+import { format } from "date-fns";
 
 type ResultStageProps = {
   user: UserData;
@@ -176,21 +182,117 @@ export default function ResultStage(props: ResultStageProps) {
     }
   }, [user, responses, result]);
   return (
-    <div>
-      <div>
-        {result && (
-          <div>
-            <h2 className="font-bold pb-8">Resultado (testing)</h2>
-            <h3>Nome do usuário: {result.name}</h3>
-            <h4>Métodologia: {result.methodology}</h4>
-            <h4>Nivel: {result.level}</h4>
-            <h4>Fase: {result.stage}</h4>
-            <h4>Necessidades especiais:</h4>
-            <h4>- {result.specialNeeds[0].name}</h4>
-            <h4>- {result.specialNeeds[1].name}</h4>
-            <h4>- {result.specialNeeds[2].name}</h4>
+    <div className="h-full w-full">
+      {result && (
+        <div className="flex flex-col h-full">
+          <Header className="flex-[3]" username={result.name} />
+          <Methodology
+            className="flex-[5]"
+            level={result.level}
+            stage={result.stage}
+            image={(() => {
+              switch (result.methodology) {
+                case "VIVA LEVE":
+                  return VivaLeve;
+                case "VIDA ATIVA":
+                  return VidaAtiva;
+                default:
+                  return ViverBem;
+              }
+            })()}
+          />
+          <SpecialNeeds
+            className="flex-[4]"
+            needs={result.specialNeeds.map((specialNeed) => specialNeed.showName)}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+type HeaderProps = {
+  className?: string;
+  username: string;
+};
+
+function Header(props: HeaderProps) {
+  const { username, className } = props;
+
+  return (
+    <div
+      className={`flex flex-col items-center justify-center ${
+        className ? className : ""
+      }`.trim()}
+    >
+      <Image
+        src={ActonLogoSmall}
+        alt="Acton logo small"
+        width={150}
+        className="py-2"
+      />
+      <h1 className="text-2xl font-medium text-[#40444D]">Análise concluida,</h1>
+      <h2 className="text-[#40444D]">{username}</h2>
+    </div>
+  );
+}
+
+type MethodologyProps = {
+  className?: string;
+  image: StaticImageData;
+  level: number;
+  stage: number;
+};
+
+function Methodology(props: MethodologyProps) {
+  const { className, image, level, stage } = props;
+
+  return (
+    <div
+      className={`flex flex-col justify-center items-center ${
+        className ? className : ""
+      }`.trim()}
+    >
+      <h2>Métodologia</h2>
+      <Image className="py-4" src={image} alt="Methodology logo" width={360} />
+      <div className="flex flex-row justify-center gap-4">
+        <div>
+          <h4 className="text-center">Fase</h4>
+          <div className="flex justify-center items-center w-[70px] h-[80px] bg-[#DEE2E7] rounded-md">
+            <h3 className="font-bold text-[#40444D] text-3xl">{stage}</h3>
           </div>
-        )}
+        </div>
+        <div>
+          <h4 className="text-center">Nivel</h4>
+          <div className="flex justify-center items-center w-[70px] h-[80px] bg-[#DEE2E7] rounded-md">
+            <h3 className="font-bold text-[#40444D] text-3xl">{level}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+type SpecialNeedsProps = {
+  className?: string;
+  needs: string[];
+};
+
+function SpecialNeeds(props: SpecialNeedsProps) {
+  const { className, needs } = props;
+  return (
+    <div
+      className={`flex flex-col justify-center items-center ${
+        className ? className : ""
+      }`.trim()}
+    >
+      <div className="w-[80%]">
+        <h3 className="font-medium">Data da análise</h3>
+        <h4>{format(new Date(), "dd/MM/yyyy")}</h4>
+        <h3 className="text-xl font-medium mt-3">Necessiades especiais</h3>
+        {needs.map((need, index) => (
+          <h4 key={`need-${index}`}>{need}</h4>
+        ))}
       </div>
     </div>
   );
