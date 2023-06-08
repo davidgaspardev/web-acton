@@ -233,7 +233,7 @@ function Header(props: HeaderProps) {
         width={150}
         className="py-2"
       />
-      <h1 className="text-2xl font-medium text-[#40444D]">Análise concluida,</h1>
+      <h1 className="text-xl font-medium text-[#40444D]">Análise concluída,</h1>
       <h2 className="text-[#40444D]">{username}</h2>
     </div>
   );
@@ -251,22 +251,22 @@ function Methodology(props: MethodologyProps) {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center ${
+      className={`flex flex-col justify-center text-[#40444D] items-center ${
         className ? className : ""
       }`.trim()}
     >
-      <h2>Métodologia</h2>
+      <h2 className="text-xl text-[#40444D] font-medium">Métodologia</h2>
       <Image className="py-4" src={image} alt="Methodology logo" width={360} />
       <div className="flex flex-row justify-center gap-4">
         <div>
-          <h4 className="text-center">Fase</h4>
-          <div className="flex justify-center items-center w-[70px] h-[80px] bg-[#DEE2E7] rounded-md">
+          <h4 className="text-center text-[#40444D] ">Fase</h4>
+          <div className="flex justify-center items-center w-[70px] h-[75px] bg-[#DEE2E7] rounded-md">
             <h3 className="font-bold text-[#40444D] text-3xl">{stage}</h3>
           </div>
         </div>
         <div>
-          <h4 className="text-center">Nivel</h4>
-          <div className="flex justify-center items-center w-[70px] h-[80px] bg-[#DEE2E7] rounded-md">
+          <h4 className="text-center text-[#40444D] ">Nível</h4>
+          <div className="flex justify-center items-center w-[70px] h-[75px] bg-[#DEE2E7] rounded-md">
             <h3 className="font-bold text-[#40444D] text-3xl">{level}</h3>
           </div>
         </div>
@@ -290,10 +290,12 @@ function SpecialNeeds(props: SpecialNeedsProps) {
     >
       <div className="w-[80%]">
         <h3 className="font-medium">Data da análise</h3>
-        <h4>{format(new Date(), "dd/MM/yyyy")}</h4>
-        <h3 className="text-xl font-medium mt-3">Necessiades especiais</h3>
+        <h4 className="text-sm">{format(new Date(), "dd/MM/yyyy")}</h4>
+        <h3 className="font-medium mt-3">Necessiades especiais</h3>
         {needs.map((need, index) => (
-          <h4 key={`need-${index}`}>{need}</h4>
+          <h4 key={`need-${index}`} className="text-sm">
+            {need}
+          </h4>
         ))}
       </div>
 
