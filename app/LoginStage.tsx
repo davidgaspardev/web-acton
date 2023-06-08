@@ -37,7 +37,7 @@ export default function LoginStage(props: LoginStageProps) {
         onClick(user);
       }}
     >
-      <Image className="mb-10" src={ActonLogin} alt="Acton login logo" width={140} />
+      <Image className="mb-10" src={ActonLogin} alt="Acton login logo" width={100} />
 
       <InputText
         className="mb-3"
@@ -57,7 +57,7 @@ export default function LoginStage(props: LoginStageProps) {
         text={whatsapp}
         onText={setWhatsapp}
       />
-      <InputText className="mb-3" placeholder="Sexo" text={sex} onText={setSex} />
+      <InputText className="mb-4" placeholder="Sexo" text={sex} onText={setSex} />
 
       <InputSubmit className="mt-5 text-[#7C65B5]" name="Avançar" />
     </form>
