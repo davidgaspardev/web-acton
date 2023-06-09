@@ -308,7 +308,7 @@ function SpecialNeeds(props: SpecialNeedsProps) {
       </div>
 
       <Image
-        className="absolute -bottom-8 -right-[55px]"
+        className="absolute -bottom-8 -right-[55px] md:right-[0px]"
         src={ActonAvatar}
         width={200}
         alt="ActonAvatar"
