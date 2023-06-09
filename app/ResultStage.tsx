@@ -171,7 +171,7 @@ export default function ResultStage(props: ResultStageProps) {
         );
       }
 
-      setResult({
+      const resultData = {
         name: user.fullname,
         methodology,
         level,
@@ -180,7 +180,10 @@ export default function ResultStage(props: ResultStageProps) {
           .sort((a, b) => b.priority - a.priority)
           .slice(0, 3),
         createdAt: new Date(),
-      });
+      };
+
+      setResult(resultData);
+      printerResult(resultData);
     }
   }, [user, responses, result]);
   return (
@@ -211,6 +214,11 @@ export default function ResultStage(props: ResultStageProps) {
       )}
     </div>
   );
+
+  function printerResult(result: ResultInfoData) {
+    // @ts-ignore
+    MessageInvoker.postMessage(JSON.stringify(result));
+  }
 }
 
 type HeaderProps = {
