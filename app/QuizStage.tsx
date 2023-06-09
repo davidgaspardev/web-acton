@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import ActonLogoSmall from "@/assets/acton-logo-small.png";
+import BackArrowIcon from "@/assets/back-arrow.png";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { quizList } from "@/helpers/data";
 import { getPercentageByMeta } from "@/helpers/math";
@@ -40,11 +41,17 @@ export default function Quiz(props: QuizPros) {
   );
 
   useEffect(() => {
-    if (quizIndex > 0) handleShowQuiz();
+    handleShowQuiz();
   }, [quizIndex, handleShowQuiz]);
 
   return (
     <section className="flex flex-col items-center h-full w-full">
+      <BackArrow
+        show={quizIndex > 0}
+        onClick={() => {
+          handleHiddenQuiz(() => setQuizIndex((it) => it - 1));
+        }}
+      />
       <Header />
 
       <div className="max-w-[360px] w-full p-4 flex flex-col flex-1">
@@ -145,6 +152,26 @@ function ProgressBar(prps: ProgressBarProps) {
       <h4 className="text-[#9AB766] text-center py-3">
         {percentage.toPrecision(2)}%
       </h4>
+    </div>
+  );
+}
+
+type BackArrowProps = {
+  show: boolean;
+  onClick: () => void;
+};
+
+function BackArrow(props: BackArrowProps) {
+  const { show, onClick } = props;
+
+  return (
+    <div
+      onClick={onClick}
+      className={`absolute top-0 pt-4 h-[80px] cursor-pointer flex justify-center items-center ${
+        show ? "left-8" : "-left-20"
+      } transition-all duration-150 ease-linear`}
+    >
+      <Image src={BackArrowIcon} alt="Back arrow icon" width={20} />
     </div>
   );
 }
