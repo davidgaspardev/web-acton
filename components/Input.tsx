@@ -31,7 +31,7 @@ export function Input(props: InputProps) {
     <div className={className}>
       {label && <label htmlFor={id}>{label}</label>}
       <input
-        className="bg-transparent border-b-2 text-white border-white px-2 py-1 placeholder:text-white/75 focus:outline-none"
+        className="bg-transparent border-b-2 text-white border-white px-2 py-1 placeholder:text-white/75 focus:outline-none w-full"
         id={id}
         type={type || "text"}
         pattern={pattern}
@@ -48,6 +48,49 @@ export function Input(props: InputProps) {
           ))}
         </datalist>
       )}
+    </div>
+  );
+}
+
+type InputSelectProps = {
+  label?: string;
+  placeholder?: string;
+  value?: string;
+  type?: "text" | "number" | "tel" | "email";
+  className?: string;
+  onValue: (value: string) => void;
+  pattern?: string;
+  required?: boolean;
+  options: string[];
+};
+
+export function InputSelect(props: InputSelectProps) {
+  const { className, label, placeholder, value, onValue, required, options } = props;
+
+  const id = useId();
+
+  return (
+    <div className={className}>
+      {label && <label htmlFor={id}>{label}</label>}
+      <select
+        className="bg-transparent border-b-2 text-white border-white px-2 py-1 placeholder:text-white/75 focus:outline-none w-full"
+        id={id}
+        value={value}
+        placeholder={placeholder}
+        onChange={({ target: { value } }) => onValue(value)}
+        required={required}
+      >
+        {placeholder && (
+          <option key="" value="">
+            {placeholder}
+          </option>
+        )}
+        {options.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
     </div>
   );
 }
