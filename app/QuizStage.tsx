@@ -50,7 +50,14 @@ export default function Quiz(props: QuizPros) {
         show={quizIndex > 0}
         onClick={() => {
           if (quizIndex === 1) setSelectedList([]);
-          handleHiddenQuiz(() => setQuizIndex((it) => it - 1));
+          handleHiddenQuiz(() => {
+            if (quizIndex === 2)
+              setQuizIndex(
+                (it) =>
+                  it - (quizIndex === 2 && quizList[0].selected![0] === 0 ? 1 : 2)
+              );
+            else setQuizIndex((it) => it - 1);
+          });
         }}
       />
       <Header />
@@ -90,7 +97,11 @@ export default function Quiz(props: QuizPros) {
                   }
 
                   // Next question
-                  handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
+                  handleHiddenQuiz(() =>
+                    setQuizIndex(
+                      (it) => it + (quizIndex === 0 && index === 0 ? 1 : 2)
+                    )
+                  );
                 }}
                 className={`${
                   selectedList.includes(index) && selectedList.length > 0
