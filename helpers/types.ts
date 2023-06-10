@@ -2,7 +2,7 @@ export type UserData = {
   fullname: string;
   email: string;
   whatsapp: string;
-  sex: string;
+  gender: string;
 };
 
 export type QuizData = {

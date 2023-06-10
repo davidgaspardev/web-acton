@@ -1,4 +1,4 @@
-import { InputSubmit, Input } from "@/components/Input";
+import { InputSubmit, Input, InputSelect } from "@/components/Input";
 import { UserData } from "@/helpers/types";
 import { useState } from "react";
 import Image from "next/image";
@@ -14,7 +14,7 @@ export default function LoginStage(props: LoginStageProps) {
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [whatsapp, setWhatsapp] = useState<string>("");
-  const [sex, setSex] = useState<string>("");
+  const [gender, setgender] = useState<string>("");
 
   return (
     <form
@@ -22,7 +22,7 @@ export default function LoginStage(props: LoginStageProps) {
       onSubmit={(event) => {
         if (!event.defaultPrevented) event.preventDefault();
 
-        if (!fullname || !email || !whatsapp || !sex) {
+        if (!fullname || !email || !whatsapp || !gender) {
           alert("Por favor preenchar todos os campos");
           return;
         }
@@ -31,7 +31,7 @@ export default function LoginStage(props: LoginStageProps) {
           fullname,
           email,
           whatsapp,
-          sex,
+          gender,
         };
 
         onClick(user);
@@ -40,7 +40,7 @@ export default function LoginStage(props: LoginStageProps) {
       <Image className="mb-10" src={ActonLogin} alt="Acton login logo" width={100} />
 
       <Input
-        className="mb-3"
+        className="mb-3 w-4/6"
         placeholder="Nome Completo"
         value={fullname}
         onValue={setFullname}
@@ -48,7 +48,7 @@ export default function LoginStage(props: LoginStageProps) {
       />
 
       <Input
-        className="mb-3"
+        className="mb-3 w-4/6"
         placeholder="E-mail"
         type="email"
         value={email}
@@ -57,7 +57,7 @@ export default function LoginStage(props: LoginStageProps) {
       />
 
       <Input
-        className="mb-3"
+        className="mb-3 w-4/6"
         placeholder="Whatsapp"
         type="tel"
         pattern="[0-9]{11}"
@@ -66,13 +66,13 @@ export default function LoginStage(props: LoginStageProps) {
         required={true}
       />
 
-      <Input
-        className="mb-4"
-        placeholder="Sexo"
-        value={sex}
-        onValue={setSex}
+      <InputSelect
+        className="mb-4 w-4/6"
+        placeholder="Gênero"
+        value={gender}
+        onValue={setgender}
         required={true}
-        options={["Masculino", "Feminino"]}
+        options={["Masculino", "Feminino", "Trans", "Outro", "Prefiro não dizer"]}
       />
 
       <InputSubmit className="mt-5 text-[#7C65B5]" name="Avançar" />
