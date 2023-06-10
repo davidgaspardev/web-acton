@@ -62,12 +62,14 @@ export default function Quiz(props: QuizPros) {
       />
       <Header />
 
-      <div className="max-w-[360px] w-full p-4 flex flex-col flex-1">
-        <h2 className="font-semibold text-[16pt] opacity-80">Sua saúde!</h2>
+      <div className="max-w-[360px] sm:max-w-[520px] w-full p-4 flex flex-col flex-1">
+        <h2 className="font-semibold text-[16pt] opacity-80 sm:pt-4 sm:text-3xl">
+          Sua saúde!
+        </h2>
 
         <div id={id} className="flex-1 transaction-opacity duration-150 ease-linear">
-          <div className="h-[75px] flex flex-col justify-center">
-            <h3 className="opacity-75">{quizList[quizIndex].question}</h3>
+          <div className="h-[75px] sm:[80px] flex flex-col justify-center">
+            <h3 className="opacity-75 sm:text-xl">{quizList[quizIndex].question}</h3>
           </div>
 
           <div className="py-5">
@@ -109,7 +111,7 @@ export default function Quiz(props: QuizPros) {
                   selectedList.includes(index) && selectedList.length > 0
                     ? "bg-[#654C8D] text-[#D7D7D7]"
                     : "bg-[#D7D7D7] text-[#654C8D]"
-                } cursor-pointer m-3 h-[34px] flex items-center justify-center rounded-full transition-colors duration-250 ease-linear hover:bg-[#654C8D] hover:text-white`}
+                } cursor-pointer m-3 h-[34px] sm:h-[40px] sm:mx-6 sm:my-4 flex items-center justify-center rounded-full transition-colors duration-250 ease-linear hover:bg-[#654C8D] hover:text-white`}
               >
                 <h5>{answer}</h5>
               </div>
@@ -125,7 +127,7 @@ export default function Quiz(props: QuizPros) {
                 }}
                 className={`${
                   selectedList.length > 0 ? "opacity-100" : "opacity-0"
-                } transition-opacity duration-300 ease-linear m-3 h-[34px] flex items-center justify-center bg-[#829932] text-white rounded-full cursor-pointer`}
+                } transition-opacity duration-300 ease-linear m-3 h-[34px] sm:h-[40px] sm:mx-6 sm:my-4 flex items-center justify-center bg-[#829932] text-white rounded-full cursor-pointer`}
               >
                 <h5>Avançar</h5>
               </div>
