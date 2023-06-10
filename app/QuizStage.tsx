@@ -97,11 +97,13 @@ export default function Quiz(props: QuizPros) {
                   }
 
                   // Next question
-                  handleHiddenQuiz(() =>
-                    setQuizIndex(
-                      (it) => it + (quizIndex === 0 && index === 0 ? 1 : 2)
-                    )
-                  );
+                  handleHiddenQuiz(() => {
+                    if (quizIndex === 0) {
+                      setQuizIndex((it) => it + (index === 0 ? 1 : 2));
+                    } else {
+                      setQuizIndex((it) => it + 1);
+                    }
+                  });
                 }}
                 className={`${
                   selectedList.includes(index) && selectedList.length > 0
