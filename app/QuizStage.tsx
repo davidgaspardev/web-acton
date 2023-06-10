@@ -49,6 +49,7 @@ export default function Quiz(props: QuizPros) {
       <BackArrow
         show={quizIndex > 0}
         onClick={() => {
+          if (quizIndex === 1) setSelectedList([]);
           handleHiddenQuiz(() => setQuizIndex((it) => it - 1));
         }}
       />
