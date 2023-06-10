@@ -21,7 +21,7 @@ type ResultStageProps = {
 };
 
 export default function ResultStage(props: ResultStageProps) {
-  const { user, result: responses } = props;
+  const { user, result: responses, onFinish } = props;
   const [result, setResult] = useState<ResultInfoData>();
 
   useEffect(() => {
@@ -183,9 +183,17 @@ export default function ResultStage(props: ResultStageProps) {
       };
 
       setResult(resultData);
-      printerResult(resultData);
+
+      try {
+        printerResult(resultData);
+      } catch (err) {
+        console.error(err);
+      }
+
+      setTimeout(onFinish, 30 * 1000);
     }
-  }, [user, responses, result]);
+  }, [user, responses, result, onFinish]);
+
   return (
     <div className="h-full w-full">
       {result && (

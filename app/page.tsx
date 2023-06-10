@@ -38,7 +38,7 @@ export default function MainPage() {
   );
 
   useEffect(() => {
-    if (stageIndex > 0) handleShowScreen();
+    handleShowScreen();
   }, [stageIndex, handleShowScreen]);
 
   return (
