@@ -75,7 +75,7 @@ export default function LoginStage(props: LoginStageProps) {
         options={["Masculino", "Feminino", "Trans", "Outro", "Prefiro não dizer"]}
       />
 
-      <InputSubmit className="mt-5 text-[#7C65B5] font-bold" name="avançar" />
+      <InputSubmit className="mt-5 text-[#7C65B5]" name="Avançar" />
     </form>
   );
 }
