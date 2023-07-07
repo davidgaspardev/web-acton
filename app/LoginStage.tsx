@@ -22,7 +22,7 @@ export default function LoginStage(props: LoginStageProps) {
       onSubmit={(event) => {
         if (!event.defaultPrevented) event.preventDefault();
 
-        if (!fullname || !email || !whatsapp || !gender) {
+        if (!fullname || !whatsapp || !gender) {
           alert("Por favor preenchar todos os campos");
           return;
         }
@@ -37,10 +37,10 @@ export default function LoginStage(props: LoginStageProps) {
         onClick(user);
       }}
     >
-      <Image className="mb-10" src={ActonLogin} alt="Acton login logo" width={100} />
+      <Image className="mb-14" src={ActonLogin} alt="Acton login logo" width={180} />
 
       <Input
-        className="mb-3 w-4/6"
+        className="mb-4 w-5/6"
         placeholder="Nome Completo"
         value={fullname}
         onValue={setFullname}
@@ -48,16 +48,16 @@ export default function LoginStage(props: LoginStageProps) {
       />
 
       <Input
-        className="mb-3 w-4/6"
+        className="mb-4 w-5/6"
         placeholder="E-mail"
         type="email"
         value={email}
         onValue={setEmail}
-        required={true}
+        // required={true}
       />
 
       <Input
-        className="mb-3 w-4/6"
+        className="mb-4 w-5/6"
         placeholder="Whatsapp"
         type="tel"
         pattern="[0-9]{11}"
@@ -67,7 +67,7 @@ export default function LoginStage(props: LoginStageProps) {
       />
 
       <InputSelect
-        className="mb-4 w-4/6"
+        className="mb-6 w-5/6"
         placeholder="Gênero"
         value={gender}
         onValue={setgender}
@@ -75,7 +75,7 @@ export default function LoginStage(props: LoginStageProps) {
         options={["Masculino", "Feminino", "Trans", "Outro", "Prefiro não dizer"]}
       />
 
-      <InputSubmit className="mt-5 text-[#7C65B5]" name="Avançar" />
+      <InputSubmit className="mt-5 text-[#7C65B5] font-bold" name="avançar" />
     </form>
   );
 }
