@@ -267,7 +267,7 @@ function Methodology(props: MethodologyProps) {
 
   return (
     <div
-      className={`flex flex-col justify-center text-[#40444D] items-center ${
+      className={`flex flex-col justify-center z-10 text-[#40444D] items-center ${
         className ? className : ""
       }`.trim()}
     >
@@ -304,7 +304,7 @@ function SpecialNeeds(props: SpecialNeedsProps) {
         className ? className : ""
       }`.trim()}
     >
-      <div className="w-[80%]">
+      <div className="w-[80%] z-10">
         <h3 className="font-medium">Data da análise</h3>
         <h4 className="text-sm">{format(new Date(), "dd/MM/yyyy")}</h4>
         <h3 className="font-medium mt-3">Necessiades especiais</h3>
