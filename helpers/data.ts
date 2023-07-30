@@ -3,12 +3,12 @@ import { QuizData, SpecialNeedData } from "./types";
 export const quizList: QuizData[] = [
   {
     id: 1,
-    question: "Dores físicas: possuí alguma que incomoda?",
+    question: "Dores físicas: possui alguma que incomoda?",
     answers: ["Sim", "Não"],
   },
   {
     id: 2,
-    question: "Qual a dor que lhe icomoda atualmente?",
+    question: "Qual a dor que lhe incomoda atualmente?",
     hasMultiSelection: true,
     answers: [
       "Pescoço",
@@ -23,7 +23,7 @@ export const quizList: QuizData[] = [
   },
   {
     id: 3,
-    question: "Você sentiu dor fisíca em repouso nos últimos 30 dias?",
+    question: "Você sentiu dor física em repouso nos últimos 30 dias?",
     answers: ["Sim", "Não"],
   },
   {
@@ -73,7 +73,7 @@ export const quizList: QuizData[] = [
   },
   {
     id: 13,
-    question: "O Stress tem atrapalhado o seu dia-a-dia?",
+    question: "O Stress tem atrapalhado o seu dia a dia?",
     answers: ["Sim", "Não"],
   },
   {
@@ -104,7 +104,7 @@ export const quizList: QuizData[] = [
   {
     id: 19,
     question:
-      "Por quanto tempo você já praticou exercicio fisico regular em academias na sua vida?",
+      "Por quanto tempo você já praticou exercício físico regular em academias na sua vida?",
     answers: ["Nunca Treinei", "6 meses", "1 ano", "2 anos", "3 anos"],
   },
 ];
