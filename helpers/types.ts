@@ -1,9 +1,17 @@
 export type UserData = {
+  id?: number;
   fullname: string;
   email: string;
   whatsapp: string;
-  gender: string;
+  gender: GenderOptions;
 };
+
+export type GenderOptions =
+  | "Masculino"
+  | "Feminino"
+  | "Trans"
+  | "Outro"
+  | "Prefiro não dizer";
 
 export type QuizData = {
   id: number;

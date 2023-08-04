@@ -1,5 +1,5 @@
 import { InputSubmit, Input, InputSelect } from "@/components/Input";
-import { UserData } from "@/helpers/types";
+import { GenderOptions, UserData } from "@/helpers/types";
 import { useState } from "react";
 import Image from "next/image";
 import ActonLogin from "../assets/acton-login.png";
@@ -14,7 +14,7 @@ export default function LoginStage(props: LoginStageProps) {
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [whatsapp, setWhatsapp] = useState<string>("");
-  const [gender, setgender] = useState<string>("");
+  const [gender, setGender] = useState<GenderOptions | undefined>();
 
   return (
     <form
@@ -70,9 +70,17 @@ export default function LoginStage(props: LoginStageProps) {
         className="mb-6 w-5/6"
         placeholder="Gênero"
         value={gender}
-        onValue={setgender}
+        onValue={(option) => setGender(option as GenderOptions)}
         required={true}
-        options={["Masculino", "Feminino", "Trans", "Outro", "Prefiro não dizer"]}
+        options={
+          [
+            "Masculino",
+            "Feminino",
+            "Trans",
+            "Outro",
+            "Prefiro não dizer",
+          ] as GenderOptions[]
+        }
       />
 
       <InputSubmit className="mt-5 text-[#7C65B5]" name="Avançar" />
