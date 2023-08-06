@@ -3,6 +3,9 @@ import { GenderOptions, UserData } from "@/helpers/types";
 import { useState } from "react";
 import Image from "next/image";
 import ActonLogin from "../assets/acton-login.png";
+import UsersApi from "@/helpers/api/users";
+
+const usersApi = UsersApi.getInstance();
 
 type LoginStageProps = {
   onClick: (user: UserData) => void;
@@ -19,7 +22,7 @@ export default function LoginStage(props: LoginStageProps) {
   return (
     <form
       className="w-full h-full bg-[#7C65B5] flex flex-col items-center justify-center"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         if (!event.defaultPrevented) event.preventDefault();
 
         if (!fullname || !whatsapp || !gender) {
@@ -33,6 +36,9 @@ export default function LoginStage(props: LoginStageProps) {
           whatsapp,
           gender,
         };
+
+        const userId = await usersApi.register(user);
+        user.id = userId;
 
         onClick(user);
       }}
