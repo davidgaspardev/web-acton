@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import ActonLogin from "../assets/acton-login.png";
 import UsersApi from "@/helpers/api/users";
+import { generateSessionCode } from "@/helpers/math";
 
 const usersApi = UsersApi.getInstance();
 
@@ -39,6 +40,7 @@ export default function LoginStage(props: LoginStageProps) {
 
         const userId = await usersApi.register(user);
         user.id = userId;
+        user.sessionCode = generateSessionCode();
 
         onClick(user);
       }}
