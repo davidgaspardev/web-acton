@@ -22,6 +22,18 @@ export type QuizData = {
   selected?: number[];
 };
 
+/**
+ * @file ../prisma/schema.prisma
+ */
+export type QuizFromDatabase = {
+  id?: string;
+  question: string;
+  answer: string;
+  date: Date;
+  sessionCode: string;
+  userId: string;
+};
+
 export type SpecialNeedData = {
   name: string;
   showName: string;
