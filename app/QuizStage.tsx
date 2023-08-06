@@ -7,6 +7,9 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { quizList } from "@/helpers/data";
 import { getPercentageByMeta } from "@/helpers/math";
 import { Callback, QuizData, UserData } from "@/helpers/types";
+import QuizzesApi from "@/helpers/api/quizzes";
+
+const quizzesApi = QuizzesApi.getInstance();
 
 type QuizPros = {
   user: UserData;
@@ -77,7 +80,7 @@ export default function Quiz(props: QuizPros) {
             {quizList[quizIndex].answers.map((answer, index) => (
               <div
                 key={`${quizIndex}-${index}`}
-                onClick={() => {
+                onClick={async () => {
                   if (quizList[quizIndex].hasMultiSelection) {
                     setSelectedList((selectedList) => {
                       if (selectedList.includes(index)) {
@@ -92,6 +95,8 @@ export default function Quiz(props: QuizPros) {
 
                   // Storage answer selected
                   quizList[quizIndex].selected = [index];
+                  // TODO: Save on database
+                  await quizzesApi.create(quizList[quizIndex], user);
 
                   // Check if is the last question
                   if (quizList.length - 1 === quizIndex) {
