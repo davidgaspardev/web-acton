@@ -6,14 +6,15 @@ import BackArrowIcon from "@/assets/back-arrow.png";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { quizList } from "@/helpers/data";
 import { getPercentageByMeta } from "@/helpers/math";
-import { Callback, QuizData } from "@/helpers/types";
+import { Callback, QuizData, UserData } from "@/helpers/types";
 
 type QuizPros = {
+  user: UserData;
   onClick: (results: QuizData[]) => void;
 };
 
 export default function Quiz(props: QuizPros) {
-  const { onClick } = props;
+  const { onClick, user } = props;
   const [quizIndex, setQuizIndex] = useState(0);
   // Used only the question is hasMultiSelection
   const [selectedList, setSelectedList] = useState<number[]>([]);
