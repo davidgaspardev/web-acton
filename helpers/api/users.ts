@@ -10,23 +10,40 @@ export default class UsersApi {
     return this.instance;
   }
 
-  public register = async (user: UserData) => {
+  /**
+   * Register user on database
+   *
+   * @param {string} user
+   * @returns {string} id registed
+   */
+  public register = async (user: UserData): Promise<string> => {
     const { loadGender } = this;
 
-    const response = await fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        ...user,
-        gender: loadGender(user.gender),
-      }),
-    });
+    try {
+      const response = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...user,
+          gender: loadGender(user.gender),
+        }),
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
+        const responseBody = await response.json();
+        throw new Error(responseBody);
+      }
+
       const responseBody = await response.json();
-      throw new Error(responseBody);
+      if (typeof responseBody["data"]["id"] !== "string") {
+        throw new Error("User id don't received");
+      }
+
+      return responseBody["data"]["id"] as string;
+    } catch (e) {
+      throw e;
     }
   };
 
