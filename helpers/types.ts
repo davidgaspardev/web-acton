@@ -4,6 +4,7 @@ export type UserData = {
   email: string;
   whatsapp: string;
   gender: GenderOptions;
+  sessionCode?: string;
 };
 
 export type GenderOptions =
