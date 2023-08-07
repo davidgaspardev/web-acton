@@ -124,9 +124,11 @@ export default function Quiz(props: QuizPros) {
             ))}
             {quizList[quizIndex].hasMultiSelection && (
               <div
-                onClick={() => {
+                onClick={async () => {
                   // Storage answer selected
                   quizList[quizIndex].selected = selectedList;
+                  // TODO: Save on database
+                  await quizzesApi.create(quizList[quizIndex], user);
 
                   setSelectedList([]);
                   handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
