@@ -49,3 +49,17 @@ export type ResultData = {
   date: Date;
   needs: SpecialNeedData[];
 };
+
+/**
+ * @file ../prisma/schema.prisma
+ */
+export type ResultFromDatabase = {
+  id?: string;
+  methodology: string;
+  level: number;
+  stage: number;
+  needs: string;
+  date: Date;
+  sessionCode: string;
+  userId: string;
+};
