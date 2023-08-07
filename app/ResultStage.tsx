@@ -1,10 +1,5 @@
 import { specialNeeds } from "@/helpers/data";
-import {
-  QuizData,
-  ResultInfoData,
-  SpecialNeedData,
-  UserData,
-} from "@/helpers/types";
+import { QuizData, ResultData, SpecialNeedData, UserData } from "@/helpers/types";
 import { useEffect, useState } from "react";
 import ActonLogoSmall from "../assets/acton-logo-small.png";
 import Image, { StaticImageData } from "next/image";
@@ -17,12 +12,12 @@ import { format } from "date-fns";
 type ResultStageProps = {
   user: UserData;
   result: QuizData[];
-  onFinish: (result: ResultInfoData) => void;
+  onFinish: (result: ResultData) => void;
 };
 
 export default function ResultStage(props: ResultStageProps) {
   const { user, result: responses, onFinish } = props;
-  const [result, setResult] = useState<ResultInfoData>();
+  const [result, setResult] = useState<ResultData>();
 
   useEffect(() => {
     if (result === undefined) {
@@ -176,10 +171,10 @@ export default function ResultStage(props: ResultStageProps) {
         methodology,
         level,
         stage,
-        specialNeeds: specialNeedsSelected
+        needs: specialNeedsSelected
           .sort((a, b) => b.priority - a.priority)
           .slice(0, 3),
-        createdAt: new Date(),
+        date: new Date(),
       };
 
       setResult(resultData);
@@ -216,14 +211,14 @@ export default function ResultStage(props: ResultStageProps) {
           />
           <SpecialNeeds
             className="flex-[4]"
-            needs={result.specialNeeds.map((specialNeed) => specialNeed.showName)}
+            needs={result.needs.map((specialNeed) => specialNeed.showName)}
           />
         </div>
       )}
     </div>
   );
 
-  function printerResult(result: ResultInfoData) {
+  function printerResult(result: ResultData) {
     // @ts-ignore
     MessageInvoker.postMessage(JSON.stringify(result));
   }

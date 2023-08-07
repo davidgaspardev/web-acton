@@ -42,11 +42,11 @@ export type SpecialNeedData = {
 
 export type Callback<T = undefined> = (param: T) => void;
 
-export type ResultInfoData = {
+export type ResultData = {
   name: string;
   methodology: string;
   level: number;
   stage: number;
-  createdAt: Date;
-  specialNeeds: SpecialNeedData[];
+  date: Date;
+  needs: SpecialNeedData[];
 };
