@@ -5,14 +5,23 @@ import { NextRequest, NextResponse } from "next/server";
  * Create a new user
  */
 export async function POST(request: Request) {
-  const data = await request.json();
-  const userCreated = await prisma.users.create({
-    data,
-  });
+  try {
+    if (request.headers.get("origin") !== process.env.ORIGIN_ALLOWED) {
+      return NextResponse.json({}, { status: 401 });
+    }
 
-  return NextResponse.json({
-    data: userCreated,
-  });
+    const data = await request.json();
+    const userCreated = await prisma.users.create({
+      data,
+    });
+
+    return NextResponse.json({
+      data: userCreated,
+    });
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(e, { status: 500 });
+  }
 }
 
 /**
