@@ -8,6 +8,9 @@ import VivaLeve from "../assets/viva-leve-logo.png";
 import VidaAtiva from "../assets/vida-ativa-logo.png";
 import ActonAvatar from "../assets/acton-avatar.gif";
 import { format } from "date-fns";
+import ResultsApi from "@/helpers/api/results";
+
+const resultsApi = ResultsApi.getInstance();
 
 type ResultStageProps = {
   user: UserData;
@@ -177,6 +180,7 @@ export default function ResultStage(props: ResultStageProps) {
       };
 
       setResult(resultData);
+      resultsApi.save(resultData, user);
 
       try {
         printerResult(resultData);
