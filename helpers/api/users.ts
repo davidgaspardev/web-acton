@@ -52,7 +52,7 @@ export default class UsersApi {
       "Masculino",
       "Feminino",
       "Trans",
-      "Outro",
+      "Outros",
       "Prefiro não dizer",
     ];
 

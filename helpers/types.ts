@@ -11,7 +11,7 @@ export type GenderOptions =
   | "Masculino"
   | "Feminino"
   | "Trans"
-  | "Outro"
+  | "Outros"
   | "Prefiro não dizer";
 
 export type QuizData = {

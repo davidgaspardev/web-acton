@@ -85,7 +85,7 @@ export default function LoginStage(props: LoginStageProps) {
             "Masculino",
             "Feminino",
             "Trans",
-            "Outro",
+            "Outros",
             "Prefiro não dizer",
           ] as GenderOptions[]
         }
