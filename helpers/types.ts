@@ -43,7 +43,6 @@ export type SpecialNeedData = {
 export type Callback<T = undefined> = (param: T) => void;
 
 export type ResultData = {
-  name: string;
   methodology: string;
   level: number;
   stage: number;

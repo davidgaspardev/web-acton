@@ -167,7 +167,6 @@ export default function ResultStage(props: ResultStageProps) {
       }
 
       const resultData = {
-        name: user.fullname,
         methodology,
         level,
         stage,
@@ -193,7 +192,7 @@ export default function ResultStage(props: ResultStageProps) {
     <div className="h-full w-full">
       {result && (
         <div className="flex flex-col h-full">
-          <Header className="flex-[3]" username={result.name} />
+          <Header className="flex-[3]" username={user.fullname} />
           <Methodology
             className="flex-[5]"
             level={result.level}
