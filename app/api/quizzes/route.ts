@@ -1,6 +1,9 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 
+/**
+ * Add quiz result
+ */
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
@@ -14,6 +17,9 @@ export async function POST(request: NextRequest) {
   }
 }
 
+/**
+ * Get quizzes by session code
+ */
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
