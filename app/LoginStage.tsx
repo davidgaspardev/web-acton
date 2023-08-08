@@ -1,6 +1,6 @@
 import { InputSubmit, Input, InputSelect } from "@/components/Input";
 import { GenderOptions, UserData } from "@/helpers/types";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import ActonLogin from "../assets/acton-login.png";
 import UsersApi from "@/helpers/api/users";
@@ -20,29 +20,38 @@ export default function LoginStage(props: LoginStageProps) {
   const [whatsapp, setWhatsapp] = useState<string>("");
   const [gender, setGender] = useState<GenderOptions | undefined>();
 
+  const lockRef = useRef<boolean>(false);
+
   return (
     <form
       className="w-full h-full bg-[#7C65B5] flex flex-col items-center justify-center"
       onSubmit={async (event) => {
         if (!event.defaultPrevented) event.preventDefault();
+        if (lockRef.current) return;
+        lockRef.current = true;
 
-        if (!fullname || !whatsapp || !gender) {
-          alert("Por favor preenchar todos os campos");
-          return;
+        try {
+          if (!fullname || !whatsapp || !gender) {
+            alert("Por favor preenchar todos os campos");
+            return;
+          }
+
+          const user: UserData = {
+            fullname,
+            email,
+            whatsapp,
+            gender,
+          };
+
+          const userId = await usersApi.register(user);
+          user.id = userId;
+          user.sessionCode = generateSessionCode();
+
+          onClick(user);
+        } catch (e) {
+          console.error(e);
+          lockRef.current = false;
         }
-
-        const user: UserData = {
-          fullname,
-          email,
-          whatsapp,
-          gender,
-        };
-
-        const userId = await usersApi.register(user);
-        user.id = userId;
-        user.sessionCode = generateSessionCode();
-
-        onClick(user);
       }}
     >
       <Image className="mb-14" src={ActonLogin} alt="Acton login logo" width={180} />
