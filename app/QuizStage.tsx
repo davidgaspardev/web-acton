@@ -6,14 +6,18 @@ import BackArrowIcon from "@/assets/back-arrow.png";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { quizList } from "@/helpers/data";
 import { getPercentageByMeta } from "@/helpers/math";
-import { Callback, QuizData } from "@/helpers/types";
+import { Callback, QuizData, UserData } from "@/helpers/types";
+import QuizzesApi from "@/helpers/api/quizzes";
+
+const quizzesApi = QuizzesApi.getInstance();
 
 type QuizPros = {
+  user: UserData;
   onClick: (results: QuizData[]) => void;
 };
 
 export default function Quiz(props: QuizPros) {
-  const { onClick } = props;
+  const { onClick, user } = props;
   const [quizIndex, setQuizIndex] = useState(0);
   // Used only the question is hasMultiSelection
   const [selectedList, setSelectedList] = useState<number[]>([]);
@@ -76,7 +80,7 @@ export default function Quiz(props: QuizPros) {
             {quizList[quizIndex].answers.map((answer, index) => (
               <div
                 key={`${quizIndex}-${index}`}
-                onClick={() => {
+                onClick={async () => {
                   if (quizList[quizIndex].hasMultiSelection) {
                     setSelectedList((selectedList) => {
                       if (selectedList.includes(index)) {
@@ -91,6 +95,8 @@ export default function Quiz(props: QuizPros) {
 
                   // Storage answer selected
                   quizList[quizIndex].selected = [index];
+                  // TODO: Save on database
+                  quizzesApi.create(quizList[quizIndex], user);
 
                   // Check if is the last question
                   if (quizList.length - 1 === quizIndex) {
@@ -118,9 +124,11 @@ export default function Quiz(props: QuizPros) {
             ))}
             {quizList[quizIndex].hasMultiSelection && (
               <div
-                onClick={() => {
+                onClick={async () => {
                   // Storage answer selected
                   quizList[quizIndex].selected = selectedList;
+                  // TODO: Save on database
+                  quizzesApi.create(quizList[quizIndex], user);
 
                   setSelectedList([]);
                   handleHiddenQuiz(() => setQuizIndex((it) => it + 1));

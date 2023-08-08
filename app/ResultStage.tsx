@@ -1,10 +1,5 @@
 import { specialNeeds } from "@/helpers/data";
-import {
-  QuizData,
-  ResultInfoData,
-  SpecialNeedData,
-  UserData,
-} from "@/helpers/types";
+import { QuizData, ResultData, SpecialNeedData, UserData } from "@/helpers/types";
 import { useEffect, useState } from "react";
 import ActonLogoSmall from "../assets/acton-logo-small.png";
 import Image, { StaticImageData } from "next/image";
@@ -13,16 +8,19 @@ import VivaLeve from "../assets/viva-leve-logo.png";
 import VidaAtiva from "../assets/vida-ativa-logo.png";
 import ActonAvatar from "../assets/acton-avatar.gif";
 import { format } from "date-fns";
+import ResultsApi from "@/helpers/api/results";
+
+const resultsApi = ResultsApi.getInstance();
 
 type ResultStageProps = {
   user: UserData;
   result: QuizData[];
-  onFinish: (result: ResultInfoData) => void;
+  onFinish: (result: ResultData) => void;
 };
 
 export default function ResultStage(props: ResultStageProps) {
   const { user, result: responses, onFinish } = props;
-  const [result, setResult] = useState<ResultInfoData>();
+  const [result, setResult] = useState<ResultData>();
 
   useEffect(() => {
     if (result === undefined) {
@@ -172,17 +170,17 @@ export default function ResultStage(props: ResultStageProps) {
       }
 
       const resultData = {
-        name: user.fullname,
         methodology,
         level,
         stage,
-        specialNeeds: specialNeedsSelected
+        needs: specialNeedsSelected
           .sort((a, b) => b.priority - a.priority)
           .slice(0, 3),
-        createdAt: new Date(),
+        date: new Date(),
       };
 
       setResult(resultData);
+      resultsApi.save(resultData, user);
 
       try {
         printerResult(resultData);
@@ -198,7 +196,7 @@ export default function ResultStage(props: ResultStageProps) {
     <div className="h-full w-full">
       {result && (
         <div className="flex flex-col h-full">
-          <Header className="flex-[3]" username={result.name} />
+          <Header className="flex-[3]" username={user.fullname} />
           <Methodology
             className="flex-[5]"
             level={result.level}
@@ -216,14 +214,14 @@ export default function ResultStage(props: ResultStageProps) {
           />
           <SpecialNeeds
             className="flex-[4]"
-            needs={result.specialNeeds.map((specialNeed) => specialNeed.showName)}
+            needs={result.needs.map((specialNeed) => specialNeed.showName)}
           />
         </div>
       )}
     </div>
   );
 
-  function printerResult(result: ResultInfoData) {
+  function printerResult(result: ResultData) {
     // @ts-ignore
     MessageInvoker.postMessage(JSON.stringify(result));
   }

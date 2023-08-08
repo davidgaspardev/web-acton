@@ -57,6 +57,7 @@ export default function MainPage() {
       )}
       {stageIndex === 2 && (
         <QuizStage
+          user={userRef.current!}
           onClick={(result) => {
             resultRef.current = result;
             nextStage();

@@ -10,6 +10,7 @@ type InputProps = {
   pattern?: string;
   required?: boolean;
   options?: string[];
+  maxLength?: number;
 };
 
 export function Input(props: InputProps) {
@@ -23,6 +24,7 @@ export function Input(props: InputProps) {
     required,
     pattern,
     options,
+    maxLength,
   } = props;
 
   const id = useId();
@@ -40,6 +42,7 @@ export function Input(props: InputProps) {
         onChange={({ target: { value } }) => onValue(value)}
         required={required}
         list={`options-${id}`}
+        maxLength={maxLength}
       />
       {options && options.length > 0 && (
         <datalist id={`options-${id}`}>

@@ -1,8 +1,12 @@
 import { InputSubmit, Input, InputSelect } from "@/components/Input";
-import { UserData } from "@/helpers/types";
+import { GenderOptions, UserData } from "@/helpers/types";
 import { useState } from "react";
 import Image from "next/image";
 import ActonLogin from "../assets/acton-login.png";
+import UsersApi from "@/helpers/api/users";
+import { generateSessionCode } from "@/helpers/math";
+
+const usersApi = UsersApi.getInstance();
 
 type LoginStageProps = {
   onClick: (user: UserData) => void;
@@ -14,12 +18,12 @@ export default function LoginStage(props: LoginStageProps) {
   const [fullname, setFullname] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [whatsapp, setWhatsapp] = useState<string>("");
-  const [gender, setgender] = useState<string>("");
+  const [gender, setGender] = useState<GenderOptions | undefined>();
 
   return (
     <form
       className="w-full h-full bg-[#7C65B5] flex flex-col items-center justify-center"
-      onSubmit={(event) => {
+      onSubmit={async (event) => {
         if (!event.defaultPrevented) event.preventDefault();
 
         if (!fullname || !whatsapp || !gender) {
@@ -33,6 +37,10 @@ export default function LoginStage(props: LoginStageProps) {
           whatsapp,
           gender,
         };
+
+        const userId = await usersApi.register(user);
+        user.id = userId;
+        user.sessionCode = generateSessionCode();
 
         onClick(user);
       }}
@@ -61,6 +69,7 @@ export default function LoginStage(props: LoginStageProps) {
         placeholder="Whatsapp"
         type="tel"
         pattern="[0-9]{11}"
+        maxLength={11}
         value={whatsapp}
         onValue={setWhatsapp}
         required={true}
@@ -70,9 +79,17 @@ export default function LoginStage(props: LoginStageProps) {
         className="mb-6 w-5/6"
         placeholder="Gênero"
         value={gender}
-        onValue={setgender}
+        onValue={(option) => setGender(option as GenderOptions)}
         required={true}
-        options={["Masculino", "Feminino", "Trans", "Outro", "Prefiro não dizer"]}
+        options={
+          [
+            "Masculino",
+            "Feminino",
+            "Trans",
+            "Outros",
+            "Prefiro não dizer",
+          ] as GenderOptions[]
+        }
       />
 
       <InputSubmit className="mt-5 text-[#7C65B5]" name="Avançar" />

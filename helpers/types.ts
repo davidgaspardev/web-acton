@@ -1,9 +1,18 @@
 export type UserData = {
+  id?: string;
   fullname: string;
   email: string;
   whatsapp: string;
-  gender: string;
+  gender: GenderOptions;
+  sessionCode?: string;
 };
+
+export type GenderOptions =
+  | "Masculino"
+  | "Feminino"
+  | "Trans"
+  | "Outros"
+  | "Prefiro não dizer";
 
 export type QuizData = {
   id: number;
@@ -11,6 +20,18 @@ export type QuizData = {
   answers: string[];
   hasMultiSelection?: boolean;
   selected?: number[];
+};
+
+/**
+ * @file ../prisma/schema.prisma
+ */
+export type QuizFromDatabase = {
+  id?: string;
+  question: string;
+  answer: string;
+  date: Date;
+  sessionCode: string;
+  userId: string;
 };
 
 export type SpecialNeedData = {
@@ -21,11 +42,24 @@ export type SpecialNeedData = {
 
 export type Callback<T = undefined> = (param: T) => void;
 
-export type ResultInfoData = {
-  name: string;
+export type ResultData = {
   methodology: string;
   level: number;
   stage: number;
-  createdAt: Date;
-  specialNeeds: SpecialNeedData[];
+  date: Date;
+  needs: SpecialNeedData[];
+};
+
+/**
+ * @file ../prisma/schema.prisma
+ */
+export type ResultFromDatabase = {
+  id?: string;
+  methodology: string;
+  level: number;
+  stage: number;
+  needs: string;
+  date: Date;
+  sessionCode: string;
+  userId: string;
 };
