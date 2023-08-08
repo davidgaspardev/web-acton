@@ -183,7 +183,10 @@ export default function ResultStage(props: ResultStageProps) {
       resultsApi.save(resultData, user);
 
       try {
-        printerResult(resultData);
+        printerResult({
+          name: user.fullname,
+          ...resultData,
+        });
       } catch (err) {
         console.error(err);
       }
@@ -221,7 +224,7 @@ export default function ResultStage(props: ResultStageProps) {
     </div>
   );
 
-  function printerResult(result: ResultData) {
+  function printerResult(result: ResultData & { name: string }) {
     // @ts-ignore
     MessageInvoker.postMessage(JSON.stringify(result));
   }
