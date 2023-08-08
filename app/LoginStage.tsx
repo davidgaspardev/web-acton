@@ -69,6 +69,7 @@ export default function LoginStage(props: LoginStageProps) {
         placeholder="Whatsapp"
         type="tel"
         pattern="[0-9]{11}"
+        maxLength={11}
         value={whatsapp}
         onValue={setWhatsapp}
         required={true}
