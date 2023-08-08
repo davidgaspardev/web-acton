@@ -96,7 +96,7 @@ export default function Quiz(props: QuizPros) {
                   // Storage answer selected
                   quizList[quizIndex].selected = [index];
                   // TODO: Save on database
-                  await quizzesApi.create(quizList[quizIndex], user);
+                  quizzesApi.create(quizList[quizIndex], user);
 
                   // Check if is the last question
                   if (quizList.length - 1 === quizIndex) {
@@ -128,7 +128,7 @@ export default function Quiz(props: QuizPros) {
                   // Storage answer selected
                   quizList[quizIndex].selected = selectedList;
                   // TODO: Save on database
-                  await quizzesApi.create(quizList[quizIndex], user);
+                  quizzesApi.create(quizList[quizIndex], user);
 
                   setSelectedList([]);
                   handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
