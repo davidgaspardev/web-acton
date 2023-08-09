@@ -50,6 +50,14 @@ export type ResultData = {
   needs: SpecialNeedData[];
 };
 
+export type ResultToPrint = {
+  name: string;
+  methodology: string;
+  level: number;
+  stage: number;
+  specialNeeds: SpecialNeedData[];
+};
+
 /**
  * @file ../prisma/schema.prisma
  */

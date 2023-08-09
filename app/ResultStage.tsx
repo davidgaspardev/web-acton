@@ -1,5 +1,11 @@
 import { specialNeeds } from "@/helpers/data";
-import { QuizData, ResultData, SpecialNeedData, UserData } from "@/helpers/types";
+import {
+  QuizData,
+  ResultData,
+  ResultToPrint,
+  SpecialNeedData,
+  UserData,
+} from "@/helpers/types";
 import { useEffect, useState } from "react";
 import ActonLogoSmall from "../assets/acton-logo-small.png";
 import Image, { StaticImageData } from "next/image";
@@ -186,6 +192,7 @@ export default function ResultStage(props: ResultStageProps) {
         printerResult({
           name: user.fullname,
           ...resultData,
+          specialNeeds: resultData.needs,
         });
       } catch (err) {
         console.error(err);
@@ -224,7 +231,7 @@ export default function ResultStage(props: ResultStageProps) {
     </div>
   );
 
-  function printerResult(result: ResultData & { name: string }) {
+  function printerResult(result: ResultToPrint) {
     // @ts-ignore
     MessageInvoker.postMessage(JSON.stringify(result));
   }
