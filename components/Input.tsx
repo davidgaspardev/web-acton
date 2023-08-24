@@ -4,7 +4,7 @@ type InputProps = {
   label?: string;
   placeholder?: string;
   value?: string;
-  type?: "text" | "number" | "tel" | "email";
+  type?: "text" | "number" | "tel" | "email" | "password";
   className?: string;
   onValue: (value: string) => void;
   pattern?: string;
