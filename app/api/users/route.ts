@@ -1,4 +1,4 @@
-import { DEBUG_MODE, JWT_SECRET_KEY } from "@/helpers/env";
+import { DEBUG_MODE, JWT_SECRET_KEY, ORIGINS_ALLOWED } from "@/helpers/env";
 import prisma from "@/lib/prisma";
 import { decode, verify } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,7 +8,10 @@ import { NextRequest, NextResponse } from "next/server";
  */
 export async function POST(request: Request) {
   try {
-    if (request.headers.get("origin") !== process.env.ORIGIN_ALLOWED) {
+    if (
+      ORIGINS_ALLOWED !== "*" &&
+      !ORIGINS_ALLOWED.split(",").includes(request.headers.get("origin")!)
+    ) {
       return NextResponse.json({}, { status: 401 });
     }
 
