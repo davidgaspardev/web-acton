@@ -3,9 +3,11 @@
 import { DEBUG_MODE } from "@/helpers/env";
 import LocalStorage from "@/helpers/storage";
 import * as Form from "@radix-ui/react-form";
+import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
 
 export default function LoginPage(): JSX.Element {
+    const router = useRouter();
     const [ username, setUsername ] = useState<string>("");
     const [ password, setPassword ] = useState<string>("");
 
@@ -21,6 +23,8 @@ export default function LoginPage(): JSX.Element {
 
             const localStorage = LocalStorage.getInstance();
             localStorage.setToken(tokenGenerated);
+
+            return router.push("/dashboard");
         } catch(e) {
             console.error(e);
         } finally {
