@@ -117,3 +117,8 @@ export type ResultModel = {
   date: Date;
   sessionCode: string;
 };
+
+export type MetricsInfo<T = number> = {
+  methodology: string;
+  quantity: T;
+}[];
