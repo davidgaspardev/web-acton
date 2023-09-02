@@ -118,7 +118,9 @@ export type ResultModel = {
   sessionCode: string;
 };
 
-export type MetricsInfo<T = number> = {
+export type MetricsInfo<T = number> = MetricInfo<T>[];
+
+export type MetricInfo<T = number> = {
   methodology: string;
   quantity: T;
-}[];
+};

@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import CardUser from "./CardUser";
 import ResultsApi from "@/helpers/api/results";
+import MetricMethoCard, { MetricCountCard } from "./MetricCard";
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -48,14 +49,26 @@ export default function DashboardPage() {
     }, [ loadUsers, loadMetrics ]);
 
     return (
-        <div>
-            <section className="flex flex-col gap-2">
-            {
-                users.map((user) => (
-                    <CardUser data={user} key={user.id} />
-                ))
-            }
-            </section>
-        </div>
+        <main>
+            <div className="flex flex-row">
+                <section className="w-[200px]">
+                    {
+                        metrics.length > 0 && [
+                            <MetricCountCard key={0} data={metrics} />,
+                            ...metrics.map((metric) => (
+                                <MetricMethoCard data={metric} key={metric.methodology} />
+                            ))
+                        ]
+                    }
+                </section>
+                <section className="flex-1 flex flex-col gap-2">
+                {
+                    users.map((user) => (
+                        <CardUser data={user} key={user.id} />
+                    ))
+                }
+                </section>
+            </div>
+        </main>
     )
 }
