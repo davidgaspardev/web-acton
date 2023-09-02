@@ -2,10 +2,11 @@
 
 import UsersApi from "@/helpers/api/users";
 import LocalStorage from "@/helpers/storage";
-import { UserModel } from "@/helpers/types";
+import { MetricsInfo, UserModel } from "@/helpers/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import CardUser from "./CardUser";
+import ResultsApi from "@/helpers/api/results";
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -17,6 +18,7 @@ export default function DashboardPage() {
         return token;
     });
     const [ users, setUsers ] = useState<UserModel[]>([]);
+    const [ metrics, setMetrics ] = useState<MetricsInfo>([]);
 
     const loadUsers = useCallback(async () => {
         if(!token) {
@@ -29,9 +31,21 @@ export default function DashboardPage() {
         setUsers(users);
     }, [ token, page, router ]);
 
+    const loadMetrics = useCallback(async () => {
+        if(!token) {
+            return router.push("/login");
+        }
+
+        const resultsApi = ResultsApi.getInstance();
+        const metrics = await resultsApi.getMetrics();
+
+        setMetrics(metrics);
+    }, [ token, router ]);
+
     useEffect(() => {
         loadUsers();
-    }, [ loadUsers ]);
+        loadMetrics();
+    }, [ loadUsers, loadMetrics ]);
 
     return (
         <div>
