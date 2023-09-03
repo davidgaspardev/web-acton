@@ -36,6 +36,7 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const pageQuery = searchParams.get("page");
+    const searchQuery = searchParams.get("search");
 
     const authorization = request.headers.get("Authorization");
     if (!authorization) {
@@ -56,7 +57,15 @@ export async function GET(request: NextRequest) {
 
     const page = Number(pageQuery);
     const pageSize = 100;
-    const usersTotal = await prisma.users.count();
+    const usersTotal = await prisma.users.count({
+      where: searchQuery
+        ? {
+            fullname: {
+              contains: searchQuery,
+            },
+          }
+        : undefined,
+    });
 
     if ((page - 1) * pageSize >= usersTotal) {
       return NextResponse.json({ message: "page not exists" }, { status: 400 });
@@ -65,6 +74,13 @@ export async function GET(request: NextRequest) {
     const users = await prisma.users.findMany({
       take: pageSize,
       skip: (page - 1) * pageSize,
+      where: searchQuery
+        ? {
+            fullname: {
+              contains: searchQuery,
+            },
+          }
+        : undefined,
       include: {
         results: true,
       },
