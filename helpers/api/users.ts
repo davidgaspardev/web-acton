@@ -1,3 +1,4 @@
+import { DEBUG_MODE } from "../env";
 import { GenderOptions, UserData, UserModel } from "../types";
 
 export default class UsersApi {
@@ -98,6 +99,35 @@ export default class UsersApi {
         total: responseBody["total"] as number,
         users: responseBody["data"] as UserModel[],
       };
+    } catch (e) {
+      throw e;
+    }
+  };
+
+  public getById = async (
+    userId: string,
+    conf: { token: string }
+  ): Promise<UserModel> => {
+    try {
+      const { token } = conf;
+
+      const response = await fetch(`/api/users/${userId}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const responseBody = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseBody);
+      }
+
+      if (DEBUG_MODE) console.log("responseBody", responseBody);
+
+      return responseBody["data"] as UserModel;
     } catch (e) {
       throw e;
     }
