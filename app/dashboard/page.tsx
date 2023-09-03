@@ -56,7 +56,10 @@ export default function DashboardPage() {
 
     return (
         <main className="flex flex-col min-h-screen">
-            <Header search={search} onSearch={setSearch}/>
+            <Header search={search} onSearch={(text) => {
+                if(page != 1) setPage(1);
+                setSearch(text);
+            }}/>
             <div className="flex flex-row flex-1">
                 <section className="w-[200px]">
                     {
