@@ -67,11 +67,15 @@ export default class UsersApi {
 
   public getUsersByPage = async (
     page: number,
-    conf: { token: string }
-  ): Promise<UserModel[]> => {
+    conf: { token: string; search?: string }
+  ): Promise<{
+    total: number;
+    users: UserModel[];
+  }> => {
     try {
-      const { token } = conf;
-      const response = await fetch(`/api/users?page=${page}`, {
+      const { token, search } = conf;
+      const searchQuery = search ? `&search=${search}` : "";
+      const response = await fetch(`/api/users?page=${page}${searchQuery}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -90,7 +94,10 @@ export default class UsersApi {
         throw new Error("Invalid return data structure");
       }
 
-      return responseBody["data"] as UserModel[];
+      return {
+        total: responseBody["total"] as number,
+        users: responseBody["data"] as UserModel[],
+      };
     } catch (e) {
       throw e;
     }

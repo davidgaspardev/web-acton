@@ -4,10 +4,12 @@ import UsersApi from "@/helpers/api/users";
 import LocalStorage from "@/helpers/storage";
 import { MetricsInfo, UserModel } from "@/helpers/types";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CardUser from "./CardUser";
 import ResultsApi from "@/helpers/api/results";
 import MetricMethoCard, { MetricCountCard } from "./MetricCard";
+import Header from "./Header";
+import PageControl from "./PageControl";
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -19,7 +21,10 @@ export default function DashboardPage() {
         return token;
     });
     const [ users, setUsers ] = useState<UserModel[]>([]);
+    const usersTotal = useRef<number>();
+
     const [ metrics, setMetrics ] = useState<MetricsInfo>([]);
+    const [ search, setSearch ] = useState<string>("");
 
     const loadUsers = useCallback(async () => {
         if(!token) {
@@ -27,10 +32,11 @@ export default function DashboardPage() {
         }
 
         const usersApi = UsersApi.getInstance();
-        const users = await usersApi.getUsersByPage(page, { token });
+        const {users, total } = await usersApi.getUsersByPage(page, { token, search: search.length > 0 ? search : undefined });
 
+        usersTotal.current = total;
         setUsers(users);
-    }, [ token, page, router ]);
+    }, [ token, page, router, search ]);
 
     const loadMetrics = useCallback(async () => {
         if(!token) {
@@ -50,6 +56,7 @@ export default function DashboardPage() {
 
     return (
         <main>
+            <Header search={search} onSearch={setSearch}/>
             <div className="flex flex-row">
                 <section className="w-[200px]">
                     {
@@ -66,6 +73,14 @@ export default function DashboardPage() {
                     users.map((user) => (
                         <CardUser data={user} key={user.id} />
                     ))
+                }
+                {
+                    usersTotal.current && (
+                        <PageControl
+                            currentPage={page}
+                            total={usersTotal.current}
+                            onPage={setPage}/>
+                    )
                 }
                 </section>
             </div>
