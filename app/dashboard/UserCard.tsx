@@ -1,16 +1,17 @@
 import { ResultModel, UserModel } from "@/helpers/types";
+import Link from "next/link";
 
 type UserCardProps = {
     data: UserModel;
 }
 
 export default function UserCard(props: UserCardProps): JSX.Element {
-    const { fullname, email, results } = props.data;
+    const { fullname, email, results, id } = props.data;
 
     const hasResult = results.length > 0;
 
     return (
-        <div className="flex flex-row h-12">
+        <Link href={`/user/${id}`} className="flex flex-row h-12">
             <div className="flex flex-1 flex-col justify-center bg-red-300">
                 <h2>{fullname}</h2>
                 { (email && email.length > 0) && (
@@ -24,7 +25,7 @@ export default function UserCard(props: UserCardProps): JSX.Element {
                     <NoResult />
                 )}
             </div>
-        </div>
+        </Link>
     );
 }
 
