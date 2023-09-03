@@ -30,6 +30,9 @@ export async function GET(request: Request, pathData: PathData) {
       where: {
         id,
       },
+      include: {
+        results: true,
+      },
     });
 
     return NextResponse.json({
