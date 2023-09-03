@@ -26,6 +26,7 @@ export default function UserPage(props: UserPageProps): JSX.Element {
     });
     const [ user, setUser ] = useState<UserModel>();
     const [ quizzes, setQuizzes ] = useState<QuizModel[]>([]);
+    const [ search, setSearch ] = useState<string>("");
 
     const loadUserData = useCallback(async () => {
         if(!token) {
@@ -61,11 +62,20 @@ export default function UserPage(props: UserPageProps): JSX.Element {
 
     return (
         <main className="h-screen flex flex-col">
-            <Header search="" onSearch={() => {}} />
+            <Header search={search} onSearch={setSearch} />
             <div className="flex-1 flex flex-row">
                 <div className="w-[50%] bg-[#EAEDF3] h-full">
                     {
-                        quizzes.map((quiz) => (
+                        quizzes.filter((quiz) => {
+                            if (search.length > 0) {
+                                return (
+                                    quiz.question.toLowerCase().includes(search.toLowerCase()) ||
+                                    quiz.answer.toLowerCase().includes(search.toLowerCase())
+                                );
+                            }
+
+                            return true;
+                        }).map((quiz) => (
                             <div key={quiz.id} className="ps-3 pb-3">
                                 <h3>{quiz.question}</h3>
                                 {/* <div> */}
