@@ -60,14 +60,17 @@ export default function UserPage(props: UserPageProps): JSX.Element {
     }
 
     return (
-        <main>
+        <main className="h-screen flex flex-col">
             <Header search="" onSearch={() => {}} />
-            <div className="flex flex-row">
-                <div className="w-[40%]">
+            <div className="flex-1 flex flex-row">
+                <div className="w-[50%] bg-[#EAEDF3] h-full">
                     {
                         quizzes.map((quiz) => (
-                            <div key={quiz.id}>
+                            <div key={quiz.id} className="ps-3 pb-3">
                                 <h3>{quiz.question}</h3>
+                                {/* <div> */}
+                                    <h3 className={`inline-block px-1 ${quiz.answer == "Sim" ? "bg-[#66EF78]" : ""}${quiz.answer == "Não" ? "bg-[#F04130]" : ""}`}>{quiz.answer}</h3>
+                                {/* </div> */}
                             </div>
                         ))
                     }
