@@ -1,10 +1,10 @@
 import { ResultModel, UserModel } from "@/helpers/types";
 
-type CardUserProps = {
+type UserCardProps = {
     data: UserModel;
 }
 
-export default function CardUser(props: CardUserProps): JSX.Element {
+export default function UserCard(props: UserCardProps): JSX.Element {
     const { fullname, email, results } = props.data;
 
     const hasResult = results.length > 0;

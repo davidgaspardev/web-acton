@@ -5,7 +5,7 @@ import LocalStorage from "@/helpers/storage";
 import { MetricsInfo, UserModel } from "@/helpers/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import CardUser from "./CardUser";
+import UserCard from "./UserCard";
 import ResultsApi from "@/helpers/api/results";
 import MetricMethoCard, { MetricCountCard } from "./MetricCard";
 import Header from "./Header";
@@ -71,7 +71,7 @@ export default function DashboardPage() {
                 <section className="flex-1 flex flex-col gap-2">
                 {
                     users.map((user) => (
-                        <CardUser data={user} key={user.id} />
+                        <UserCard data={user} key={user.id} />
                     ))
                 }
                 {
