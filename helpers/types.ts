@@ -118,6 +118,14 @@ export type ResultModel = {
   sessionCode: string;
 };
 
+export type QuizModel = {
+  id: string;
+  question: string;
+  answer: string;
+  date: Date;
+  sessionCode: string;
+};
+
 export type MetricsInfo<T = number> = MetricInfo<T>[];
 
 export type MetricInfo<T = number> = {

@@ -1,4 +1,5 @@
-import { QuizData, QuizFromDatabase, UserData } from "../types";
+import { DEBUG_MODE } from "../env";
+import { QuizData, QuizFromDatabase, QuizModel, UserData } from "../types";
 
 export default class QuizzesApi {
   private static instance: QuizzesApi;
@@ -47,5 +48,33 @@ export default class QuizzesApi {
       sessionCode: userData.sessionCode!,
       userId: userData.id!,
     };
+  };
+
+  public getBySessionCode = async (
+    sessionCode: string,
+    conf: { token: string }
+  ): Promise<QuizModel[]> => {
+    try {
+      const { token } = conf;
+      const response = await fetch(`/api/quizzes?sessionCode=${sessionCode}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const responseBody = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseBody);
+      }
+
+      if (DEBUG_MODE) console.log("responseBody:", responseBody);
+
+      return responseBody["data"] as QuizModel[];
+    } catch (e) {
+      throw e;
+    }
   };
 }
