@@ -84,6 +84,9 @@ export async function GET(request: NextRequest) {
       include: {
         results: true,
       },
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     return NextResponse.json({
