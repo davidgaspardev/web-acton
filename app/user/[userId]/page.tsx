@@ -64,7 +64,7 @@ export default function UserPage(props: UserPageProps): JSX.Element {
         <main className="h-screen flex flex-col">
             <Header search={search} onSearch={setSearch} />
             <div className="flex-1 flex flex-row">
-                <div className="w-[50%] bg-[#EAEDF3] h-full">
+                <div className="w-[50%] bg-[#EAEDF3] h-[calc(100vh-64px)] overflow-y-auto">
                     {
                         quizzes.filter((quiz) => {
                             if (search.length > 0) {
