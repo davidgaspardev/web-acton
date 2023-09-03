@@ -8,7 +8,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import UserCard from "./UserCard";
 import ResultsApi from "@/helpers/api/results";
 import MetricMethoCard, { MetricCountCard } from "./MetricCard";
-import Header from "./Header";
+import Header from "../../components/Header";
 import PageControl from "./PageControl";
 
 export default function DashboardPage() {

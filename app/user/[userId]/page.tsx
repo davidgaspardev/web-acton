@@ -1,5 +1,6 @@
 "use client";
 
+import Header from "@/components/Header";
 import UsersApi from "@/helpers/api/users";
 import LocalStorage from "@/helpers/storage";
 import { UserModel } from "@/helpers/types";
@@ -44,7 +45,8 @@ export default function UserPage(props: UserPageProps): JSX.Element {
     }
 
     return (
-        <div>
+        <main>
+            <Header search="" onSearch={() => {}} />
             { user && (
                 <div>
                     <h1>{user.fullname}</h1>
@@ -53,6 +55,6 @@ export default function UserPage(props: UserPageProps): JSX.Element {
                     <h1>{user.whatsapp}</h1>
                 </div>
             )}
-        </div>
+        </main>
     );
 }
