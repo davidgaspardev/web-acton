@@ -69,7 +69,7 @@ export default function DashboardPage() {
                     }
                 </section>
                 <section className="flex-1">
-                    <div className="flex flex-col gap-2 h-[calc(100%-50px)]">
+                    <div className="flex flex-col gap-2 h-[calc(100vh-114px)] overflow-y-auto">
                         <div className="flex flex-row h-[45px] mt-4">
                             <div className="flex-1 flex flex-col justify-center">
                                 <h1 className="font-bold text-xl">NOME:</h1>
