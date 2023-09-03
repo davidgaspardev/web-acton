@@ -18,7 +18,7 @@ export default function PageControl(props: PageControlProps): JSX.Element {
     }
 
     return (
-        <div>
+        <div className="h-[50px] flex flex-row-reverse items-center px-6">
             {
                 pages.map((page, index) => (
                     <div

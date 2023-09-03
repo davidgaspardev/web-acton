@@ -55,9 +55,9 @@ export default function DashboardPage() {
     }, [ loadUsers, loadMetrics ]);
 
     return (
-        <main>
+        <main className="flex flex-col min-h-screen">
             <Header search={search} onSearch={setSearch}/>
-            <div className="flex flex-row">
+            <div className="flex flex-row flex-1">
                 <section className="w-[200px]">
                     {
                         metrics.length > 0 && [
@@ -68,20 +68,22 @@ export default function DashboardPage() {
                         ]
                     }
                 </section>
-                <section className="flex-1 flex flex-col gap-2">
-                {
-                    users.map((user) => (
-                        <UserCard data={user} key={user.id} />
-                    ))
-                }
-                {
-                    usersTotal.current && (
-                        <PageControl
-                            currentPage={page}
-                            total={usersTotal.current}
-                            onPage={setPage}/>
-                    )
-                }
+                <section className="flex-1">
+                    <div className="flex flex-col gap-2 h-[calc(100%-50px)]">
+                        {
+                            users.map((user) => (
+                                <UserCard data={user} key={user.id} />
+                            ))
+                        }
+                    </div>
+                    {
+                        usersTotal.current && (
+                            <PageControl
+                                currentPage={page}
+                                total={usersTotal.current}
+                                onPage={setPage}/>
+                        )
+                    }
                 </section>
             </div>
         </main>
