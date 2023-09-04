@@ -279,7 +279,7 @@ function Methodology(props: MethodologyProps) {
         className ? className : ""
       }`.trim()}
     >
-      <h2 className="text-xl text-[#40444D] font-medium">Métodologia</h2>
+      <h2 className="text-xl text-[#40444D] font-medium">Metodologia</h2>
       <Image className="py-4" src={image} alt="Methodology logo" width={360} />
       <div className="flex flex-row justify-center gap-4">
         <div>
