@@ -42,13 +42,13 @@ export default function ResultStage(props: ResultStageProps) {
         switch (trainerTime) {
           case "Nunca Treinei":
             return 1;
-          case "6 meses":
+          case "Treino à 6 meses":
             return 2;
-          case "1 ano":
+          case "Treino à 1 ano":
             return 4;
-          case "2 anos":
+          case "Treino à 2 anos":
             return 5;
-          case "3 anos":
+          case "Treino à 3 anos":
             return 6;
           default:
             throw Error("trainerTime expection");
@@ -58,13 +58,13 @@ export default function ResultStage(props: ResultStageProps) {
         switch (trainerTime) {
           case "Nunca Treinei":
             return 1;
-          case "6 meses":
+          case "Treino à 6 meses":
             return 6;
-          case "1 ano":
+          case "Treino à 1 ano":
             return 11;
-          case "2 anos":
+          case "Treino à 2 anos":
             return 13;
-          case "3 anos":
+          case "Treino à 3 anos":
             return 16;
           default:
             throw Error("trainerTime expection");
