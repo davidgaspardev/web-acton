@@ -10,6 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Admins {
+  id        String   @id @default(uuid())
+  username  String   @unique @db.VarChar(64)
+  password  String   @db.Char(64)
+  rules     String   @db.VarChar(8)
+  enable    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
 model Users {
   id        String    @id @default(uuid())
   fullname  String    @db.VarChar(128)

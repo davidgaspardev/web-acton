@@ -1,6 +1,8 @@
-import { ResultData, ResultFromDatabase, UserData } from "../types";
+import { MetricsInfo, ResultData, ResultFromDatabase, UserData } from "../types";
 
 export default class ResultsApi {
+  private static LOG_TAG = "RestultsApi";
+
   private static instance: ResultsApi;
   private constructor() {}
 
@@ -44,5 +46,27 @@ export default class ResultsApi {
       userId: userData.id!,
       sessionCode: userData.sessionCode!,
     };
+  };
+
+  public getMetrics = async (): Promise<MetricsInfo> => {
+    try {
+      const response = await fetch("/api/results/metrics", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      const responseBody = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseBody);
+      }
+
+      return (responseBody as { data: MetricsInfo }).data;
+    } catch (e) {
+      console.error(ResultsApi.LOG_TAG, e);
+      throw e;
+    }
   };
 }

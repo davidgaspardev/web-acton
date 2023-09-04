@@ -71,3 +71,64 @@ export type ResultFromDatabase = {
   sessionCode: string;
   userId: string;
 };
+
+/*
+{
+    "total": 1,
+    "data": [
+        {
+            "id": "7bf8113f-dda2-4940-923a-d46309506d0c",
+            "fullname": "David Gaspar",
+            "email": "",
+            "whatsapp": "87348738947",
+            "gender": "TRANS",
+            "createdAt": "2023-08-26T02:22:18.666Z",
+            "results": [
+                {
+                    "id": "71369872-28d2-4c39-b013-c1da9fca1d62",
+                    "methodology": "VIVER BEM",
+                    "level": 2,
+                    "stage": 6,
+                    "needs": "Cuidar da Diabetes, Amenizar dores físicas, Melhorar a Ansiedade",
+                    "date": "2023-08-26T02:22:41.088Z",
+                    "sessionCode": "ir9yb5ft:1693016542051",
+                    "userId": "7bf8113f-dda2-4940-923a-d46309506d0c"
+                }
+            ]
+        }
+    ]
+}
+*/
+export type UserModel = {
+  id: string;
+  fullname: string;
+  email: string | null;
+  whatsapp: string;
+  gender: string;
+  results: ResultModel[];
+};
+
+export type ResultModel = {
+  id: string;
+  methodology: string;
+  level: number;
+  stage: number;
+  needs: string;
+  date: Date;
+  sessionCode: string;
+};
+
+export type QuizModel = {
+  id: string;
+  question: string;
+  answer: string;
+  date: Date;
+  sessionCode: string;
+};
+
+export type MetricsInfo<T = number> = MetricInfo<T>[];
+
+export type MetricInfo<T = number> = {
+  methodology: string;
+  quantity: T;
+};
