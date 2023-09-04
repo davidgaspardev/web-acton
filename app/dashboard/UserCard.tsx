@@ -11,19 +11,21 @@ export default function UserCard(props: UserCardProps): JSX.Element {
     const hasResult = results.length > 0;
 
     return (
-        <Link href={`/user/${id}`} className="flex flex-row h-12">
-            <div className="flex flex-1 flex-col justify-center">
-                <h2>{fullname}</h2>
-                { (email && email.length > 0) && (
-                    <p className="text-xs opacity-40"><a href={`mailto:${email}`}>{email}</a></p>
-                )}
-            </div>
-            <div className="w-80">
-                { hasResult ? (
-                    <Result data={results[0]} />
-                ) : (
-                    <NoResult />
-                )}
+        <Link href={`/user/${id}`}>
+            <div className="flex flex-row h-12 hover:bg-gray-100">
+                <div className="flex flex-1 flex-col justify-center">
+                    <h2>{fullname}</h2>
+                    { (email && email.length > 0) && (
+                        <p className="text-xs opacity-40"><a href={`mailto:${email}`}>{email}</a></p>
+                    )}
+                </div>
+                <div className="w-80">
+                    { hasResult ? (
+                        <Result data={results[0]} />
+                    ) : (
+                        <NoResult />
+                    )}
+                </div>
             </div>
         </Link>
     );
