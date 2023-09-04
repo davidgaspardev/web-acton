@@ -29,176 +29,176 @@ export default function ResultStage(props: ResultStageProps) {
   const [result, setResult] = useState<ResultData>();
 
   useEffect(() => {
-    if (result === undefined) {
-      const whatDoYouWant = (() => {
-        const reponse = responses.find((response) => response.id === 18)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
-      const trainerTime = (() => {
-        const reponse = responses.find((response) => response.id === 19)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
-      const level = (() => {
-        switch (trainerTime) {
-          case "Nunca Treinei":
-            return 1;
-          case "Treino à 6 meses":
-            return 2;
-          case "Treino à 1 ano":
-            return 4;
-          case "Treino à 2 anos":
-            return 5;
-          case "Treino à 3 anos":
-            return 6;
-          default:
-            throw Error("trainerTime expection");
+    try {
+      if (result === undefined) {
+        const whatDoYouWant = (() => {
+          const reponse = responses.find((response) => response.id === 18)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
+        const trainerTime = (() => {
+          const reponse = responses.find((response) => response.id === 19)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
+        const level = (() => {
+          switch (trainerTime) {
+            case "Nunca Treinei":
+              return 1;
+            case "Treino à 6 meses":
+              return 2;
+            case "Treino à 1 ano":
+              return 4;
+            case "Treino à 2 anos":
+              return 5;
+            case "Treino à 3 anos":
+              return 6;
+            default:
+              throw Error("trainerTime expection");
+          }
+        })();
+        const stage = (() => {
+          switch (trainerTime) {
+            case "Nunca Treinei":
+              return 1;
+            case "Treino à 6 meses":
+              return 6;
+            case "Treino à 1 ano":
+              return 11;
+            case "Treino à 2 anos":
+              return 13;
+            case "Treino à 3 anos":
+              return 16;
+            default:
+              throw Error("trainerTime expection");
+          }
+        })();
+        const methodology = (() => {
+          switch (whatDoYouWant) {
+            case "Perder peso":
+              return level === 1 ? "VIVA LEVE" : "VIVER BEM";
+            case "Qualidade de Vida":
+              return "VIVA LEVE";
+            case "Ganhar Massa Muscular":
+              return level === 1 ? "VIVA LEVE" : "VIDA ATIVA";
+            default:
+              throw Error("trainerTime expection");
+          }
+        })();
+
+        const specialNeedsSelected = new Array<SpecialNeedData>();
+        const questionId3 = (() => {
+          const reponse = responses.find((response) => response.id === 3)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
+
+        if (questionId3 === "Sim") {
+          specialNeedsSelected.push(
+            specialNeeds.find((it) => it.name === "Dor Física")!
+          );
         }
-      })();
-      const stage = (() => {
-        switch (trainerTime) {
-          case "Nunca Treinei":
-            return 1;
-          case "Treino à 6 meses":
-            return 6;
-          case "Treino à 1 ano":
-            return 11;
-          case "Treino à 2 anos":
-            return 13;
-          case "Treino à 3 anos":
-            return 16;
-          default:
-            throw Error("trainerTime expection");
+
+        const questionId4 = (() => {
+          const reponse = responses.find((response) => response.id === 4)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
+
+        if (questionId4 === "Sim") {
+          specialNeedsSelected.push(
+            specialNeeds.find(
+              (it) => it.name === "Problemas Cardíacos ou Pressão Alta"
+            )!
+          );
         }
-      })();
-      const methodology = (() => {
-        switch (whatDoYouWant) {
-          case "Perder peso":
-            return level === 1 ? "VIVA LEVE" : "VIVER BEM";
-          case "Qualidade de Vida":
-            return "VIVA LEVE";
-          case "Ganhar Massa Muscular":
-            return level === 1 ? "VIVA LEVE" : "VIDA ATIVA";
-          default:
-            throw Error("trainerTime expection");
+
+        const questionId5 = (() => {
+          const reponse = responses.find((response) => response.id === 5)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
+
+        if (questionId5 === "Sim") {
+          specialNeedsSelected.push(
+            specialNeeds.find((it) => it.name === "Diabetes")!
+          );
         }
-      })();
 
-      const specialNeedsSelected = new Array<SpecialNeedData>();
-      const questionId3 = (() => {
-        const reponse = responses.find((response) => response.id === 3)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
+        const questionId8 = (() => {
+          const reponse = responses.find((response) => response.id === 8)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
 
-      if (questionId3 === "Sim") {
-        specialNeedsSelected.push(
-          specialNeeds.find((it) => it.name === "Dor Física")!
-        );
-      }
+        if (questionId8 === "Sim") {
+          specialNeedsSelected.push(
+            specialNeeds.find((it) => it.name === "Qualidade de Vida")!
+          );
+        }
 
-      const questionId4 = (() => {
-        const reponse = responses.find((response) => response.id === 4)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
+        const questionId10 = (() => {
+          const reponse = responses.find((response) => response.id === 10)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
 
-      if (questionId4 === "Sim") {
-        specialNeedsSelected.push(
-          specialNeeds.find(
-            (it) => it.name === "Problemas Cardíacos ou Pressão Alta"
-          )!
-        );
-      }
+        if (questionId10 === "Sim") {
+          console.log(specialNeeds);
+          specialNeedsSelected.push(
+            specialNeeds.find((it) => it.name === "Disposição")!
+          );
+        }
 
-      const questionId5 = (() => {
-        const reponse = responses.find((response) => response.id === 5)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
+        const questionId11 = (() => {
+          const reponse = responses.find((response) => response.id === 11)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
 
-      if (questionId5 === "Sim") {
-        specialNeedsSelected.push(
-          specialNeeds.find((it) => it.name === "Diabetes")!
-        );
-      }
+        if (questionId11 === "Sim" && questionId10 === "Não") {
+          specialNeedsSelected.push(
+            specialNeeds.find((it) => it.name === "Disposição")!
+          );
+        }
 
-      const questionId8 = (() => {
-        const reponse = responses.find((response) => response.id === 8)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
+        const questionId12 = (() => {
+          const reponse = responses.find((response) => response.id === 12)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
 
-      if (questionId8 === "Sim") {
-        specialNeedsSelected.push(
-          specialNeeds.find((it) => it.name === "Qualidade de Vida")!
-        );
-      }
+        if (questionId12 === "Sim") {
+          specialNeedsSelected.push(
+            specialNeeds.find((it) => it.name === "Ansiedade")!
+          );
+        }
 
-      const questionId10 = (() => {
-        const reponse = responses.find((response) => response.id === 10)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
+        const questionId14 = (() => {
+          const reponse = responses.find((response) => response.id === 14)!;
+          return reponse.answers[reponse.selected![0]];
+        })();
 
-      if (questionId10 === "Sim") {
-        console.log(specialNeeds);
-        specialNeedsSelected.push(
-          specialNeeds.find((it) => it.name === "Disposição")!
-        );
-      }
+        if (questionId14 === "Sim") {
+          specialNeedsSelected.push(
+            specialNeeds.find((it) => it.name === "Qualidade do Sono")!
+          );
+        }
 
-      const questionId11 = (() => {
-        const reponse = responses.find((response) => response.id === 11)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
+        const resultData = {
+          methodology,
+          level,
+          stage,
+          needs: specialNeedsSelected
+            .sort((a, b) => b.priority - a.priority)
+            .slice(0, 3),
+          date: new Date(),
+        };
 
-      if (questionId11 === "Sim" && questionId10 === "Não") {
-        specialNeedsSelected.push(
-          specialNeeds.find((it) => it.name === "Disposição")!
-        );
-      }
-
-      const questionId12 = (() => {
-        const reponse = responses.find((response) => response.id === 12)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
-
-      if (questionId12 === "Sim") {
-        specialNeedsSelected.push(
-          specialNeeds.find((it) => it.name === "Ansiedade")!
-        );
-      }
-
-      const questionId14 = (() => {
-        const reponse = responses.find((response) => response.id === 14)!;
-        return reponse.answers[reponse.selected![0]];
-      })();
-
-      if (questionId14 === "Sim") {
-        specialNeedsSelected.push(
-          specialNeeds.find((it) => it.name === "Qualidade do Sono")!
-        );
-      }
-
-      const resultData = {
-        methodology,
-        level,
-        stage,
-        needs: specialNeedsSelected
-          .sort((a, b) => b.priority - a.priority)
-          .slice(0, 3),
-        date: new Date(),
-      };
-
-      setResult(resultData);
-      resultsApi.save(resultData, user);
-
-      try {
+        setResult(resultData);
+        resultsApi.save(resultData, user);
+        
         printerResult({
           name: user.fullname,
           ...resultData,
           specialNeeds: resultData.needs,
         });
-      } catch (err) {
-        console.error(err);
-      }
 
-      setTimeout(onFinish, 30 * 1000);
+        setTimeout(onFinish, 30 * 1000);
+      }
+    } catch (err) {
+      console.error(err);
     }
   }, [user, responses, result, onFinish]);
 
