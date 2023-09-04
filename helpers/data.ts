@@ -104,8 +104,8 @@ export const quizList: QuizData[] = [
   {
     id: 19,
     question:
-      "Por quanto tempo você já praticou exercício físico regular em academias na sua vida?",
-    answers: ["Nunca Treinei", "6 meses", "1 ano", "2 anos", "3 anos"],
+      "Você está treinando atualmente ?",
+    answers: ["Nunca Treinei", "Treino à 6 meses", "Treino à 1 ano", "Treino à 2 anos", "Treino à 3 anos"],
   },
 ];
 
