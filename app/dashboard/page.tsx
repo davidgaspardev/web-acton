@@ -15,6 +15,8 @@ export default function DashboardPage() {
     const router = useRouter();
     const [ page, setPage ] = useState<number>(1);
     const [ token ] = useState<string | null>(() => {
+        if (typeof window === "undefined")  return null;
+
         const localStorage = LocalStorage.getInstance();
         const token = localStorage.findToken();
 
