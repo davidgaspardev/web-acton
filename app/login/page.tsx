@@ -6,6 +6,8 @@ import * as Form from "@radix-ui/react-form";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FormEvent, useRef, useState } from "react";
+import ActonAvatarLogin from "@/assets/svg/acton-avatar-login.svg"
+import ActoLogo from "@/assets/svg/acto-logo.svg"
 
 export default function LoginPage(): JSX.Element {
     const router = useRouter();
@@ -34,42 +36,50 @@ export default function LoginPage(): JSX.Element {
     }
 
     return (
-        <main className="bg-[#7C65B5] min-h-screen flex flex-row">
+        <main className="bg-white min-h-screen flex flex-row">
 
             <div className="flex-1 min-w-[400px] flex justify-center items-center">
-                <Form.Root className="max-w-[256px] w-full" onSubmit={loginSubmit}>
+                <Form.Root className="max-w-[300px] w-full" onSubmit={loginSubmit}>
+
+                  <Image
+                    src={ActonAvatarLogin}
+                    width={250}
+                    alt="Acton avatar"
+                    className="block mx-auto py-4"/>
 
                     <Form.Field name="username" className="flex flex-col">
                         <div className="flex items-baseline justify-between">
-                            <Form.Label className="text-[15px] font-medium leading-[35px] text-white">Nome de usuário</Form.Label>
-                            <Form.Message className="text-[13px] text-white opacity-[0.8]" match="valueMissing">
+                            <Form.Label className="text-[15px] font-medium leading-[35px] text-[#484848]">Usuário / E-mail</Form.Label>
+                            <Form.Message className="text-[13px] text-[#484848] opacity-[0.8]" match="valueMissing">
                                 Please enter your username
                             </Form.Message>
                         </div>
                         <Form.Control asChild>
                             <input
-                                className="bg-[#CBCBCB64]"
+                                className="h-8 border-b-2 border-b-[#7C65B5]"
                                 type="text"
+                                placeholder="actonuser"
                                 value={username}
                                 onChange={({ target: { value } }) => setUsername(value)}
                                 required />
                         </Form.Control>
-                        <Form.Message className="text-[13px] text-white opacity-[0.8]" match="typeMismatch">
-                                Please provide a valid username
-                            </Form.Message>
+                        <Form.Message className="text-[13px] text-[#484848] opacity-[0.8]" match="typeMismatch">
+                            Please provide a valid username
+                        </Form.Message>
                     </Form.Field>
 
                     <Form.Field name="password" className="flex flex-col">
                         <div className="flex items-baseline justify-between">
-                            <Form.Label className="text-[15px] font-medium leading-[35px] text-white">Senha</Form.Label>
-                            <Form.Message className="text-[13px] text-white opacity-[0.8]" match="valueMissing">
+                            <Form.Label className="text-[15px] font-medium leading-[35px] text-[#484848]">Senha</Form.Label>
+                            <Form.Message className="text-[13px] text-[#484848] opacity-[0.8]" match="valueMissing">
                                 Please enter your password
                             </Form.Message>
                         </div>
                         <Form.Control asChild>
                             <input
-                                className="bg-[#CBCBCB64]"
+                                className="h-8 border-b-2 border-b-[#7C65B5]"
                                 type="password"
+                                placeholder="*******"
                                 value={password}
                                 onChange={({ target: { value } }) => setPassword(value)}
                                 required />
@@ -80,7 +90,7 @@ export default function LoginPage(): JSX.Element {
                     </Form.Field>
 
                     <Form.Submit asChild>
-                        <button className="box-border w-full text-violet11 shadow-blackA7 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none mt-[10px]">
+                        <button className="w-full bg-[#7C65B5] text-white h-[35px] items-center justify-center px-[15px] mt-8 font-medium leading-none focus:outline-none">
                             Enter
                         </button>
                     </Form.Submit>
@@ -88,7 +98,14 @@ export default function LoginPage(): JSX.Element {
                 </Form.Root>
             </div>
 
-            <div className="flex-[2] bg-cover bg-center bg-[url(https://firebasestorage.googleapis.com/v0/b/myself-dg.appspot.com/o/acton_background.JPG?alt=media&token=b223d5ee-5c4a-4118-be71-6f4385d3fde9)]">
+            <div className="hidden lg:block flex-[2] bg-cover bg-center bg-[url(https://firebasestorage.googleapis.com/v0/b/myself-dg.appspot.com/o/acton_background.JPG?alt=media&token=b223d5ee-5c4a-4118-be71-6f4385d3fde9)]">
+              <div className="w-full h-full bg-[#FFFFFF75] relative">
+                <Image
+                  src={ActoLogo}
+                  width={580}
+                  alt="Acto logo"
+                  className="fixed bottom-6 right-6"/>
+              </div>
             </div>
 
             {/* <form className="p-4"
