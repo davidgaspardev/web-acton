@@ -58,7 +58,7 @@ function Container(props: ContainerProps): JSX.Element {
     const { children } = props;
 
     return (
-        <div className="bg-[#EAEDF3] w-[160px] h-[140px] m-4 flex flex-col items-center justify-center">
+        <div className="bg-[#EAEDF3] w-[200px] h-[180px] mx-4 my-6 flex flex-col items-center justify-center">
             {children}
         </div>
     )
