@@ -12,7 +12,7 @@ export default function UserCard(props: UserCardProps): JSX.Element {
 
     return (
         <Link href={`/user/${id}`}>
-            <div className="flex flex-row h-12 hover:bg-gray-100">
+            <div className="flex flex-row h-14 hover:bg-gray-100 px-2">
                 <div className="flex flex-1 flex-col justify-center">
                     <h2>{fullname}</h2>
                     { (email && email.length > 0) && (
