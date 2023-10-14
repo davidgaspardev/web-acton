@@ -15,6 +15,8 @@ import VidaAtiva from "../assets/vida-ativa-logo.png";
 import ActonAvatar from "../assets/acton-avatar.gif";
 import { format } from "date-fns";
 import ResultsApi from "@/helpers/api/results";
+import PopUp from "@/components/tmp/PopUp";
+import { isMobileDevice } from "@/helpers/tools";
 
 const resultsApi = ResultsApi.getInstance();
 
@@ -27,6 +29,7 @@ type ResultStageProps = {
 export default function ResultStage(props: ResultStageProps) {
   const { user, result: responses, onFinish } = props;
   const [result, setResult] = useState<ResultData>();
+  const [hasPopUp, setHasPopUp] = useState<boolean>(false);
 
   useEffect(() => {
     try {
@@ -188,17 +191,17 @@ export default function ResultStage(props: ResultStageProps) {
 
         setResult(resultData);
         resultsApi.save(resultData, user);
-        
+
         printerResult({
           name: user.fullname,
           ...resultData,
           specialNeeds: resultData.needs,
         });
-
-        setTimeout(onFinish, 30 * 1000);
       }
     } catch (err) {
       console.error(err);
+      if(!isMobileDevice()) setTimeout(() => setHasPopUp(true), 8 * 1000);
+      setTimeout(onFinish, 30 * 1000);
     }
   }, [user, responses, result, onFinish]);
 
@@ -228,6 +231,8 @@ export default function ResultStage(props: ResultStageProps) {
           />
         </div>
       )}
+
+      {hasPopUp && <PopUp onClick={() => setHasPopUp(false)} />}
     </div>
   );
 
