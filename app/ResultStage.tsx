@@ -200,6 +200,7 @@ export default function ResultStage(props: ResultStageProps) {
       }
     } catch (err) {
       console.error(err);
+    } finally {
       if(!isMobileDevice()) setTimeout(() => setHasPopUp(true), 8 * 1000);
       setTimeout(onFinish, 30 * 1000);
     }
