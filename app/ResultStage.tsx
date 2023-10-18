@@ -16,7 +16,7 @@ import ActonAvatar from "../assets/acton-avatar.gif";
 import { format } from "date-fns";
 import ResultsApi from "@/helpers/api/results";
 import PopUp from "@/components/tmp/PopUp";
-import { isMobileDevice } from "@/helpers/tools";
+import { isInSpecificAndroidWebView } from "@/helpers/tools";
 
 const resultsApi = ResultsApi.getInstance();
 
@@ -201,7 +201,7 @@ export default function ResultStage(props: ResultStageProps) {
     } catch (err) {
       console.error(err);
     } finally {
-      if(!isMobileDevice()) setTimeout(() => setHasPopUp(true), 8 * 1000);
+      if(!isInSpecificAndroidWebView()) setTimeout(() => setHasPopUp(true), 8 * 1000);
       setTimeout(onFinish, 30 * 1000);
     }
   }, [user, responses, result, onFinish]);
