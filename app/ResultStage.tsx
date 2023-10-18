@@ -201,7 +201,7 @@ export default function ResultStage(props: ResultStageProps) {
     } catch (err) {
       console.error(err);
     } finally {
-      if(!isInSpecificAndroidWebView()) setTimeout(() => setHasPopUp(true), 8 * 1000);
+      if(!isInSpecificAndroidWebView()) setTimeout(() => setHasPopUp(true), 5 * 1000);
       setTimeout(onFinish, 30 * 1000);
     }
   }, [user, responses, result, onFinish]);
