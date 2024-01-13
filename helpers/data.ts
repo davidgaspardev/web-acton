@@ -11,13 +11,13 @@ export const quizList: QuizData[] = [
     question: "Qual a dor que lhe incomoda atualmente?",
     hasMultiSelection: true,
     answers: [
-      "Pescoço",
-      "Nas Costas ou Lombar",
-      "No Ombro",
-      "No Cotovelo",
-      "No Joelho",
-      "No Tornozelo",
-      "No Quadril",
+      "No quadril",
+      "No tornozelo",
+      "No pescoço",
+      "Nas costas ou lombar",
+      "No ombro",
+      "No cotovelo",
+      "No joelho",
       "Outros",
     ],
   },
@@ -103,9 +103,14 @@ export const quizList: QuizData[] = [
   },
   {
     id: 19,
-    question:
-      "Você está treinando atualmente ?",
-    answers: ["Nunca Treinei", "Treino à 6 meses", "Treino à 1 ano", "Treino à 2 anos", "Treino à 3 anos"],
+    question: "Você está treinando atualmente ?",
+    answers: [
+      "Nunca Treinei",
+      "Treino à 6 meses",
+      "Treino à 1 ano",
+      "Treino à 2 anos",
+      "Treino à 3 anos",
+    ],
   },
 ];
 
