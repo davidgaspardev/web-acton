@@ -8,6 +8,7 @@ import { quizList } from "@/helpers/data";
 import { getPercentageByMeta } from "@/helpers/math";
 import { Callback, QuizData, UserData } from "@/helpers/types";
 import QuizzesApi from "@/helpers/api/quizzes";
+import InputModal from "@/components/InputModal";
 
 const quizzesApi = QuizzesApi.getInstance();
 
@@ -21,6 +22,7 @@ export default function Quiz(props: QuizPros) {
   const [quizIndex, setQuizIndex] = useState(0);
   // Used only the question is hasMultiSelection
   const [selectedList, setSelectedList] = useState<number[]>([]);
+  const [showInputModal, setShowInputModal] = useState<boolean>(false);
 
   const id = useId();
 
@@ -53,14 +55,14 @@ export default function Quiz(props: QuizPros) {
       <BackArrow
         show={quizIndex > 0}
         onClick={() => {
-          if (quizIndex === 1) setSelectedList([]);
           handleHiddenQuiz(() => {
-            if (quizIndex === 2)
+            if (quizIndex === 2) {
+              if(user.inputs) user.inputs = undefined;
               setQuizIndex(
                 (it) =>
                   it - (quizIndex === 2 && quizList[0].selected![0] === 0 ? 1 : 2)
               );
-            else setQuizIndex((it) => it - 1);
+            } else setQuizIndex((it) => it - 1);
           });
         }}
       />
@@ -90,6 +92,10 @@ export default function Quiz(props: QuizPros) {
                       }
                       return selectedList.concat([index]);
                     });
+
+                    if(quizList[quizIndex].answers[index] === "Outros") {
+                      setShowInputModal(true);
+                    }
                     return;
                   }
 
@@ -144,6 +150,20 @@ export default function Quiz(props: QuizPros) {
         </div>
 
         <ProgressBar percentage={getPercentageByMeta(quizIndex, quizList.length)} />
+
+        {
+          showInputModal && (
+            <InputModal
+              title="Digite abaixo o local da sua dor"
+              onClick={(userInput) => {
+                if(!user.inputs) user.inputs = new Array<string>();
+                user.inputs.push(userInput);
+
+                setShowInputModal(false);
+              }}
+              placeholder="Ex: Dor aguda na parte inferior da perna" />
+          )
+        }
       </div>
     </section>
   );
