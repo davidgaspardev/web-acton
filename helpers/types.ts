@@ -5,6 +5,7 @@ export type UserData = {
   whatsapp: string;
   gender: GenderOptions;
   sessionCode?: string;
+  inputs?: string[];
 };
 
 export type GenderOptions =
