@@ -85,17 +85,21 @@ export default function Quiz(props: QuizPros) {
                 onClick={async () => {
                   if (quizList[quizIndex].hasMultiSelection) {
                     setSelectedList((selectedList) => {
+                      // Unselect
                       if (selectedList.includes(index)) {
+                        // Clean input if index is "Outros"
+                        if(quizList[quizIndex].answers[index] === "Outros") user.inputs = undefined;
                         return selectedList.filter(
                           (selectedIndex) => selectedIndex !== index
                         );
                       }
+
+                      // Select
+                      if(quizList[quizIndex].answers[index] === "Outros") {
+                        setShowInputModal(true);
+                      }
                       return selectedList.concat([index]);
                     });
-
-                    if(quizList[quizIndex].answers[index] === "Outros") {
-                      setShowInputModal(true);
-                    }
                     return;
                   }
 
