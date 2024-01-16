@@ -24,6 +24,8 @@ export default function Quiz(props: QuizPros) {
   const [selectedList, setSelectedList] = useState<number[]>([]);
   const [showInputModal, setShowInputModal] = useState<boolean>(false);
 
+  const hasInputModalForSingleAnswer = useRef<boolean>(false);
+
   const id = useId();
 
   const handleHiddenQuiz = useCallback(
@@ -103,6 +105,12 @@ export default function Quiz(props: QuizPros) {
                     return;
                   }
 
+                  hasInputModalForSingleAnswer.current = quizList[quizIndex].id === 6 && quizList[quizIndex].answers[index] === "Sim"
+
+                  if(hasInputModalForSingleAnswer.current) {
+                    setShowInputModal(true);
+                  }
+
                   // Storage answer selected
                   quizList[quizIndex].selected = [index];
                   // TODO: Save on database
@@ -115,7 +123,7 @@ export default function Quiz(props: QuizPros) {
                   }
 
                   // Next question
-                  handleHiddenQuiz(() => {
+                  if(!hasInputModalForSingleAnswer.current) handleHiddenQuiz(() => {
                     if (quizIndex === 0) {
                       setQuizIndex((it) => it + (index === 0 ? 1 : 2));
                     } else {
@@ -158,14 +166,20 @@ export default function Quiz(props: QuizPros) {
         {
           showInputModal && (
             <InputModal
-              title="Digite abaixo o local da sua dor"
+              title={
+                hasInputModalForSingleAnswer.current ? "Informe sua lesão" : "Digite abaixo o local da sua dor"
+              }
               onClick={(userInput) => {
                 if(!user.inputs) user.inputs = new Array<string>();
                 user.inputs.push(userInput);
 
                 setShowInputModal(false);
+
+                if(hasInputModalForSingleAnswer.current) {
+                  handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
+                }
               }}
-              placeholder="Ex: Dor aguda na parte inferior da perna" />
+              placeholder={hasInputModalForSingleAnswer.current ? "Ex: Tendinite no pulso" : "Ex: Dor aguda na parte inferior da perna"} />
           )
         }
       </div>
