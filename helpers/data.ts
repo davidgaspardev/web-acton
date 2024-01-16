@@ -22,11 +22,6 @@ export const quizList: QuizData[] = [
     ],
   },
   {
-    id: 3,
-    question: "Você sentiu dor física em repouso nos últimos 30 dias?",
-    answers: ["Sim", "Não"],
-  },
-  {
     id: 4,
     question: "Você tem problemas cardíacos ou pressão alta?",
     answers: ["Sim", "Não"],
@@ -114,12 +109,10 @@ export const quizList: QuizData[] = [
   },
 ];
 
+/**
+ * problemas cardiacos ou pressão alta > diabetes > ansiedade > qualidade do sono > qualidade de vida > disposição
+ */
 export const specialNeeds: SpecialNeedData[] = [
-  {
-    name: "Dor Física",
-    priority: 85,
-    showName: "Amenizar dores físicas",
-  },
   {
     name: "Problemas Cardíacos ou Pressão Alta",
     priority: 100,

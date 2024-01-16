@@ -88,16 +88,6 @@ export default function ResultStage(props: ResultStageProps) {
         })();
 
         const specialNeedsSelected = new Array<SpecialNeedData>();
-        const questionId3 = (() => {
-          const reponse = responses.find((response) => response.id === 3)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-
-        if (questionId3 === "Sim") {
-          specialNeedsSelected.push(
-            specialNeeds.find((it) => it.name === "Dor Física")!
-          );
-        }
 
         const questionId4 = (() => {
           const reponse = responses.find((response) => response.id === 4)!;
