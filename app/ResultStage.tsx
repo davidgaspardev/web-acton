@@ -118,7 +118,7 @@ export default function ResultStage(props: ResultStageProps) {
           return reponse.answers[reponse.selected![0]];
         })();
 
-        if (questionId8 === "Sim") {
+        if (questionId8 !== "Boa") {
           specialNeedsSelected.push(
             specialNeeds.find((it) => it.name === "Qualidade de Vida")!
           );

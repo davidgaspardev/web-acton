@@ -126,7 +126,7 @@ export const specialNeeds: SpecialNeedData[] = [
   {
     name: "Qualidade de Vida",
     priority: 60,
-    showName: "Melhorar a minha qualidade de vida",
+    showName: "Melhorar a qualidade de vida",
   },
   {
     name: "Disposição",
