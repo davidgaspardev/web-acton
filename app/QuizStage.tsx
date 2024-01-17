@@ -105,7 +105,7 @@ export default function Quiz(props: QuizPros) {
                     return;
                   }
 
-                  hasInputModalForSingleAnswer.current = quizList[quizIndex].id === 6 && quizList[quizIndex].answers[index] === "Sim"
+                  hasInputModalForSingleAnswer.current = (quizList[quizIndex].id === 6 || quizList[quizIndex].id === 7) && quizList[quizIndex].answers[index] === "Sim"
 
                   if(hasInputModalForSingleAnswer.current) {
                     setShowInputModal(true);
@@ -164,10 +164,24 @@ export default function Quiz(props: QuizPros) {
         <ProgressBar percentage={getPercentageByMeta(quizIndex, quizList.length)} />
 
         {
-          showInputModal && (
+          (showInputModal && !hasInputModalForSingleAnswer.current) && (
+            <InputModal
+              title="Digite abaixo o local da sua dor"
+              onClick={(userInput) => {
+                if(!user.inputs) user.inputs = new Array<string>();
+                user.inputs.push(userInput);
+
+                setShowInputModal(false);
+              }}
+              placeholder="Ex: Dor aguda na parte inferior da perna"/>
+          )
+        }
+
+        {
+          (showInputModal && hasInputModalForSingleAnswer.current) && (
             <InputModal
               title={
-                hasInputModalForSingleAnswer.current ? "Informe sua lesão" : "Digite abaixo o local da sua dor"
+                quizList[quizIndex].id === 6 ? "Informe sua lesão abaixo" : "Informe seu medicamento abaixo"
               }
               onClick={(userInput) => {
                 if(!user.inputs) user.inputs = new Array<string>();
@@ -175,11 +189,9 @@ export default function Quiz(props: QuizPros) {
 
                 setShowInputModal(false);
 
-                if(hasInputModalForSingleAnswer.current) {
-                  handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
-                }
+                handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
               }}
-              placeholder={hasInputModalForSingleAnswer.current ? "Ex: Tendinite no pulso" : "Ex: Dor aguda na parte inferior da perna"} />
+              placeholder={quizList[quizIndex].id === 6 ? "Ex: Tendinite no pulso" : "Ex: Clonazepam"} />
           )
         }
       </div>
