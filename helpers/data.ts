@@ -47,11 +47,6 @@ export const quizList: QuizData[] = [
     answers: ["Boa", "Ruim", "Pode melhorar"],
   },
   {
-    id: 9,
-    question: "Como você passa a maior parte do seu dia?",
-    answers: ["Em pé", "Sentado"],
-  },
-  {
     id: 10,
     question: "Você se sente cansado ao longo das tarefas do dia?",
     answers: ["Sim", "Não"],
@@ -131,7 +126,7 @@ export const specialNeeds: SpecialNeedData[] = [
   {
     name: "Disposição",
     priority: 50,
-    showName: "Ter mais disposição",
+    showName: "Melhorar a disposição",
   },
   {
     name: "Ansiedade",
