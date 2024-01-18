@@ -77,16 +77,6 @@ export const quizList: QuizData[] = [
     answers: ["Sim", "Não"],
   },
   {
-    id: 16,
-    question: "Você deseja emagrecer?",
-    answers: ["Sim", "Não"],
-  },
-  {
-    id: 17,
-    question: "Você pratica esportes?",
-    answers: ["Sim", "Não", "Sou atleta"],
-  },
-  {
     id: 18,
     question: "O que você deseja?",
     answers: ["Ganhar Massa Muscular", "Qualidade de Vida", "Perder peso"],
