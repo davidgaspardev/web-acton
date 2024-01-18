@@ -186,7 +186,12 @@ export default function ResultStage(props: ResultStageProps) {
           stage,
           needs: specialNeedsSelected
             .sort((a, b) => b.priority - a.priority)
-            .slice(0, 3),
+            .slice(0, 3)
+            .concat(user.inputs?.map(input => ({
+              name: input,
+              priority: 0,
+              showName: input
+            })) || []),
           date: new Date(),
         };
 
