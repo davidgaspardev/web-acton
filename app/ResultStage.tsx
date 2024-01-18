@@ -169,6 +169,17 @@ export default function ResultStage(props: ResultStageProps) {
           );
         }
 
+        const questionId15 = (() => {
+          const response = responses.find((response) => response.id === 15)!;
+          return response.answers[response.selected![0]];
+        })();
+
+        if (questionId15 === "Sim" && questionId14 === "Não") {
+          specialNeedsSelected.push(
+            specialNeeds.find((it) => it.name === "Qualidade do Sono")!
+          );
+        }
+
         const resultData = {
           methodology,
           level,
