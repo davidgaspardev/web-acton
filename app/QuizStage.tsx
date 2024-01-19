@@ -64,7 +64,15 @@ export default function Quiz(props: QuizPros) {
                 (it) =>
                   it - (quizIndex === 2 && quizList[0].selected![0] === 0 ? 1 : 2)
               );
-            } else setQuizIndex((it) => it - 1);
+            } else {
+              if(quizIndex === 5 || quizIndex === 6) {
+                if (user.inputs) {
+                  user.inputs.pop();
+                  if(!user.inputs.length) user.inputs = undefined;
+                }
+              }
+              setQuizIndex((it) => it - 1);
+            }
           });
         }}
       />
