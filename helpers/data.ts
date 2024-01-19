@@ -11,20 +11,15 @@ export const quizList: QuizData[] = [
     question: "Qual a dor que lhe incomoda atualmente?",
     hasMultiSelection: true,
     answers: [
-      "Pescoço",
-      "Nas Costas ou Lombar",
-      "No Ombro",
-      "No Cotovelo",
-      "No Joelho",
-      "No Tornozelo",
-      "No Quadril",
+      "No quadril",
+      "No tornozelo",
+      "No pescoço",
+      "Nas costas ou lombar",
+      "No ombro",
+      "No cotovelo",
+      "No joelho",
       "Outros",
     ],
-  },
-  {
-    id: 3,
-    question: "Você sentiu dor física em repouso nos últimos 30 dias?",
-    answers: ["Sim", "Não"],
   },
   {
     id: 4,
@@ -50,11 +45,6 @@ export const quizList: QuizData[] = [
     id: 8,
     question: "Como você avalia sua qualidade de vida hoje?",
     answers: ["Boa", "Ruim", "Pode melhorar"],
-  },
-  {
-    id: 9,
-    question: "Como você passa a maior parte do seu dia?",
-    answers: ["Em pé", "Sentado"],
   },
   {
     id: 10,
@@ -87,34 +77,27 @@ export const quizList: QuizData[] = [
     answers: ["Sim", "Não"],
   },
   {
-    id: 16,
-    question: "Você deseja emagrecer?",
-    answers: ["Sim", "Não"],
-  },
-  {
-    id: 17,
-    question: "Você pratica esportes?",
-    answers: ["Sim", "Não", "Sou atleta"],
-  },
-  {
     id: 18,
     question: "O que você deseja?",
     answers: ["Ganhar Massa Muscular", "Qualidade de Vida", "Perder peso"],
   },
   {
     id: 19,
-    question:
-      "Você está treinando atualmente ?",
-    answers: ["Nunca Treinei", "Treino à 6 meses", "Treino à 1 ano", "Treino à 2 anos", "Treino à 3 anos"],
+    question: "Você está treinando atualmente ?",
+    answers: [
+      "Nunca Treinei",
+      "Treino à 6 meses",
+      "Treino à 1 ano",
+      "Treino à 2 anos",
+      "Treino à 3 anos",
+    ],
   },
 ];
 
+/**
+ * problemas cardiacos ou pressão alta > diabetes > ansiedade > qualidade do sono > qualidade de vida > disposição
+ */
 export const specialNeeds: SpecialNeedData[] = [
-  {
-    name: "Dor Física",
-    priority: 85,
-    showName: "Amenizar dores físicas",
-  },
   {
     name: "Problemas Cardíacos ou Pressão Alta",
     priority: 100,
@@ -128,12 +111,12 @@ export const specialNeeds: SpecialNeedData[] = [
   {
     name: "Qualidade de Vida",
     priority: 60,
-    showName: "Melhorar a minha qualidade de vida",
+    showName: "Melhorar a qualidade de vida",
   },
   {
     name: "Disposição",
     priority: 50,
-    showName: "Ter mais disposição",
+    showName: "Melhorar a disposição",
   },
   {
     name: "Ansiedade",

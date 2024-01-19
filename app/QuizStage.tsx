@@ -8,6 +8,7 @@ import { quizList } from "@/helpers/data";
 import { getPercentageByMeta } from "@/helpers/math";
 import { Callback, QuizData, UserData } from "@/helpers/types";
 import QuizzesApi from "@/helpers/api/quizzes";
+import InputModal from "@/components/InputModal";
 
 const quizzesApi = QuizzesApi.getInstance();
 
@@ -21,6 +22,9 @@ export default function Quiz(props: QuizPros) {
   const [quizIndex, setQuizIndex] = useState(0);
   // Used only the question is hasMultiSelection
   const [selectedList, setSelectedList] = useState<number[]>([]);
+  const [showInputModal, setShowInputModal] = useState<boolean>(false);
+
+  const hasInputModalForSingleAnswer = useRef<boolean>(false);
 
   const id = useId();
 
@@ -53,14 +57,22 @@ export default function Quiz(props: QuizPros) {
       <BackArrow
         show={quizIndex > 0}
         onClick={() => {
-          if (quizIndex === 1) setSelectedList([]);
           handleHiddenQuiz(() => {
-            if (quizIndex === 2)
+            if (quizIndex === 2) {
+              if(user.inputs) user.inputs = undefined;
               setQuizIndex(
                 (it) =>
                   it - (quizIndex === 2 && quizList[0].selected![0] === 0 ? 1 : 2)
               );
-            else setQuizIndex((it) => it - 1);
+            } else {
+              if(quizIndex === 5 || quizIndex === 6) {
+                if (user.inputs) {
+                  user.inputs.pop();
+                  if(!user.inputs.length) user.inputs = undefined;
+                }
+              }
+              setQuizIndex((it) => it - 1);
+            }
           });
         }}
       />
@@ -83,14 +95,28 @@ export default function Quiz(props: QuizPros) {
                 onClick={async () => {
                   if (quizList[quizIndex].hasMultiSelection) {
                     setSelectedList((selectedList) => {
+                      // Unselect
                       if (selectedList.includes(index)) {
+                        // Clean input if index is "Outros"
+                        if(quizList[quizIndex].answers[index] === "Outros") user.inputs = undefined;
                         return selectedList.filter(
                           (selectedIndex) => selectedIndex !== index
                         );
                       }
+
+                      // Select
+                      if(quizList[quizIndex].answers[index] === "Outros") {
+                        setShowInputModal(true);
+                      }
                       return selectedList.concat([index]);
                     });
                     return;
+                  }
+
+                  hasInputModalForSingleAnswer.current = (quizList[quizIndex].id === 6 || quizList[quizIndex].id === 7) && quizList[quizIndex].answers[index] === "Sim"
+
+                  if(hasInputModalForSingleAnswer.current) {
+                    setShowInputModal(true);
                   }
 
                   // Storage answer selected
@@ -105,7 +131,7 @@ export default function Quiz(props: QuizPros) {
                   }
 
                   // Next question
-                  handleHiddenQuiz(() => {
+                  if(!hasInputModalForSingleAnswer.current) handleHiddenQuiz(() => {
                     if (quizIndex === 0) {
                       setQuizIndex((it) => it + (index === 0 ? 1 : 2));
                     } else {
@@ -144,6 +170,38 @@ export default function Quiz(props: QuizPros) {
         </div>
 
         <ProgressBar percentage={getPercentageByMeta(quizIndex, quizList.length)} />
+
+        {
+          (showInputModal && !hasInputModalForSingleAnswer.current) && (
+            <InputModal
+              title="Informe abaixo o local da sua dor"
+              onClick={(userInput) => {
+                if(!user.inputs) user.inputs = new Array<string>();
+                user.inputs.push(userInput);
+
+                setShowInputModal(false);
+              }}
+              placeholder="Ex: Dor aguda na parte inferior da perna"/>
+          )
+        }
+
+        {
+          (showInputModal && hasInputModalForSingleAnswer.current) && (
+            <InputModal
+              title={
+                quizList[quizIndex].id === 6 ? "Informe abaixo sua lesão" : "Informe abaixo seu medicamento"
+              }
+              onClick={(userInput) => {
+                if(!user.inputs) user.inputs = new Array<string>();
+                user.inputs.push(userInput);
+
+                setShowInputModal(false);
+
+                handleHiddenQuiz(() => setQuizIndex((it) => it + 1));
+              }}
+              placeholder={quizList[quizIndex].id === 6 ? "Ex: Tendinite no pulso" : "Ex: Clonazepam"} />
+          )
+        }
       </div>
     </section>
   );

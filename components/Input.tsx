@@ -55,6 +55,48 @@ export function Input(props: InputProps) {
   );
 }
 
+export function InputDark(props: InputProps) {
+  const {
+    className,
+    label,
+    type,
+    placeholder,
+    value,
+    onValue,
+    required,
+    pattern,
+    options,
+    maxLength,
+  } = props;
+
+  const id = useId();
+
+  return (
+    <div className={className}>
+      {label && <label htmlFor={id}>{label}</label>}
+      <input
+        className="bg-gray-100 border-b-2 text-gray-900 border-white px-2 py-1 placeholder:text-black/82 focus:outline-none mx-[5px] my-2 w-[calc(100%-10px)] rounded-md text-xs"
+        id={id}
+        type={type || "text"}
+        pattern={pattern}
+        value={value}
+        placeholder={placeholder}
+        onChange={({ target: { value } }) => onValue(value)}
+        required={required}
+        list={`options-${id}`}
+        maxLength={maxLength}
+      />
+      {options && options.length > 0 && (
+        <datalist id={`options-${id}`}>
+          {options.map((option) => (
+            <option key={option} value={option}></option>
+          ))}
+        </datalist>
+      )}
+    </div>
+  );
+}
+
 type InputSelectProps = {
   label?: string;
   placeholder?: string;

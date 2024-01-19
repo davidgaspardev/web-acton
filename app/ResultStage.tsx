@@ -88,16 +88,6 @@ export default function ResultStage(props: ResultStageProps) {
         })();
 
         const specialNeedsSelected = new Array<SpecialNeedData>();
-        const questionId3 = (() => {
-          const reponse = responses.find((response) => response.id === 3)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-
-        if (questionId3 === "Sim") {
-          specialNeedsSelected.push(
-            specialNeeds.find((it) => it.name === "Dor Física")!
-          );
-        }
 
         const questionId4 = (() => {
           const reponse = responses.find((response) => response.id === 4)!;
@@ -128,7 +118,7 @@ export default function ResultStage(props: ResultStageProps) {
           return reponse.answers[reponse.selected![0]];
         })();
 
-        if (questionId8 === "Sim") {
+        if (questionId8 !== "Boa") {
           specialNeedsSelected.push(
             specialNeeds.find((it) => it.name === "Qualidade de Vida")!
           );
@@ -179,13 +169,29 @@ export default function ResultStage(props: ResultStageProps) {
           );
         }
 
+        const questionId15 = (() => {
+          const response = responses.find((response) => response.id === 15)!;
+          return response.answers[response.selected![0]];
+        })();
+
+        if (questionId15 === "Sim" && questionId14 === "Não") {
+          specialNeedsSelected.push(
+            specialNeeds.find((it) => it.name === "Qualidade do Sono")!
+          );
+        }
+
         const resultData = {
           methodology,
           level,
           stage,
           needs: specialNeedsSelected
             .sort((a, b) => b.priority - a.priority)
-            .slice(0, 3),
+            .slice(0, 3)
+            .concat(user.inputs?.map(input => ({
+              name: input,
+              priority: 0,
+              showName: input
+            })) || []),
           date: new Date(),
         };
 
