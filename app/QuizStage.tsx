@@ -174,7 +174,7 @@ export default function Quiz(props: QuizPros) {
         {
           (showInputModal && !hasInputModalForSingleAnswer.current) && (
             <InputModal
-              title="Digite abaixo o local da sua dor"
+              title="Informe abaixo o local da sua dor"
               onClick={(userInput) => {
                 if(!user.inputs) user.inputs = new Array<string>();
                 user.inputs.push(userInput);
@@ -189,7 +189,7 @@ export default function Quiz(props: QuizPros) {
           (showInputModal && hasInputModalForSingleAnswer.current) && (
             <InputModal
               title={
-                quizList[quizIndex].id === 6 ? "Informe sua lesão abaixo" : "Informe seu medicamento abaixo"
+                quizList[quizIndex].id === 6 ? "Informe abaixo sua lesão" : "Informe abaixo seu medicamento"
               }
               onClick={(userInput) => {
                 if(!user.inputs) user.inputs = new Array<string>();
