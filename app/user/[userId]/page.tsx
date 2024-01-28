@@ -7,10 +7,8 @@ import LocalStorage from "@/helpers/storage";
 import { QuizModel, UserModel } from "@/helpers/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import ViverBem from "@/assets/viver-bem-logo.png";
-import VivaLeve from "@/assets/viva-leve-logo.png";
-import VidaAtiva from "@/assets/vida-ativa-logo.png";
 import Image from "next/image";
+import UserInfoCard from "./UserInfoCard";
 
 type UserPageProps = {
     params: {
@@ -52,15 +50,6 @@ export default function UserPage(props: UserPageProps): JSX.Element {
         setQuizzes(quizzes);
     }, [ user, token ]);
 
-    const loadImage = useCallback(() => {
-      switch (user?.results[0].methodology) {
-          case "VIDA ATIVA": return VidaAtiva;
-          case "VIVA LEVE": return VivaLeve;
-          case "VIVER BEM": return ViverBem;
-          default: throw Error(`invalid for load image`);
-      }
-  }, [ user ]);
-
     useEffect(() => {
         loadQuizzesData();
     }, [user, loadQuizzesData])
@@ -98,21 +87,8 @@ export default function UserPage(props: UserPageProps): JSX.Element {
                         ))
                     }
                 </div>
-                <div className="flex-1">
-                    { user && (
-                        <div className="flex flex-col items-center justify-center h-[calc(100vh-64px)]">
-                            <h1 className=" text-2xl">{user.fullname}</h1>
-                            <h1>{user.whatsapp}</h1>
-                            { user.email && <h1>{user.email}</h1>}
-                            <div className="flex flex-row items-center mt-4">
-                              <Image
-                                src={loadImage()}
-                                height={64}
-                                alt="Methology logo"/>
-                              <h1 className="ps-4 text-xl">{user.results[0].methodology} |  NIVEL {user.results[0].level} FASE {user.results[0].stage}</h1>
-                            </div>
-                        </div>
-                    )}
+                <div className="flex-1 flex items-center justify-center">
+                    { user && <UserInfoCard info={user} />}
                 </div>
             </div>
         </main>

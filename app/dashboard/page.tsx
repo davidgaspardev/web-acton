@@ -5,11 +5,11 @@ import LocalStorage from "@/helpers/storage";
 import { MetricsInfo, UserModel } from "@/helpers/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
-import UserCard from "./UserCard";
 import ResultsApi from "@/helpers/api/results";
 import MetricMethoCard, { MetricCountCard } from "./MetricCard";
 import Header from "../../components/Header";
 import PageControl from "./PageControl";
+import UserList from "./UserList";
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -73,22 +73,12 @@ export default function DashboardPage() {
                         ]
                     }
                 </section>
+
+                {/** Render user list */}
                 <section className="flex-1">
-                    <div className="flex flex-col gap-2 h-[calc(100vh-114px)] overflow-y-auto">
-                        <div className="flex flex-row h-[45px] mt-4 px-2">
-                            <div className="flex-1 flex flex-col justify-center">
-                                <h1 className="font-bold text-xl">NOME:</h1>
-                            </div>
-                            <div className="w-80 flex flex-col justify-center">
-                                <h1 className="font-bold text-xl ps-5">PRODUTO:</h1>
-                            </div>
-                        </div>
-                        {
-                            users.map((user) => (
-                                <UserCard data={user} key={user.id} />
-                            ))
-                        }
-                    </div>
+                    <UserList users={users} />
+
+                    {/** Footer with page count */}
                     {
                         usersTotal.current && (
                             <PageControl
