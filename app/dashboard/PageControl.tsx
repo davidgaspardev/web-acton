@@ -18,14 +18,15 @@ export default function PageControl(props: PageControlProps): JSX.Element {
     }
 
     return (
-        <div className="h-[50px] flex flex-row justify-end items-center px-6">
+        <div className="overflow-x-auto w-[calc(100vw-232px)] h-[50px] flex flex-row items-center px-6">
             {
                 pages.map((page, index) => (
-                    <div
-                        key={index}
-                        onClick={page !== currentPage ? () => onPage(page) : undefined}
-                        className={`w-6 h-6 mx-2 cursor-pointer rounded-full ${page !== currentPage ? "bg-green-400" : "bg-green-700"} flex items-center justify-center`}>
-                        <h3>{page}</h3>
+                    <div key={index} className="flex-none">
+                        <div
+                            onClick={page !== currentPage ? () => onPage(page) : undefined}
+                            className={`w-6 h-6 mx-2 cursor-pointer rounded-full ${page !== currentPage ? "bg-green-400" : "bg-green-700"} flex items-center justify-center`}>
+                            <h3>{page}</h3>
+                        </div>
                     </div>
                 ))
             }
