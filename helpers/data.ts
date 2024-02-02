@@ -86,10 +86,10 @@ export const quizList: QuizData[] = [
     question: "Você está treinando atualmente ?",
     answers: [
       "Nunca Treinei",
-      "Treino à 6 meses",
-      "Treino à 1 ano",
-      "Treino à 2 anos",
-      "Treino à 3 anos",
+      "Treino há 6 meses",
+      "Treino há 1 ano",
+      "Treino há 2 anos",
+      "Treino há 3 anos",
     ],
   },
 ];
