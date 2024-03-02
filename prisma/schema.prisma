@@ -47,7 +47,6 @@ model Results {
   needs       String    @db.VarChar(256)
   date        DateTime  @default(now())
   sessionCode String    @db.VarChar(32)
-  // quizzes     Quizzes[]
 
   user        Users     @relation(fields: [userId], references: [id])
   userId      String
@@ -62,7 +61,4 @@ model Quizzes {
 
   user     Users    @relation(fields: [userId], references: [id])
   userId   String
-
-  // result   Results?  @relation(fields: [resultId], references: [id])
-  // resultId String?
 }
