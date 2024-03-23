@@ -1,13 +1,11 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Admins {
@@ -26,30 +24,22 @@ model Users {
   whatsapp  String    @db.Char(11)
   gender    Gender
   createdAt DateTime  @default(now())
-
-  results   Results[]
   quizzes   Quizzes[]
-}
-
-enum Gender {
-  MASCULINO
-  FEMININO
-  TRANS
-  OUTROS
-  DESCONHECIDO
+  results   Results[]
 }
 
 model Results {
-  id          String    @id @default(uuid())
-  methodology String    @db.VarChar(64)
+  id          String   @id @default(uuid())
+  methodology String   @db.VarChar(64)
   level       Int
   stage       Int
-  needs       String    @db.VarChar(256)
-  date        DateTime  @default(now())
-  sessionCode String    @db.VarChar(32)
-
-  user        Users     @relation(fields: [userId], references: [id])
+  needs       String   @db.VarChar(256)
+  date        DateTime @default(now())
+  sessionCode String   @db.VarChar(32)
   userId      String
+  user        Users    @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "Results_userId_fkey")
 }
 
 model Quizzes {
@@ -58,7 +48,16 @@ model Quizzes {
   answer      String   @db.VarChar(256)
   date        DateTime @default(now())
   sessionCode String   @db.VarChar(32)
+  userId      String
+  user        Users    @relation(fields: [userId], references: [id])
 
-  user     Users    @relation(fields: [userId], references: [id])
-  userId   String
+  @@index([userId], map: "Quizzes_userId_fkey")
+}
+
+enum Gender {
+  MASCULINO
+  FEMININO
+  TRANS
+  OUTROS
+  DESCONHECIDO
 }
