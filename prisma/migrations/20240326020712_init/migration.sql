@@ -1,5 +1,5 @@
 -- CreateTable
-CREATE TABLE `Admins` (
+CREATE TABLE IF NOT EXISTS `Admins` (
     `id` VARCHAR(191) NOT NULL,
     `username` VARCHAR(64) NOT NULL,
     `password` CHAR(64) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE `Admins` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Users` (
+CREATE TABLE IF NOT EXISTS `Users` (
     `id` VARCHAR(191) NOT NULL,
     `fullname` VARCHAR(128) NOT NULL,
     `email` VARCHAR(128) NULL,
@@ -24,7 +24,7 @@ CREATE TABLE `Users` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Results` (
+CREATE TABLE IF NOT EXISTS `Results` (
     `id` VARCHAR(191) NOT NULL,
     `methodology` VARCHAR(64) NOT NULL,
     `level` INTEGER NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `Results` (
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- CreateTable
-CREATE TABLE `Quizzes` (
+CREATE TABLE IF NOT EXISTS `Quizzes` (
     `id` VARCHAR(191) NOT NULL,
     `question` VARCHAR(256) NOT NULL,
     `answer` VARCHAR(256) NOT NULL,
