@@ -5,7 +5,7 @@ generator client {
 datasource db {
   provider          = "mysql"
   url               = env("DATABASE_URL")
-  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
 model Admins {
@@ -18,14 +18,15 @@ model Admins {
 }
 
 model Users {
-  id        String    @id @default(uuid())
-  fullname  String    @db.VarChar(128)
-  email     String?   @db.VarChar(128)
-  whatsapp  String    @db.Char(11)
-  gender    Gender
-  createdAt DateTime  @default(now())
-  quizzes   Quizzes[]
-  results   Results[]
+  id         String    @id @default(uuid())
+  fullname   String    @db.VarChar(128)
+  email      String?   @db.VarChar(128)
+  whatsapp   String    @db.Char(11)
+  gender     Gender
+  createdAt  DateTime  @default(now())
+  prospectId Int?
+  quizzes    Quizzes[]
+  results    Results[]
 }
 
 model Results {
