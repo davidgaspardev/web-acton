@@ -108,6 +108,7 @@ export type UserModel = {
   whatsapp: string;
   gender: string;
   results: ResultModel[];
+  prospectId: number | null;
 };
 
 export type ResultModel = {
