@@ -19,6 +19,7 @@ export default function LoginStage(props: LoginStageProps) {
   const [email, setEmail] = useState<string>("");
   const [whatsapp, setWhatsapp] = useState<string>("");
   const [gender, setGender] = useState<GenderOptions | undefined>();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const lockRef = useRef<boolean>(false);
 
@@ -30,6 +31,7 @@ export default function LoginStage(props: LoginStageProps) {
           if (!event.defaultPrevented) event.preventDefault();
           if (lockRef.current) return;
           lockRef.current = true;
+          setLoading(true);
 
           try {
             if (!fullname || !whatsapp || !gender) {
@@ -52,6 +54,7 @@ export default function LoginStage(props: LoginStageProps) {
           } catch (e) {
             console.error(e);
             lockRef.current = false;
+            setLoading(false);
           }
         }}
       >
@@ -102,7 +105,7 @@ export default function LoginStage(props: LoginStageProps) {
           }
         />
 
-        <InputSubmit className="mt-5 text-[#7C65B5]" name="Avançar" />
+        <InputSubmit diabled={loading} className="mt-5 text-[#7C65B5]" name="Avançar" />
       </form>
     </div>
   );
