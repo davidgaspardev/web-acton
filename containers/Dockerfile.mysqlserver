@@ -1,0 +1,8 @@
+# Use the official MySQL image as base
+FROM mysql:latest
+
+# Set environment variables
+ENV MYSQL_ROOT_PASSWORD=1234
+ENV MYSQL_DATABASE=acton_shadow
+ENV MYSQL_USER=acton_local
+ENV MYSQL_PASSWORD=acton_local_1234

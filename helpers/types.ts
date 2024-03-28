@@ -1,11 +1,12 @@
 export type UserData = {
   id?: string;
   fullname: string;
-  email: string;
+  email?: string;
   whatsapp: string;
   gender: GenderOptions;
   sessionCode?: string;
   inputs?: string[];
+  prospectId?: number;
 };
 
 export type GenderOptions =
@@ -107,6 +108,7 @@ export type UserModel = {
   whatsapp: string;
   gender: string;
   results: ResultModel[];
+  prospectId: number | null;
 };
 
 export type ResultModel = {

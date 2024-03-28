@@ -24,8 +24,13 @@ export default function UserInfoCard(props: UserInfoCardProps): JSX.Element {
             { getLastResult() && (
                 <>
                     <div className="bg-gray-300 w-full h-[1.5px] rounded-sm my-2"/>
-                    <Methology result={getLastResult()} /> 
+                    <Methology result={getLastResult()} />
                 </>
+            )}
+            { info.prospectId && (
+              <a
+                className="text-center underline"
+                href={loadLinkToEVO(info.prospectId)}>Acessar via sistema EVO: <strong>{info.prospectId}</strong></a>
             )}
         </div>
     )
@@ -57,7 +62,7 @@ function Methology(props: MethologyProps): JSX.Element {
                     alt="Methology logo"/>
                 <h1 className="ps-4 text-xl"><strong>{result.methodology}</strong> |  NIVEL {result.level} FASE {result.stage}</h1>
 
-            
+
             </div>
             <div className="mt-2">
                 <h4><strong>Necessidades especiais</strong></h4>
@@ -67,4 +72,8 @@ function Methology(props: MethologyProps): JSX.Element {
             </div>
         </div>
     )
+}
+
+function loadLinkToEVO(prospectId: number): string {
+  return `https://evo-release.w12app.com.br/#/app/actoacademia/0/oportunidades/${prospectId}//perfil`;
 }

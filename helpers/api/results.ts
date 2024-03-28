@@ -1,7 +1,7 @@
 import { MetricsInfo, ResultData, ResultFromDatabase, UserData } from "../types";
 
 export default class ResultsApi {
-  private static LOG_TAG = "RestultsApi";
+  private LOG_TAG = "RestultsApi";
 
   private static instance: ResultsApi;
   private constructor() {}
@@ -13,7 +13,7 @@ export default class ResultsApi {
   }
 
   public save = async (resultData: ResultData, userData: UserData) => {
-    const { convertDataToDataFromDatabase } = this;
+    const { convertDataToDataFromDatabase, LOG_TAG } = this;
 
     try {
       const result = convertDataToDataFromDatabase(resultData, userData);
@@ -49,6 +49,8 @@ export default class ResultsApi {
   };
 
   public getMetrics = async (): Promise<MetricsInfo> => {
+    const { LOG_TAG } = this;
+
     try {
       const response = await fetch("/api/results/metrics", {
         method: "GET",
@@ -65,7 +67,7 @@ export default class ResultsApi {
 
       return (responseBody as { data: MetricsInfo }).data;
     } catch (e) {
-      console.error(ResultsApi.LOG_TAG, e);
+      console.error(LOG_TAG, e);
       throw e;
     }
   };

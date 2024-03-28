@@ -1,4 +1,10 @@
-import { DEBUG_MODE, JWT_SECRET_KEY, ORIGINS_ALLOWED } from "@/helpers/env";
+import EvoApi from "@/app/helpers/api/evo";
+import {
+  DEBUG_MODE,
+  EVO_API_ENABLE,
+  JWT_SECRET_KEY,
+  ORIGINS_ALLOWED,
+} from "@/helpers/env";
 import prisma from "@/lib/prisma";
 import { decode, verify } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
@@ -15,7 +21,11 @@ export async function POST(request: Request) {
       return NextResponse.json({}, { status: 401 });
     }
 
+    const evoApi = EvoApi.getInstance();
+
     const data = await request.json();
+    if (EVO_API_ENABLE) await evoApi.createUser(data);
+
     const userCreated = await prisma.users.create({
       data,
     });
