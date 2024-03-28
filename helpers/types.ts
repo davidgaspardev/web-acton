@@ -1,11 +1,12 @@
 export type UserData = {
   id?: string;
   fullname: string;
-  email: string;
+  email?: string;
   whatsapp: string;
   gender: GenderOptions;
   sessionCode?: string;
   inputs?: string[];
+  prospectId?: number;
 };
 
 export type GenderOptions =
