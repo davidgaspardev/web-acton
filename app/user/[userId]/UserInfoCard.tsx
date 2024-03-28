@@ -30,6 +30,7 @@ export default function UserInfoCard(props: UserInfoCardProps): JSX.Element {
             { info.prospectId && (
               <a
                 className="text-center underline"
+                target="_blank"
                 href={loadLinkToEVO(info.prospectId)}>Acessar via sistema EVO: <strong>{info.prospectId}</strong></a>
             )}
         </div>

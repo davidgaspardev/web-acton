@@ -39,14 +39,19 @@ function Result(props: ResultProps): JSX.Element {
     const { stage, level, methodology } = props.data;
     return (
         <div className="flex flex-row items-center h-full">
-            <h2>{methodology} | NIVEL {level} FASE {stage}</h2>
+            <div className="w-[35%]">
+              <h2><strong>{methodology}</strong></h2>
+            </div>
+            <div className="w-[65%]">
+              <h3>NIVEL {level} FASE {stage}</h3>
+            </div>
         </div>
     );
 }
 
 function NoResult(): JSX.Element {
     return (
-        <div>
+        <div className="flex flex-row items-center h-full">
             <h1>Ainda sem resultado</h1>
         </div>
     );
