@@ -24,7 +24,8 @@ export async function POST(request: Request) {
     const evoApi = EvoApi.getInstance();
 
     const data = await request.json();
-    if (EVO_API_ENABLE) evoApi.createUser(data);
+    if (EVO_API_ENABLE) await evoApi.createUser(data);
+
     const userCreated = await prisma.users.create({
       data,
     });

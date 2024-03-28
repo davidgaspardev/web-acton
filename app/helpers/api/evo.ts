@@ -1,5 +1,5 @@
-import { EVO_API_BASE_URL, EVO_API_PASSWORD, EVO_API_USERNAME } from "@/helpers/env";
-import { UserData } from "@/helpers/types";
+import { DEBUG_MODE, EVO_API_BASE_URL, EVO_API_PASSWORD, EVO_API_USERNAME } from "@/helpers/env";
+import { GenderOptions, UserData } from "@/helpers/types";
 import { loadBasicAuthHeaderValue } from "../utils/auth";
 
 /**
@@ -18,10 +18,22 @@ export default class EvoApi {
   }
 
   public createUser = async (userData: UserData) => {
-    console.log("I'm here");
+    const { loadGender } = this;
+    const {
+      fullname: name,
+      email,
+      whatsapp: cellphone,
+      gender
+    } = userData;
 
     try {
-      const { fullname: name, email, whatsapp: cellphone, gender } = userData;
+      const body = JSON.stringify({
+        name,
+        email,
+        cellphone,
+        gender: loadGender(gender),
+        note: "Acton integration",
+      });
 
       const response = await fetch(`${EVO_API_BASE_URL}/v1/prospects`, {
         method: "POST",
@@ -33,24 +45,47 @@ export default class EvoApi {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body: JSON.stringify({
-          name,
-          email,
-          cellphone,
-          gender,
-          node: "Acton integration",
-        }),
+        body
       });
 
+      if (DEBUG_MODE) {
+        console.log("request auth:", loadBasicAuthHeaderValue(
+          EVO_API_USERNAME,
+          EVO_API_PASSWORD
+        ));
+        console.log("request path:", `${EVO_API_BASE_URL}/v1/prospects`);
+        console.log("request body:", body);
+      }
+
       if (response.status === 200) {
-        const result = await response.json();
-        console.log("EVO result:", result);
+        const result: { idProspect: number } = await response.json();
+        userData.prospectId = result.idProspect;
       } else {
-        throw Error(JSON.stringify(response));
+        throw Error(await response.text());
       }
     } catch (err) {
       console.error(err);
       throw err;
     }
   };
+
+  private removeUndefinedKeys = (obj: { [key: string]: any }) => {
+    for (const key in obj) {
+      if (obj[key] === undefined) {
+        delete obj[key];
+      }
+    }
+    return obj;
+  }
+
+  private loadGender = (gender: GenderOptions) => {
+    switch (gender) {
+      case "Masculino".toUpperCase():
+        return "M";
+      case "Feminino".toUpperCase():
+        return "F";
+      default:
+        return undefined;
+    }
+  }
 }
