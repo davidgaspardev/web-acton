@@ -1,7 +1,11 @@
+// Define a generic Nullable type for properties that can be null
+export type Nullable<T> = T | null;
+export type Optional<T> = T | undefined;
+
 export type UserData = {
   id?: string;
   fullname: string;
-  email?: string;
+  email: string;
   whatsapp: string;
   gender: GenderOptions;
   sessionCode?: string;
@@ -104,7 +108,7 @@ export type ResultFromDatabase = {
 export type UserModel = {
   id: string;
   fullname: string;
-  email: string | null;
+  email: string;
   whatsapp: string;
   gender: string;
   results: ResultModel[];
