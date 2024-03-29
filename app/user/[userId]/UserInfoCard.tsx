@@ -104,6 +104,6 @@ function EvoLink(props: EvoLinkProps): JSX.Element {
   );
 }
 
-function loadLinkToEVO(prospectId: number): string {
+export function loadLinkToEVO(prospectId: number): string {
   return `https://evo-release.w12app.com.br/#/app/actoacademia/0/oportunidades/${prospectId}//perfil`;
 }
