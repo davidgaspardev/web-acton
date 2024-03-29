@@ -41,7 +41,7 @@ export default function LoginStage(props: LoginStageProps) {
 
             const user: UserData = {
               fullname,
-              email: email.length ? email : undefined,
+              email,
               whatsapp,
               gender,
             };
