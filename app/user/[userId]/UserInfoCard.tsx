@@ -3,6 +3,7 @@ import { ResultModel, UserModel } from "@/helpers/types"
 import ViverBem from "@/assets/viver-bem-logo.png";
 import VivaLeve from "@/assets/viva-leve-logo.png";
 import VidaAtiva from "@/assets/vida-ativa-logo.png";
+import IcEvo from "@/assets/svg/ic-evo.svg";
 import { useCallback } from "react";
 
 type UserInfoCardProps = {
@@ -17,8 +18,9 @@ export default function UserInfoCard(props: UserInfoCardProps): JSX.Element {
     }, [ info ])
 
     return (
-        <div className="flex flex-col w-[420px] p-3 rounded bg-gray-200">
-            <h1 className=" text-2xl">{info.fullname}</h1>
+        <div className="flex flex-col w-[440px] rounded bg-gray-200">
+          <div className="p-3">
+            <h1 className="text-2xl">{info.fullname}</h1>
             <h1>{info.whatsapp}</h1>
             { info.email && <h1>{info.email}</h1>}
             { getLastResult() && (
@@ -27,11 +29,8 @@ export default function UserInfoCard(props: UserInfoCardProps): JSX.Element {
                     <Methology result={getLastResult()} />
                 </>
             )}
-            { info.prospectId && (
-              <a
-                className="text-center underline"
-                href={loadLinkToEVO(info.prospectId)}>Acessar via sistema EVO: <strong>{info.prospectId}</strong></a>
-            )}
+          </div>
+          { info.prospectId && <EvoLink prospectId={info.prospectId}/> }
         </div>
     )
 }
@@ -62,18 +61,49 @@ function Methology(props: MethologyProps): JSX.Element {
                     alt="Methology logo"/>
                 <h1 className="ps-4 text-xl"><strong>{result.methodology}</strong> |  NIVEL {result.level} FASE {result.stage}</h1>
 
-
             </div>
-            <div className="mt-2">
-                <h4><strong>Necessidades especiais</strong></h4>
-                {result.needs.split(",").map((need, index) => (
+            {
+              result.needs.length > 0 && (
+                <div className="mt-2">
+                  <h4><strong>Necessidades especiais</strong></h4>
+                  {result.needs.split(",").map((need, index) => (
                     <h3 key={`${index}-${need}`}>{need}</h3>
-                ))}
-            </div>
+                  ))}
+                </div>
+              )
+            }
         </div>
     )
 }
 
-function loadLinkToEVO(prospectId: number): string {
+type EvoLinkProps = {
+  prospectId: number;
+}
+
+function EvoLink(props: EvoLinkProps): JSX.Element {
+  const { prospectId } = props;
+
+  const openEvo = useCallback(() => {
+    window.open(loadLinkToEVO(prospectId), "_blank");
+  },[prospectId]);
+
+  return (
+    <div className="w-full h-10 bg-[#262b2c] flex felx-row cursor-pointer rounded-b-md" onClick={openEvo}>
+      <div className="px-4 h-full flex justify-center items-center">
+        <Image
+            src={IcEvo}
+            width={55}
+            alt="EVO icon"/>
+      </div>
+      <div className="flex-1 flex flex-row items-center border-l border-l-[#424242] pl-4">
+        <p
+        className="text-white text-sm">
+          Acessar via sistema EVO: <strong>{prospectId}</strong></p>
+      </div>
+    </div>
+  );
+}
+
+export function loadLinkToEVO(prospectId: number): string {
   return `https://evo-release.w12app.com.br/#/app/actoacademia/0/oportunidades/${prospectId}//perfil`;
 }

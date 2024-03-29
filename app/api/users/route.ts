@@ -1,4 +1,5 @@
 import EvoApi from "@/app/helpers/api/evo";
+import { UserCreateData } from "@/app/helpers/utils/types";
 import {
   DEBUG_MODE,
   EVO_API_ENABLE,
@@ -6,7 +7,7 @@ import {
   ORIGINS_ALLOWED,
 } from "@/helpers/env";
 import prisma from "@/lib/prisma";
-import { decode, verify } from "jsonwebtoken";
+import { verify } from "jsonwebtoken";
 import { NextRequest, NextResponse } from "next/server";
 
 /**
@@ -21,13 +22,23 @@ export async function POST(request: Request) {
       return NextResponse.json({}, { status: 401 });
     }
 
-    const evoApi = EvoApi.getInstance();
+    const newUser: UserCreateData = await request.json();
+    if (EVO_API_ENABLE) {
+      const evoApi = EvoApi.getInstance();
+      const prospectAlreadyExists = await evoApi.findByEmail(newUser.email);
 
-    const data = await request.json();
-    if (EVO_API_ENABLE) await evoApi.createUser(data);
+      if (prospectAlreadyExists) {
+        newUser.prospectId =
+          prospectAlreadyExists[prospectAlreadyExists.length - 1].idProspect;
+      } else {
+        await evoApi.createUser(newUser);
+      }
+    }
 
     const userCreated = await prisma.users.create({
-      data,
+      data: {
+        ...(newUser as any),
+      },
     });
 
     return NextResponse.json({
