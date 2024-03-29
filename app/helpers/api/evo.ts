@@ -4,8 +4,9 @@ import {
   EVO_API_PASSWORD,
   EVO_API_USERNAME,
 } from "@/helpers/env";
-import { GenderOptions, UserData } from "@/helpers/types";
+import { Optional } from "@/helpers/types";
 import { loadBasicAuthHeaderValue } from "../utils/auth";
+import { Prospect, UserCreateData, GenderOptions } from "../utils/types";
 
 /**
  * EVO API client (integration)
@@ -22,7 +23,7 @@ export default class EvoApi {
     return this.instance;
   }
 
-  public createUser = async (userData: UserData) => {
+  public createUser = async (userData: UserCreateData) => {
     const { loadGender } = this;
     const { fullname: name, email, whatsapp: cellphone, gender } = userData;
 
@@ -69,20 +70,39 @@ export default class EvoApi {
     }
   };
 
-  private removeUndefinedKeys = (obj: { [key: string]: any }) => {
-    for (const key in obj) {
-      if (obj[key] === undefined) {
-        delete obj[key];
+  public findByEmail = async (email: string): Promise<Optional<Prospect[]>> => {
+    try {
+      const response = await fetch(
+        `${EVO_API_BASE_URL}/v1/prospects?email=${email}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: loadBasicAuthHeaderValue(
+              EVO_API_USERNAME,
+              EVO_API_PASSWORD
+            ),
+            Accept: "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const result: Prospect[] = await response.json();
+        return result.length ? result : undefined;
+      } else {
+        throw Error(await response.text());
       }
+    } catch (err) {
+      console.error(err);
+      throw err;
     }
-    return obj;
   };
 
   private loadGender = (gender: GenderOptions) => {
     switch (gender) {
-      case "Masculino".toUpperCase():
+      case "MASCULINO":
         return "M";
-      case "Feminino".toUpperCase():
+      case "FEMININO":
         return "F";
       default:
         return undefined;
