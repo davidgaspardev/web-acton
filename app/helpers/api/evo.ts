@@ -1,4 +1,9 @@
-import { DEBUG_MODE, EVO_API_BASE_URL, EVO_API_PASSWORD, EVO_API_USERNAME } from "@/helpers/env";
+import {
+  DEBUG_MODE,
+  EVO_API_BASE_URL,
+  EVO_API_PASSWORD,
+  EVO_API_USERNAME,
+} from "@/helpers/env";
 import { GenderOptions, UserData } from "@/helpers/types";
 import { loadBasicAuthHeaderValue } from "../utils/auth";
 
@@ -19,12 +24,7 @@ export default class EvoApi {
 
   public createUser = async (userData: UserData) => {
     const { loadGender } = this;
-    const {
-      fullname: name,
-      email,
-      whatsapp: cellphone,
-      gender
-    } = userData;
+    const { fullname: name, email, whatsapp: cellphone, gender } = userData;
 
     try {
       const body = JSON.stringify({
@@ -32,7 +32,7 @@ export default class EvoApi {
         email,
         cellphone,
         gender: loadGender(gender),
-        note: "Acton integration",
+        notes: "Acton integration",
       });
 
       const response = await fetch(`${EVO_API_BASE_URL}/v1/prospects`, {
@@ -45,14 +45,14 @@ export default class EvoApi {
           "Content-Type": "application/json",
           Accept: "application/json",
         },
-        body
+        body,
       });
 
       if (DEBUG_MODE) {
-        console.log("request auth:", loadBasicAuthHeaderValue(
-          EVO_API_USERNAME,
-          EVO_API_PASSWORD
-        ));
+        console.log(
+          "request auth:",
+          loadBasicAuthHeaderValue(EVO_API_USERNAME, EVO_API_PASSWORD)
+        );
         console.log("request path:", `${EVO_API_BASE_URL}/v1/prospects`);
         console.log("request body:", body);
       }
@@ -76,7 +76,7 @@ export default class EvoApi {
       }
     }
     return obj;
-  }
+  };
 
   private loadGender = (gender: GenderOptions) => {
     switch (gender) {
@@ -87,5 +87,5 @@ export default class EvoApi {
       default:
         return undefined;
     }
-  }
+  };
 }
