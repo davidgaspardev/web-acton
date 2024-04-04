@@ -16,15 +16,15 @@ export default function UserList(props: UserListProps) {
             <div className="flex flex-row h-16 mt-4 px-2 border-b border-b-[#DCDCDC]">
                 <div className="flex-1 pl-2 flex flex-col justify-center">
                   <h1>CLIENTE</h1>
-                  <p className="text-xs">Nome e email do cliente</p>
+                  <p className="text-xs opacity-75">Nome e email do cliente</p>
                 </div>
                 <div className="w-[25%] pl-2 flex flex-col justify-center">
                   <h1>PRODUTO</h1>
-                  <p className="text-xs">Resultado do questionario</p>
+                  <p className="text-xs opacity-75">Resultado do questionario</p>
                 </div>
                 <div className="w-[15%] pl-2 flex flex-col justify-center">
                   <h1>EVO</h1>
-                  <p className="text-xs">Integração com sistema EVO</p>
+                  <p className="text-xs opacity-75">Integração com sistema EVO</p>
                 </div>
             </div>
             {

@@ -78,11 +78,11 @@ export default function UserPage(props: UserPageProps): JSX.Element {
 
                             return true;
                         }).map((quiz) => (
-                            <div key={quiz.id} className="ps-3 pb-3">
-                                <h3>{quiz.question}</h3>
-                                {/* <div> */}
-                                    <h3 className={`inline-block px-1 ${quiz.answer == "Sim" ? "bg-[#66EF78]" : (quiz.answer == "Não" ? "bg-[#F04130]" : "bg-[#CACACA]")}`}>{quiz.answer}</h3>
-                                {/* </div> */}
+                            <div key={quiz.id} className="p-3 border-b border-b-[#98acd455] hover:bg-[#98acd425] cursor-pointer">
+                                <h3 className="text-[#252525]">{quiz.question}</h3>
+                                <div className={`${quiz.answer == "Sim" ? "bg-[#66EF78]" : (quiz.answer == "Não" ? "bg-[#F04130]" : "bg-[#CACACA]")} w-max rounded-md`}>
+                                    <h3 className={`px-2 py-1 text-xs`}>{quiz.answer}</h3>
+                                </div>
                             </div>
                         ))
                     }
