@@ -66,7 +66,7 @@ export default class EvoApi {
       }
     } catch (err) {
       console.error(err);
-      throw err;
+      // throw err;
     }
   };
 
@@ -94,7 +94,7 @@ export default class EvoApi {
       }
     } catch (err) {
       console.error(err);
-      throw err;
+      // throw err;
     }
   };
 
