@@ -5,6 +5,7 @@ import Image from "next/image";
 import ActonLogin from "../assets/acton-login.png";
 import UsersApi from "@/helpers/api/users";
 import { generateSessionCode } from "@/helpers/math";
+import { WarningNotificationController } from "@/components/Notification";
 
 const usersApi = UsersApi.getInstance();
 
@@ -35,7 +36,7 @@ export default function LoginStage(props: LoginStageProps) {
 
           try {
             if (!fullname || !whatsapp || !gender) {
-              alert("Por favor preenchar todos os campos");
+              WarningNotificationController.show("INFO", "Por favor preenchar todos os campos");
               return;
             }
 
@@ -55,6 +56,8 @@ export default function LoginStage(props: LoginStageProps) {
             console.error(e);
             lockRef.current = false;
             setLoading(false);
+
+            WarningNotificationController.show("ERROR", String(e));
           }
         }}
       >
