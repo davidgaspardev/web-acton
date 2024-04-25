@@ -146,4 +146,5 @@ export type BrancheInfo = {
   city: string;
   state: string;
   zipCode: string;
+  neighborhood: string;
 };
