@@ -34,9 +34,9 @@ export default function Header(props: HeaderProps): JSX.Element {
 }
 
 
-function BottomLine(): JSX.Element {
+export function BottomLine(): JSX.Element {
     return (
-        <div className="flex flex-row h-[2px]">
+        <div className="flex flex-row h-[2px] w-full">
             <div className="flex-1 bg-[#2DABE3]"></div>
             <div className="flex-1 bg-[#FEEB1A]"></div>
             <div className="flex-1 bg-[#E50C7E]"></div>

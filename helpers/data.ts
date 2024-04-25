@@ -1,4 +1,4 @@
-import { QuizData, SpecialNeedData } from "./types";
+import { BrancheInfo, QuizData, SpecialNeedData } from "./types";
 
 export const quizList: QuizData[] = [
   {
@@ -127,5 +127,43 @@ export const specialNeeds: SpecialNeedData[] = [
     name: "Qualidade do Sono",
     priority: 70,
     showName: "Dormir melhor",
+  },
+];
+
+export const branches: BrancheInfo[] = [
+  {
+    name: "Acto Academia Várzea",
+    address: "Av. Afonso Olindense, 1090 C - Várzea",
+    city: "Recife",
+    state: "PE",
+    zipCode: "50810-000",
+  },
+  {
+    name: "Acto Academia Massangana",
+    address: "Av. Zequinha Barreto, 150 - Piedade",
+    city: "Jaboatão dos Guararapes",
+    state: "PE",
+    zipCode: "54400-090",
+  },
+  {
+    name: "Acto Academia Cordeiro",
+    address: "R. Cláudio Brotherhood, 96 - Cordeiro",
+    city: "Recife",
+    state: "PE",
+    zipCode: "50721-260",
+  },
+  {
+    name: "Acto Academia Iputinga",
+    address: "R. São Mateus, 653 - Iputinga",
+    city: "Recife",
+    state: "PE",
+    zipCode: "50680-000",
+  },
+  {
+    name: "Acto Academia Engenho do Meio",
+    address: "R. Manoel Estevão da Costa, 119 - Iputinga",
+    city: "Recife",
+    state: "PE",
+    zipCode: "50670-590",
   },
 ];

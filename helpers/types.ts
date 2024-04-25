@@ -139,3 +139,11 @@ export type MetricInfo<T = number> = {
   methodology: string;
   quantity: T;
 };
+
+export type BrancheInfo = {
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+};
