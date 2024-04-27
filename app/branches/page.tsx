@@ -2,6 +2,7 @@ import { BottomLine } from "@/components/Header";
 import { branches } from "@/helpers/data";
 import { BrancheInfo } from "@/helpers/types";
 import ActoLogoPurple from "@/assets/svg/acto-logo-purple.svg";
+import ActoBanner from "@/assets/svg/acto-bunner.svg";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -36,7 +37,10 @@ function Header(): JSX.Element {
 
 function Banner(): JSX.Element {
   return (
-    <div className="w-full h-48 bg-[#B297D7] flex items-center justify-center">
+    <div className="w-full h-48 flex items-center justify-center"
+    style={{
+      backgroundImage: `url(${ActoBanner.src})`
+    }}>
       <Image
         src={ActoLogoPurple}
         alt="Acto logo purple"
