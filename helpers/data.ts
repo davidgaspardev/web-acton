@@ -141,6 +141,8 @@ export const branches: BrancheInfo[] = [
     zipCode: "50810-000",
     signUpLink:
       "https://evo-totem.w12app.com.br/actoacademia/1/site/i681zQSE0wGa4tBjj0CKyQ%5BEQUAL%5D%5BEQUAL%5D",
+    imageUrl:
+      "https://firebasestorage.googleapis.com/v0/b/acto-dev.appspot.com/o/branches%2Fbranche_varzea.jpg?alt=media&token=0da6a261-dd21-46ac-a176-b3e3aeb2cb4d",
   },
   {
     name: "Massangana",
@@ -151,6 +153,8 @@ export const branches: BrancheInfo[] = [
     zipCode: "54400-090",
     signUpLink:
       "https://evo-totem.w12app.com.br/actoacademia/2/site/W4xbhycdyDd%5BBAR%5DxV8tdYABmQ%5BEQUAL%5D%5BEQUAL%5D",
+    imageUrl:
+      "https://firebasestorage.googleapis.com/v0/b/acto-dev.appspot.com/o/branches%2Fbranche_massangana.jpg?alt=media&token=5c0df52e-07d5-4f6d-9bdf-920a35f1c093",
   },
   {
     name: "Cordeiro",
@@ -161,6 +165,8 @@ export const branches: BrancheInfo[] = [
     zipCode: "50721-260",
     signUpLink:
       "https://evo-totem.w12app.com.br/actoacademia/5/site/ixNnMrON8x6zInt2N0%5BPLUS%5Dwiw%5BEQUAL%5D%5BEQUAL%5D",
+    imageUrl:
+      "https://firebasestorage.googleapis.com/v0/b/acto-dev.appspot.com/o/branches%2Fbranche_cordeiro.jpg?alt=media&token=0b1ffee0-3491-4017-a31b-7e0a64b56e9a",
   },
   {
     name: "Iputinga",
@@ -171,6 +177,8 @@ export const branches: BrancheInfo[] = [
     zipCode: "50680-000",
     signUpLink:
       "https://evo-totem.w12app.com.br/actoacademia/3/site/qay%5BPLUS%5D%5BBAR%5DQQGYuqK0fqpvx50Ug%5BEQUAL%5D%5BEQUAL%5D",
+    imageUrl:
+      "https://firebasestorage.googleapis.com/v0/b/acto-dev.appspot.com/o/branches%2Fbranche_iputinga.jpg?alt=media&token=2390fdbc-cd32-4db3-acc5-278a9c8a3133",
   },
   {
     name: "Engenho do Meio",
@@ -181,5 +189,7 @@ export const branches: BrancheInfo[] = [
     zipCode: "50670-590",
     signUpLink:
       "https://evo-totem.w12app.com.br/actoacademia/4/site/qCFaY5fieAgqlB%5BPLUS%5D7k5mcAw%5BEQUAL%5D%5BEQUAL%5D",
+    imageUrl:
+      "https://firebasestorage.googleapis.com/v0/b/acto-dev.appspot.com/o/branches%2Fbranche_engenho.jpg?alt=media&token=a1167580-8e95-4130-85de-22380cd53cfb",
   },
 ];

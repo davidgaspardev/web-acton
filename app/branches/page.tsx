@@ -72,13 +72,13 @@ type BrancheCardProps = {
 }
 
 function BrancheCard(props: BrancheCardProps) {
-  const { name, address, neighborhood, city, state, zipCode, signUpLink } = props.data;
+  const { name, address, neighborhood, city, state, zipCode, signUpLink, imageUrl } = props.data;
 
   return (
     <div className="w-[350px] h-96 rounded-b-[40px] rounded-tl-[40px] bg-[#FEF7FF] flex flex-col p-4 relative">
       <div className="flex-1">
         <Image
-          src={"https://dnd1g0gk41u1l.cloudfront.net/image/filename/4079727/md_NEOri7lhqRXqTapoMqbCmIkSSpHTWBzA.jpg"}
+          src={imageUrl}
           alt="Branche"
           width={256}
           height={0}

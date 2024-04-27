@@ -148,4 +148,5 @@ export type BrancheInfo = {
   zipCode: string;
   neighborhood: string;
   signUpLink: string;
+  imageUrl: string;
 };
