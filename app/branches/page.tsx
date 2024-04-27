@@ -20,12 +20,12 @@ export default function BranchgesPage(): JSX.Element {
 
 function Header(): JSX.Element {
   return (
-    <header className="fixed top-0 h-16 w-full flex flex-col bg-slate-50 z-50">
+    <header className="fixed top-0 h-16 w-full flex flex-col bg-[#FEF7FF] z-50">
       <div className="flex-1 flex flex-row justify-center">
         {
           ["Home", "Planos", "Clube"].map((navName, index) => (
             <div key={index} className="h-full w-24 flex flex-col items-center justify-center">
-              <h2>{navName}</h2>
+              <h2 className="font-Bree font-bold text-xl text-[#553581]">{navName}</h2>
             </div>
           ))
         }
@@ -79,7 +79,7 @@ function BrancheCard(props: BrancheCardProps) {
           height={0}
           className="rounded-b-[40px] rounded-tl-[40px] object-cover w-full h-full"/>
       </div>
-      <div className="h-32 text-center">
+      <div className="h-32 text-center font-Bree text-[#553581]">
         <h1 className="text-2xl mb-2"><strong>{name}</strong></h1>
         <h2 className="text-sm">{address}</h2>
         <h2 className="text-sm"><strong>{neighborhood}, {city} ({state})</strong> {zipCode}</h2>
@@ -87,7 +87,7 @@ function BrancheCard(props: BrancheCardProps) {
 
       <Link
         href={""}
-        className="h-12 w-48 rounded-b-3xl rounded-tr-3xl bg-[#553682] text-white flex items-center justify-center absolute -bottom-3 left-[calc(50%-96px)]">
+        className="h-12 w-48 font-Bree text-xl rounded-b-3xl rounded-tr-3xl bg-[#553682] text-white flex items-center justify-center absolute -bottom-3 left-[calc(50%-96px)]">
         <strong>Contratar</strong>
       </Link>
     </div>
