@@ -139,6 +139,8 @@ export const branches: BrancheInfo[] = [
     city: "Recife",
     state: "PE",
     zipCode: "50810-000",
+    signUpLink:
+      "https://evo-totem.w12app.com.br/actoacademia/1/site/i681zQSE0wGa4tBjj0CKyQ%5BEQUAL%5D%5BEQUAL%5D",
   },
   {
     name: "Massangana",
@@ -147,6 +149,8 @@ export const branches: BrancheInfo[] = [
     city: "Jaboatão dos Guararapes",
     state: "PE",
     zipCode: "54400-090",
+    signUpLink:
+      "https://evo-totem.w12app.com.br/actoacademia/2/site/W4xbhycdyDd%5BBAR%5DxV8tdYABmQ%5BEQUAL%5D%5BEQUAL%5D",
   },
   {
     name: "Cordeiro",
@@ -155,6 +159,8 @@ export const branches: BrancheInfo[] = [
     city: "Recife",
     state: "PE",
     zipCode: "50721-260",
+    signUpLink:
+      "https://evo-totem.w12app.com.br/actoacademia/5/site/ixNnMrON8x6zInt2N0%5BPLUS%5Dwiw%5BEQUAL%5D%5BEQUAL%5D",
   },
   {
     name: "Iputinga",
@@ -163,6 +169,8 @@ export const branches: BrancheInfo[] = [
     city: "Recife",
     state: "PE",
     zipCode: "50680-000",
+    signUpLink:
+      "https://evo-totem.w12app.com.br/actoacademia/3/site/qay%5BPLUS%5D%5BBAR%5DQQGYuqK0fqpvx50Ug%5BEQUAL%5D%5BEQUAL%5D",
   },
   {
     name: "Engenho do Meio",
@@ -171,5 +179,7 @@ export const branches: BrancheInfo[] = [
     city: "Recife",
     state: "PE",
     zipCode: "50670-590",
+    signUpLink:
+      "https://evo-totem.w12app.com.br/actoacademia/4/site/qCFaY5fieAgqlB%5BPLUS%5D7k5mcAw%5BEQUAL%5D%5BEQUAL%5D",
   },
 ];
