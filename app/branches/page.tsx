@@ -93,7 +93,7 @@ function BrancheCard(props: BrancheCardProps) {
       <Link
         href={signUpLink}
         target="_blank"
-        className="h-12 w-48 font-Bree text-xl rounded-b-3xl rounded-tr-3xl bg-[#553682] text-white flex items-center justify-center absolute -bottom-3 left-[calc(50%-96px)]">
+        className="h-12 w-48 font-Bree text-xl rounded-b-3xl rounded-tr-3xl bg-[#553682] text-white flex items-center justify-center absolute -bottom-5 left-[calc(50%-96px)]">
         <strong>Contratar</strong>
       </Link>
     </div>
