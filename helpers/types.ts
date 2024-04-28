@@ -147,6 +147,12 @@ export type BrancheInfo = {
   state: string;
   zipCode: string;
   neighborhood: string;
-  signUpLink: string;
+  slug: string;
   imageUrl: string;
+  plans: BranchePlan[];
+};
+
+export type BranchePlan = {
+  name: string;
+  link: string;
 };

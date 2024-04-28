@@ -85,7 +85,7 @@ type BrancheCardProps = {
 }
 
 function BrancheCard(props: BrancheCardProps) {
-  const { name, address, neighborhood, city, state, zipCode, signUpLink, imageUrl } = props.data;
+  const { name, address, neighborhood, city, state, zipCode, slug, imageUrl } = props.data;
 
   return (
     <div className="w-[350px] h-96 rounded-b-[40px] rounded-tl-[40px] bg-[#FEF7FF] flex flex-col p-4 relative">
@@ -104,8 +104,7 @@ function BrancheCard(props: BrancheCardProps) {
       </div>
 
       <Link
-        href={signUpLink}
-        target="_blank"
+        href={`/branches/${slug}`}
         className="h-12 w-48 font-Bree text-xl rounded-b-3xl rounded-tr-3xl bg-[#553682] text-white flex items-center justify-center absolute -bottom-5 left-[calc(50%-96px)]">
         <strong>Contratar</strong>
       </Link>
