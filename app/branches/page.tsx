@@ -23,7 +23,7 @@ export default function BranchgesPage(): JSX.Element {
   );
 }
 
-function Header(): JSX.Element {
+export function Header(): JSX.Element {
   return (
     <header className="fixed top-0 h-16 w-full flex flex-col bg-[#FEF7FF] z-50">
       <div className="flex-1 flex flex-row justify-center">
@@ -53,7 +53,7 @@ function Header(): JSX.Element {
   )
 }
 
-function Banner(): JSX.Element {
+export function Banner(): JSX.Element {
   return (
     <div className="w-full h-48 flex items-center justify-center"
     style={{
@@ -112,7 +112,7 @@ function BrancheCard(props: BrancheCardProps) {
   )
 }
 
-function Footer() {
+export function Footer() {
   return (
     <footer className="w-full h-40 bg-[#CABBCA] flex flex-col items-center justify-center font-Bree font-bold text-[#553682]">
       <h1>Acto Academia</h1>
