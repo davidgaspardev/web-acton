@@ -1,14 +1,10 @@
-import { BottomLine } from "@/components/Header";
 import { branches } from "@/helpers/data";
 import { BrancheInfo } from "@/helpers/types";
-import ActoLogoPurple from "@/assets/svg/acto-logo-purple.svg";
-import ActoBanner from "@/assets/svg/acto-bunner.svg";
-import IconShareFacebook from "@/assets/svg/ic-share-facebook.svg";
-import IconShareInstagram from "@/assets/svg/ic-share-instagram.svg";
-import IconShareLinkedIn from "@/assets/svg/ic-share-linkedin.svg";
-import IconShareYouTube from "@/assets/svg/ic-share-youtube.svg";
 import Image from "next/image";
 import Link from "next/link";
+import Header from "./Header";
+import { Banner } from "./Banner";
+import { Footer } from "./Footer";
 
 export default function BranchgesPage(): JSX.Element {
   return (
@@ -20,51 +16,6 @@ export default function BranchgesPage(): JSX.Element {
         <Footer />
       </div>
     </main>
-  );
-}
-
-export function Header(): JSX.Element {
-  return (
-    <header className="fixed top-0 h-16 w-full flex flex-col bg-[#FEF7FF] z-50">
-      <div className="flex-1 flex flex-row justify-center">
-        {
-          [
-            {
-              name: "Home",
-              link: "https://www.actoacademia.com.br/"
-            },
-            {
-              name: "Planos",
-              link: "/branches"
-            },
-            {
-              name:  "Clube",
-              link: "https://www.actoacademia.com.br/clubdevantagens"
-            }
-          ].map(({ name, link }, index) => (
-            <Link key={index} href={link} className="h-full w-24 flex flex-col items-center justify-center">
-              <h2 className="font-Bree font-bold text-xl text-[#553581]">{name}</h2>
-            </Link>
-          ))
-        }
-      </div>
-      {/* <BottomLine /> */}
-    </header>
-  )
-}
-
-export function Banner(): JSX.Element {
-  return (
-    <div className="w-full h-48 flex items-center justify-center"
-    style={{
-      backgroundImage: `url(${ActoBanner.src})`
-    }}>
-      <Image
-        src={ActoLogoPurple}
-        alt="Acto logo purple"
-        width={256}
-        className="max-sm:w-[180px]"/>
-    </div>
   );
 }
 
@@ -112,38 +63,3 @@ function BrancheCard(props: BrancheCardProps) {
   )
 }
 
-export function Footer() {
-  return (
-    <footer className="w-full h-40 bg-[#CABBCA] flex flex-col items-center justify-center font-Bree font-bold text-[#553682]">
-      <h1>Acto Academia</h1>
-      <h1 className="-mt-2">CREF 001670-PJ/PE</h1>
-      <div className="flex flex-row gap-4 my-2">
-        <Link href={""}>
-          <Image
-            src={IconShareFacebook}
-            alt="Facebook share"
-            width={32}/>
-        </Link>
-        <Link href={""}>
-          <Image
-            src={IconShareInstagram}
-            alt="Instagram share"
-            width={32}/>
-        </Link>
-        <Link href={""}>
-          <Image
-            src={IconShareLinkedIn}
-            alt="LinkedIn share"
-            width={32}/>
-        </Link>
-        <Link href={""}>
-          <Image
-            src={IconShareYouTube}
-            alt="YouTube share"
-            width={32}/>
-        </Link>
-      </div>
-      <h1>Pernambuco, Brasil - 2024</h1>
-    </footer>
-  );
-}
