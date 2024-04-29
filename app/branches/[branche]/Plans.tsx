@@ -24,7 +24,7 @@ export default function Plans(props: PlansProps) {
         <h1>Undidade</h1>
         <h1 className="-mt-2 font-bold">{name.toUpperCase()}</h1>
       </div>
-      <div className="flex flex-row flex-wrap gap-8 justify-center">
+      <div className="flex flex-row-reverse flex-wrap gap-8 justify-center">
         {
           plans.map(({ name, value, link, benefits }, index) => {
             return (
@@ -66,7 +66,7 @@ export default function Plans(props: PlansProps) {
                   }
                 </div>
 
-                <div className="p-3 text-center bg-[#FEF7FF] rounded-t-[40px] rounded-br-[40px] text-sm relative font-Bree">
+                <div className="p-3 text-center bg-[#FEF7FF] rounded-t-[40px] rounded-br-[40px] text-sm relative font-Bree my-4">
                   <h3 className="text-[#553581]">Recorrência mensal</h3>
                   <h3 className="text-[#553581]">Adesão R$50,00</h3>
 
