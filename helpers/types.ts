@@ -155,4 +155,6 @@ export type BrancheInfo = {
 export type BranchePlan = {
   name: string;
   link: string;
+  value: number;
+  benefits: string[];
 };
