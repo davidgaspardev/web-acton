@@ -63,7 +63,7 @@ export function Plans(props: PlansProps) {
         <h1>Undidade</h1>
         <h1 className="-mt-2 font-bold">{name.toUpperCase()}</h1>
       </div>
-      <div className="flex flex-row flex-wrap gap-8">
+      <div className="flex flex-row flex-wrap gap-8 justify-center">
         {
           plans.map(({ name, value, link, benefits }, index) => {
             return (
