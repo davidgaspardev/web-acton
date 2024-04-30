@@ -25,7 +25,6 @@ export default function Header() {
           ))
         }
       </div>
-      {/* <BottomLine /> */}
     </header>
   )
 }

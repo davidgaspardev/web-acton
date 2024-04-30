@@ -2,20 +2,12 @@ import { branches } from "@/helpers/data";
 import { BrancheInfo } from "@/helpers/types";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "./Header";
-import { Banner } from "./Banner";
-import { Footer } from "./Footer";
 
-export default function BranchgesPage(): JSX.Element {
+export default function BranchesPage(): JSX.Element {
   return (
-    <main>
-      <div className="pt-16">
-        <Header />
-        <Banner />
-        <Branches />
-        <Footer />
-      </div>
-    </main>
+    <div>
+      <Branches />
+    </div>
   );
 }
 

@@ -1,8 +1,5 @@
 import { branches } from "@/helpers/data";
-import Plans from "./Plans";
-import Header from "../Header";
-import { Banner } from "../Banner";
-import { Footer } from "../Footer";
+import Plans from "../components/Plans";
 
 type PageProps = {
   params: {
@@ -17,24 +14,15 @@ export default function Page(props: PageProps) {
 
   if(!branche) {
     return (
-      <main>
-        <div className="pt-16">
-          <Header />
-          <h1>Unidade não existente</h1>
-          <Footer />
-        </div>
-      </main>
+      <div>
+        <h1>Unidade não existente</h1>
+      </div>
     );
   }
 
   return (
-    <main>
-      <div className="pt-16">
-        <Header />
-        <Banner />
-        <Plans data={branche} />
-        <Footer />
-      </div>
-    </main>
+    <div>
+      <Plans data={branche} />
+    </div>
   );
 }

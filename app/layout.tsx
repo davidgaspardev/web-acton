@@ -8,7 +8,13 @@ export const metadata = {
   description: "Acton: Mapeamento de Sintoma",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+type RootLayoutProps = {
+  children: React.ReactNode;
+};
+
+export default function RootLayout(props: RootLayoutProps) {
+  const { children } = props;
+
   return (
     <html lang="pt-br">
       <head>

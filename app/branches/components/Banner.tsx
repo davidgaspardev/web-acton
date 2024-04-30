@@ -2,7 +2,7 @@ import ActoLogoPurple from "@/assets/svg/acto-logo-purple.svg";
 import ActoBanner from "@/assets/svg/acto-bunner.svg";
 import Image from "next/image";
 
-export function Banner(): JSX.Element {
+export function Banner() {
   return (
     <div className="w-full h-48 flex items-center justify-center"
     style={{
