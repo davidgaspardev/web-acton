@@ -404,7 +404,7 @@ export const branches: BrancheInfo[] = [
         link: "https://evo-totem.w12app.com.br/actoacademia/4/site/qCFaY5fieAgqlB%5BPLUS%5D7k5mcAw%5BEQUAL%5D%5BEQUAL%5D",
         value: 49.9,
         benefits: [
-          "ZERO MULTA",
+          "FIDELIDADE DE 12 MESES",
           "HORÁRIO LIVRE",
           "NÃO COMPROMETE O LIMITE",
           "METODOLOGIA EXCLUSIVA",
