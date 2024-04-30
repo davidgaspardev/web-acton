@@ -3,15 +3,7 @@ import { BrancheInfo } from "@/helpers/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function BranchesPage(): JSX.Element {
-  return (
-    <div>
-      <Branches />
-    </div>
-  );
-}
-
-function Branches(): JSX.Element {
+export default function BranchesPage() {
   return (
     <div className="flex flex-col items-center w-full my-12">
       <div className="flex flex-row justify-center gap-16 items-center min-h-[calc(100vh-64px)] flex-wrap max-w-[800px]">
