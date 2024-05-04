@@ -404,7 +404,7 @@ export const branches: BrancheInfo[] = [
       "https://firebasestorage.googleapis.com/v0/b/acto-dev.appspot.com/o/branches%2Fbranche_engenho.jpg?alt=media&token=a1167580-8e95-4130-85de-22380cd53cfb",
     plans: [
       {
-        name: "ENGENHO DO MEIO CONTRATO DE ADESÃO – FIDELIDADE",
+        name: "INFINITY START – FIDELIDADE",
         link: "https://evo-totem.w12app.com.br/actoacademia/4/site/qCFaY5fieAgqlB%5BPLUS%5D7k5mcAw%5BEQUAL%5D%5BEQUAL%5D",
         value: 49.9,
         benefits: [
