@@ -67,8 +67,8 @@ export default function Plans(props: PlansProps) {
                 </div>
 
                 <div className="p-3 text-center bg-[#FEF7FF] rounded-t-[40px] rounded-br-[40px] text-sm relative font-Bree my-4">
-                  <h3 className="text-[#553581]">Recorrência mensal</h3>
-                  <h3 className="text-[#553581]">Adesão R$50,00</h3>
+                  <h3 className="text-[#553581] pb-2">Recorrência mensal</h3>
+                  {/* <h3 className="text-[#553581]">Adesão R$50,00</h3> */}
 
                   <Link href={"/branches"} className="bg-[#553682] text-white flex items-center justify-center absolute -bottom-4 py-1 w-[100px] left-[calc(50%-50px)] rounded-b-[15px] rounded-tr-[15px]">
                     Saber mais

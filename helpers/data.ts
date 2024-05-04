@@ -148,6 +148,7 @@ export const branches: BrancheInfo[] = [
         link: "https://evo-totem.w12app.com.br/actoacademia/1/site/qFGpuVG2CYkGZVajHu57Ow%5BEQUAL%5D%5BEQUAL%5D",
         value: 99.9,
         benefits: [
+          "FIDELIDADE DE 12 MESES",
           "MUSCULAÇÃO E AULAS COLETIVAS",
           "NÃO COMPROMETE O LIMITE",
           "METODOLOGIA EXCLUSIVA",
@@ -212,6 +213,7 @@ export const branches: BrancheInfo[] = [
         link: "https://evo-totem.w12app.com.br/actoacademia/2/site/W4xbhycdyDd%5BBAR%5DxV8tdYABmQ%5BEQUAL%5D%5BEQUAL%5D",
         value: 99.9,
         benefits: [
+          "FIDELIDADE DE 12 MESES",
           "MUSCULAÇÃO E AULAS COLETIVAS",
           "NÃO COMPROMETE O LIMITE",
           "METODOLOGIA EXCLUSIVA",
@@ -276,6 +278,7 @@ export const branches: BrancheInfo[] = [
         link: "https://evo-totem.w12app.com.br/actoacademia/5/site/ixNnMrON8x6zInt2N0%5BPLUS%5Dwiw%5BEQUAL%5D%5BEQUAL%5D",
         value: 99.9,
         benefits: [
+          "FIDELIDADE DE 12 MESES",
           "MUSCULAÇÃO E AULAS COLETIVAS",
           "NÃO COMPROMETE O LIMITE",
           "METODOLOGIA EXCLUSIVA",
@@ -340,6 +343,7 @@ export const branches: BrancheInfo[] = [
         link: "https://evo-totem.w12app.com.br/actoacademia/3/site/qay%5BPLUS%5D%5BBAR%5DQQGYuqK0fqpvx50Ug%5BEQUAL%5D%5BEQUAL%5D",
         value: 99.9,
         benefits: [
+          "FIDELIDADE DE 12 MESES",
           "MUSCULAÇÃO E AULAS COLETIVAS",
           "NÃO COMPROMETE O LIMITE",
           "METODOLOGIA EXCLUSIVA",
