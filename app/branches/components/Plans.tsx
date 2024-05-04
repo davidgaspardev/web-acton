@@ -6,13 +6,14 @@ import PlanInfinityStart from "@/assets/svg/plan-infinity-start.svg";
 import PlanInfinityStartFidelidade from "@/assets/svg/plan-infinity-start-fidelidade.svg";
 import PlanInfinityStartFidelidadeHorarioReduzido from "@/assets/svg/plan-infinity-start-fidelidade-horario-reduzido.svg";
 import Link from "next/link";
+import { buildWhatsappLink } from "@/helpers/tools";
 
 type PlansProps = {
   data: BrancheInfo
 }
 
 export default function Plans(props: PlansProps) {
-  const { name, plans } = props.data;
+  const { name: brancheName, plans } = props.data;
 
   const loadImage = useCallback((planName: PlanType) => {
     return loadImageByPlanType(planName);
@@ -22,7 +23,7 @@ export default function Plans(props: PlansProps) {
     <div className="flex flex-col items-center w-full my-8">
       <div className="font-Bree text-center text-[#553581] mb-8 text-lg">
         <h1>Undidade</h1>
-        <h1 className="-mt-2 font-bold">{name.toUpperCase()}</h1>
+        <h1 className="-mt-2 font-bold">{brancheName.toUpperCase()}</h1>
       </div>
       <div className="flex flex-row-reverse flex-wrap gap-8 justify-center">
         {
@@ -70,7 +71,9 @@ export default function Plans(props: PlansProps) {
                   <h3 className="text-[#553581] pb-2">Recorrência mensal</h3>
                   {/* <h3 className="text-[#553581]">Adesão R$50,00</h3> */}
 
-                  <Link href={"/branches"} className="bg-[#553682] text-white flex items-center justify-center absolute -bottom-4 py-1 w-[100px] left-[calc(50%-50px)] rounded-b-[15px] rounded-tr-[15px]">
+                  <Link
+                    href={buildWhatsappLink(`Olá, gostaria de saber mais sobre o plano ${name} da unidade ${brancheName}.`)}
+                    className="bg-[#553682] text-white flex items-center justify-center absolute -bottom-4 py-1 w-[100px] left-[calc(50%-50px)] rounded-b-[15px] rounded-tr-[15px]">
                     Saber mais
                   </Link>
                 </div>
