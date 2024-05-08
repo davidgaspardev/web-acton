@@ -96,7 +96,5 @@ function loadImageByPlanType(type: PlanType): StaticImageData {
       return PlanInfinityMax;
     case "ENGENHO DO MEIO CONTRATO DE ADESÃO – FIDELIDADE":
       return PlanInfinityStartFidelidadeHorarioReduzido;
-    default:
-      throw new Error("Image don't loaded with this plan type: " + type);
   }
 }
