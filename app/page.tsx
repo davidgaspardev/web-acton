@@ -6,6 +6,7 @@ import QuizStage from "./QuizStage";
 import ResultStage from "./ResultStage";
 import LoginStage from "./LoginStage";
 import StarterStage from "./StarterStage";
+import { ErrorNotification, InfoNotification, WarningNotification } from "@/components/Notification";
 
 /**
  *
@@ -73,6 +74,9 @@ export default function MainPage() {
           }}
         />
       )}
+      <WarningNotification />
+      <ErrorNotification />
+      <InfoNotification />
     </main>
   );
 

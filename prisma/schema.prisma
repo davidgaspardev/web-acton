@@ -25,8 +25,12 @@ model Users {
   gender     Gender
   createdAt  DateTime  @default(now())
   prospectId Int?
+  brancheId  String?
   quizzes    Quizzes[]
   results    Results[]
+  branche    Branches? @relation(fields: [brancheId], references: [id])
+
+  @@index([brancheId], map: "Users_brancheId_fkey")
 }
 
 model Results {
@@ -53,6 +57,16 @@ model Quizzes {
   user        Users    @relation(fields: [userId], references: [id])
 
   @@index([userId], map: "Quizzes_userId_fkey")
+}
+
+model Branches {
+  id        String  @id @default(uuid())
+  name      String  @db.VarChar(64)
+  latitude  Decimal @db.Decimal(10, 6)
+  longitude Decimal @db.Decimal(10, 6)
+  evoDns    String  @db.VarChar(64)
+  evoToken  String  @db.Char(36)
+  users     Users[]
 }
 
 enum Gender {
