@@ -1,6 +1,6 @@
 import { InputSubmit, Input, InputSelect } from "@/components/Input";
-import { GenderOptions, UserData } from "@/helpers/types";
-import { useRef, useState } from "react";
+import { GenderOptions, PositionInfo, UserData } from "@/helpers/types";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ActonLogin from "../assets/acton-login.png";
 import UsersApi from "@/helpers/api/users";
@@ -23,6 +23,37 @@ export default function LoginStage(props: LoginStageProps) {
   const [loading, setLoading] = useState<boolean>(false);
 
   const lockRef = useRef<boolean>(false);
+
+  useEffect(() => {
+    const getLocation = async () => {
+      try {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const { latitude, longitude } = position.coords;
+              storagePosition({ latitude, longitude });
+            },
+            async (error) => {
+              console.error(error);
+              const position = await getCurrentPositionByIp();
+              storagePosition(position);
+            }
+          );
+        } else {
+          const position = await getCurrentPositionByIp();
+          storagePosition(position);
+        }
+      } catch (error) {
+        console.error(error);
+        WarningNotificationController.show(
+          "ERROR",
+          "Não foi possível obter sua localização"
+        );
+      }
+    };
+
+    getLocation();
+  }, []);
 
   return (
     <div className="w-full h-full bg-[#7C65B5] flex items-center justify-center">
@@ -112,4 +143,31 @@ export default function LoginStage(props: LoginStageProps) {
       </form>
     </div>
   );
+}
+
+
+/**
+ * Get current position by IP
+ *
+ * @returns {Promise<PositionInfo>}
+ */
+async function getCurrentPositionByIp(): Promise<PositionInfo> {
+  const response = await fetch("https://api.ipify.org?format=json");
+  const data = await response.json();
+  const ip = data.ip;
+
+  const positionResponse = await fetch(`https://ipapi.co/${ip}/json/`);
+  const positionData = await positionResponse.json();
+  const { latitude, longitude } = positionData;
+
+  return { latitude, longitude };
+}
+
+/**
+ * Storage position
+ *
+ * @param {LocationInfo} location
+ */
+async function storagePosition(location: PositionInfo) {
+  console.log("Location: ", location);
 }

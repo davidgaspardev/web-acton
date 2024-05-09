@@ -164,3 +164,8 @@ export type BranchePlan = {
   value: number;
   benefits: string[];
 };
+
+export type PositionInfo = {
+  latitude: number;
+  longitude: number;
+};
