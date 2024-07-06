@@ -59,11 +59,40 @@ model Quizzes {
   @@index([userId], map: "Quizzes_userId_fkey")
 }
 
+// export type Branche = {
+// 	id: number; // auto increment
+// 	name: string;
+// 	cnpj: Nullable<string>; // New
+// 	phone: Nullable<string>; // New
+// 	address: string;
+//   city: string;
+//   state: string;
+//   zipCode: string;
+//   neighborhood: string;
+//   slug: string;
+//   imageUrl: string;
+//   latitude: number;
+// 	longitude: number;
+// 	evoId: number;
+// 	evoDns: string;
+// 	evoToken: string;
+// };
+
 model Branches {
-  id        Int     @id
+  id        Int     @id @default(autoincrement())
   name      String  @db.VarChar(64)
+  cnpj      String? @db.VarChar(14)
+  phone     String? @db.Char(11)
+  address   String  @db.VarChar(128)
+  city      String  @db.VarChar(64)
+  state     String  @db.Char(2)
+  zipCode   String  @db.Char(8)
+  neighborhood String @db.VarChar(64)
+  slug      String  @db.VarChar(64)
+  imageUrl  String  @db.VarChar(256)
   latitude  Decimal @db.Decimal(10, 6)
   longitude Decimal @db.Decimal(10, 6)
+  evoId     Int
   evoDns    String  @db.VarChar(64)
   evoToken  String  @db.Char(36)
   users     Users[]
