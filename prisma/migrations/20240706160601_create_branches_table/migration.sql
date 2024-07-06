@@ -2,11 +2,21 @@
 ALTER TABLE `Users` ADD COLUMN `branchId` INTEGER NULL;
 
 -- CreateTable
-CREATE TABLE IF NOT EXISTS `Branches` (
-    `id` INTEGER NOT NULL,
+CREATE TABLE `Branches` (
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(64) NOT NULL,
+    `cnpj` VARCHAR(14) NULL,
+    `phone` CHAR(11) NULL,
+    `address` VARCHAR(128) NOT NULL,
+    `city` VARCHAR(64) NOT NULL,
+    `state` CHAR(2) NOT NULL,
+    `zipCode` CHAR(8) NOT NULL,
+    `neighborhood` VARCHAR(64) NOT NULL,
+    `slug` VARCHAR(64) NOT NULL,
+    `imageUrl` VARCHAR(256) NOT NULL,
     `latitude` DECIMAL(10, 6) NOT NULL,
     `longitude` DECIMAL(10, 6) NOT NULL,
+    `evoId` INTEGER NOT NULL,
     `evoDns` VARCHAR(64) NOT NULL,
     `evoToken` CHAR(36) NOT NULL,
 
