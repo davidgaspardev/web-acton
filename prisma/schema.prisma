@@ -25,12 +25,12 @@ model Users {
   gender     Gender
   createdAt  DateTime  @default(now())
   prospectId Int?
-  brancheId  String?
+  branchId   Int?
   quizzes    Quizzes[]
   results    Results[]
-  branche    Branches? @relation(fields: [brancheId], references: [id])
+  branch     Branches? @relation(fields: [branchId], references: [id])
 
-  @@index([brancheId], map: "Users_brancheId_fkey")
+  @@index([branchId], map: "Users_branchId_fkey")
 }
 
 model Results {
@@ -60,7 +60,7 @@ model Quizzes {
 }
 
 model Branches {
-  id        String  @id @default(uuid())
+  id        Int     @id
   name      String  @db.VarChar(64)
   latitude  Decimal @db.Decimal(10, 6)
   longitude Decimal @db.Decimal(10, 6)
