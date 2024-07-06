@@ -140,7 +140,7 @@ export type MetricInfo<T = number> = {
   quantity: T;
 };
 
-export type BrancheInfo = {
+export type BranchInfo = {
   name: string;
   address: string;
   city: string;
@@ -149,7 +149,6 @@ export type BrancheInfo = {
   neighborhood: string;
   slug: string;
   imageUrl: string;
-  plans: BranchePlan[];
 };
 
 export type PlanType =
@@ -157,13 +156,6 @@ export type PlanType =
   | "INFINITY START"
   | "INFINITY MAX"
   | "ENGENHO DO MEIO CONTRATO DE ADESÃO – FIDELIDADE";
-
-export type BranchePlan = {
-  name: PlanType;
-  link: string;
-  value: number;
-  benefits: string[];
-};
 
 export type PositionInfo = {
   latitude: number;

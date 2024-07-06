@@ -1,4 +1,4 @@
-import { BrancheInfo, QuizData, SpecialNeedData } from "./types";
+import { BranchInfo, QuizData, SpecialNeedData } from "./types";
 
 export const quizList: QuizData[] = [
   {
@@ -130,7 +130,7 @@ export const specialNeeds: SpecialNeedData[] = [
   },
 ];
 
-export const branches: BrancheInfo[] = [
+export const branches: BranchInfo[] = [
   {
     // name: "Acto Academia Várzea",
     name: "Várzea",
