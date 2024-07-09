@@ -74,6 +74,7 @@ model Branches {
   imageUrl  String  @db.VarChar(256)
   latitude  Decimal @db.Decimal(10, 6)
   longitude Decimal @db.Decimal(10, 6)
+  wppLink   String? @db.VarChar(256)
   evoId     Int
   evoDns    String  @db.VarChar(64)
   evoToken  String  @db.Char(36)
