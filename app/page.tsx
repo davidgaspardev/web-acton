@@ -7,6 +7,7 @@ import ResultStage from "./ResultStage";
 import LoginStage from "./LoginStage";
 import StarterStage from "./StarterStage";
 import { ErrorNotification, InfoNotification, WarningNotification } from "@/components/Notification";
+import LocalStorage from "@/helpers/storage";
 
 /**
  *
@@ -41,6 +42,21 @@ export default function MainPage() {
   useEffect(() => {
     handleShowScreen();
   }, [stageIndex, handleShowScreen]);
+
+  useEffect(() => {
+    //@ts-ignore
+    window.onCurrentLocation = (latitude: number, longitude: number) => {
+      LocalStorage.getInstance().setLocation(latitude, longitude);
+    };
+
+    // @ts-ignore
+    CurrentLocationInvoker.postMessage("");
+
+    return () => {
+      //@ts-ignore
+      delete window.onCurrentLocation;
+    };
+  }, []);
 
   return (
     <main
