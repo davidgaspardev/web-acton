@@ -43,21 +43,6 @@ export default function MainPage() {
     handleShowScreen();
   }, [stageIndex, handleShowScreen]);
 
-  useEffect(() => {
-    //@ts-ignore
-    window.onCurrentLocation = (latitude: number, longitude: number) => {
-      LocalStorage.getInstance().setLocation(latitude, longitude);
-    };
-
-    // @ts-ignore
-    CurrentLocationInvoker.postMessage("");
-
-    return () => {
-      //@ts-ignore
-      delete window.onCurrentLocation;
-    };
-  }, []);
-
   return (
     <main
       id={id}
