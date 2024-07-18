@@ -6,6 +6,7 @@ import ActonLogin from "../assets/acton-login.png";
 import UsersApi from "@/helpers/api/users";
 import { generateSessionCode } from "@/helpers/math";
 import { WarningNotificationController } from "@/components/Notification";
+import { twMerge } from "tailwind-merge";
 
 const usersApi = UsersApi.getInstance();
 
@@ -25,34 +26,57 @@ export default function LoginStage(props: LoginStageProps) {
   const lockRef = useRef<boolean>(false);
 
   useEffect(() => {
+    //@ts-ignore
+    window.onCurrentLocation = (latitude: number, longitude: number) => {
+      // Make something with latitude and longitude
+      console.log("Latitude: ", latitude);
+      console.log("Longitude: ", longitude);
+    };
+
     const getLocation = async () => {
       try {
-        if ("geolocation" in navigator) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const { latitude, longitude } = position.coords;
-              storagePosition({ latitude, longitude });
-            },
-            async (error) => {
-              console.error(error);
-              const position = await getCurrentPositionByIp();
-              storagePosition(position);
-            }
+        // @ts-ignore
+        CurrentLocationInvoker?.postMessage("");
+      } catch(err) {
+        try {
+          if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition(
+              (position) => {
+                const { latitude, longitude } = position.coords;
+
+                // @ts-ignore
+                window.onCurrentLocation(latitude, longitude);
+              },
+              async (error) => {
+                console.error(error);
+                const { latitude, longitude } = await getCurrentPositionByIp();
+
+                // @ts-ignore
+                window.onCurrentLocation(latitude, longitude);
+              }
+            );
+          } else {
+            const { latitude, longitude } = await getCurrentPositionByIp();
+
+            // @ts-ignore
+            window.onCurrentLocation(latitude, longitude);
+          }
+        } catch (error) {
+          console.error(error);
+          WarningNotificationController.show(
+            "ERROR",
+            "Não foi possível obter sua localização"
           );
-        } else {
-          const position = await getCurrentPositionByIp();
-          storagePosition(position);
         }
-      } catch (error) {
-        console.error(error);
-        WarningNotificationController.show(
-          "ERROR",
-          "Não foi possível obter sua localização"
-        );
       }
     };
 
     getLocation();
+
+    return () => {
+      //@ts-ignore
+      delete window.onCurrentLocation;
+    };
   }, []);
 
   return (
@@ -139,9 +163,30 @@ export default function LoginStage(props: LoginStageProps) {
           }
         />
 
+        <FooterSelect>
+          <InputSelect
+            onValue={console.log}
+            options={['test']}/>
+        </FooterSelect>
+
         <InputSubmit diabled={loading} className="mt-5 text-[#7C65B5]" name="Avançar" />
       </form>
     </div>
+  );
+}
+
+type FooterSelectProps = {
+  className?: string;
+  children: React.ReactNode;
+};
+
+function FooterSelect(props: FooterSelectProps) {
+  const { children, className } = props;
+
+  return (
+    <footer className={twMerge("fixed bottom-0 w-screen h-12 bg-yellow-400 flex items-center justify-center", className)}>
+      {children}
+    </footer>
   );
 }
 
