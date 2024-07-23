@@ -133,6 +133,26 @@ export type QuizModel = {
   sessionCode: string;
 };
 
+export type BranchModel = {
+  id: number;
+  name: string;
+  cnpj: string | null;
+  phone: string | null;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  neighborhood: string;
+  slug: string;
+  imageUrl: string;
+  latitude: number;
+  longitude: number;
+  wppLink: string;
+  evoId: number;
+  evoDns: string;
+  evoToken: string;
+};
+
 export type MetricsInfo<T = number> = MetricInfo<T>[];
 
 export type MetricInfo<T = number> = {
