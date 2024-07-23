@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Users` ADD COLUMN `cpf` VARCHAR(14) NULL;
