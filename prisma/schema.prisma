@@ -21,7 +21,7 @@ model Users {
   id         String    @id @default(uuid())
   fullname   String    @db.VarChar(128)
   email      String?   @db.VarChar(128)
-  cpf        String?   @db.VarChar(14)
+  cpf        String?   @db.Char(14)
   whatsapp   String    @db.Char(11)
   gender     Gender
   createdAt  DateTime  @default(now())
