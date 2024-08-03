@@ -13,8 +13,9 @@ interface InputSelectProps {
 
 export default function InputSelect(props: InputSelectProps) {
   const { className, children, placeholder, value, onValue, required } = props;
-
   const { id } = useContext(InputContext);
+
+  const isNumber = typeof value === "number";
 
   return (
     <select
@@ -22,7 +23,7 @@ export default function InputSelect(props: InputSelectProps) {
       className={twMerge("bg-transparent border-b-2 text-white border-white px-2 py-1 placeholder:text-white/75 focus:outline-none w-full", className)}
       placeholder={placeholder}
       value={value}
-      onChange={({ target: { value } }) => onValue(value)}
+      onChange={({ target: { value } }) => onValue(isNumber ? Number(value) : value)}
       required={required}
       >
       {children}
