@@ -3,10 +3,11 @@ import { Nullable } from "@/helpers/types";
 export type UserCreateData = {
   id: string;
   fullname: string;
+  cpf: string;
   email: string;
   whatsapp: string;
   gender: GenderOptions;
-  branchId: Nullable<number>;
+  branchId: number;
   prospectId: Nullable<number>;
 };
 

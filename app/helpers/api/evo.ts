@@ -28,12 +28,13 @@ export default class EvoApi {
     auth?: { username: string; password: string }
   ) => {
     const { loadGender } = this;
-    const { fullname: name, email, whatsapp: cellphone, gender } = userData;
+    const { fullname: name, cpf, email, whatsapp: cellphone, gender } = userData;
     const { username, password } = auth || {};
 
     try {
       const body = JSON.stringify({
         name,
+        cpf,
         email,
         cellphone,
         gender: loadGender(gender),
