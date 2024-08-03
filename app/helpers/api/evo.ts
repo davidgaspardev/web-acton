@@ -23,9 +23,13 @@ export default class EvoApi {
     return this.instance;
   }
 
-  public createUser = async (userData: UserCreateData) => {
+  public createUser = async (
+    userData: UserCreateData,
+    auth?: { username: string; password: string }
+  ) => {
     const { loadGender } = this;
     const { fullname: name, email, whatsapp: cellphone, gender } = userData;
+    const { username, password } = auth || {};
 
     try {
       const body = JSON.stringify({
@@ -40,8 +44,8 @@ export default class EvoApi {
         method: "POST",
         headers: {
           Authorization: loadBasicAuthHeaderValue(
-            EVO_API_USERNAME,
-            EVO_API_PASSWORD
+            username || EVO_API_USERNAME,
+            password || EVO_API_PASSWORD
           ),
           "Content-Type": "application/json",
           Accept: "application/json",
