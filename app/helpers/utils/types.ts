@@ -6,7 +6,8 @@ export type UserCreateData = {
   email: string;
   whatsapp: string;
   gender: GenderOptions;
-  prospectId: number | null;
+  branchId: Nullable<number>;
+  prospectId: Nullable<number>;
 };
 
 // Gender Options of database
