@@ -1,12 +1,14 @@
-import { InputSubmit, Input, InputSelect } from "@/components/Input";
-import { GenderOptions, PositionInfo, UserData } from "@/helpers/types";
-import { useEffect, useRef, useState } from "react";
+import { InputSubmit, Input as InputBasic, InputSelect } from "@/components/Input";
+import { BranchModel, GenderOptions, PositionInfo, UserData } from "@/helpers/types";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ActonLogin from "../assets/acton-login.png";
 import UsersApi from "@/helpers/api/users";
 import { generateSessionCode } from "@/helpers/math";
 import { WarningNotificationController } from "@/components/Notification";
 import { twMerge } from "tailwind-merge";
+import BranchesApi from "@/helpers/api/branches";
+import { Input } from "@/components/composition/Input";
 
 const usersApi = UsersApi.getInstance();
 
@@ -22,8 +24,44 @@ export default function LoginStage(props: LoginStageProps) {
   const [whatsapp, setWhatsapp] = useState<string>("");
   const [gender, setGender] = useState<GenderOptions | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
+  const [branchId, setBranchId] = useState<number>();
+  const [branches, setBranches] = useState<BranchModel[]>([]);
 
   const lockRef = useRef<boolean>(false);
+
+  const handleSubmitRegister = useCallback(async (event: FormEvent) => {
+    if (!event.defaultPrevented) event.preventDefault();
+    if (lockRef.current) return;
+    lockRef.current = true;
+    setLoading(true);
+
+    try {
+      if (!fullname || !whatsapp || !gender || !branchId) {
+        WarningNotificationController.show("INFO", "Por favor preenchar todos os campos");
+        return;
+      }
+
+      const user: UserData = {
+        fullname,
+        email,
+        whatsapp,
+        gender,
+        branchId
+      };
+
+      const userId = await usersApi.register(user);
+      user.id = userId;
+      user.sessionCode = generateSessionCode();
+
+      onClick(user);
+    } catch (e) {
+      console.error(e);
+      lockRef.current = false;
+      setLoading(false);
+
+      WarningNotificationController.show("ERROR", String(e));
+    }
+  }, [fullname, email,  whatsapp, gender, branchId, onClick]);
 
   useEffect(() => {
     //@ts-ignore
@@ -71,7 +109,15 @@ export default function LoginStage(props: LoginStageProps) {
       }
     };
 
+    const getBranches = async () => {
+      const branches = await BranchesApi.getInstance().getBranches();
+
+      setBranches(branches);
+      setBranchId(branches[0].id);
+    };
+
     getLocation();
+    getBranches();
 
     return () => {
       //@ts-ignore
@@ -83,42 +129,11 @@ export default function LoginStage(props: LoginStageProps) {
     <div className="w-full h-full bg-[#7C65B5] flex items-center justify-center">
       <form
         className="max-w-[512px] w-full flex flex-col items-center"
-        onSubmit={async (event) => {
-          if (!event.defaultPrevented) event.preventDefault();
-          if (lockRef.current) return;
-          lockRef.current = true;
-          setLoading(true);
-
-          try {
-            if (!fullname || !whatsapp || !gender) {
-              WarningNotificationController.show("INFO", "Por favor preenchar todos os campos");
-              return;
-            }
-
-            const user: UserData = {
-              fullname,
-              email,
-              whatsapp,
-              gender,
-            };
-
-            const userId = await usersApi.register(user);
-            user.id = userId;
-            user.sessionCode = generateSessionCode();
-
-            onClick(user);
-          } catch (e) {
-            console.error(e);
-            lockRef.current = false;
-            setLoading(false);
-
-            WarningNotificationController.show("ERROR", String(e));
-          }
-        }}
+        onSubmit={handleSubmitRegister}
       >
         <Image className="mb-14" src={ActonLogin} alt="Acton login logo" width={180} />
 
-        <Input
+        <InputBasic
           className="mb-4 w-5/6"
           placeholder="Nome Completo"
           value={fullname}
@@ -126,7 +141,7 @@ export default function LoginStage(props: LoginStageProps) {
           required={true}
         />
 
-        <Input
+        <InputBasic
           className="mb-4 w-5/6"
           placeholder="E-mail"
           type="email"
@@ -135,7 +150,7 @@ export default function LoginStage(props: LoginStageProps) {
           required={true}
         />
 
-        <Input
+        <InputBasic
           className="mb-4 w-5/6"
           placeholder="Whatsapp"
           type="tel"
@@ -164,9 +179,20 @@ export default function LoginStage(props: LoginStageProps) {
         />
 
         <FooterSelect>
-          <InputSelect
-            onValue={console.log}
-            options={['test']}/>
+          <Input.Root className="flex flex-row items-center gap-2">
+            <Input.Label text="Sua academia:" className="text-[#484848]"/>
+            <Input.Select
+              className="flex-1 border-none text-[#484848] bg-[#48484810] rounded-sm"
+              placeholder="Selecione uma unidade"
+              value={branchId}
+              onValue={(value) =>  setBranchId(value as number)}
+              required={true}
+            >
+              {branches.map((branch) => (
+                <Input.Option key={branch.id} value={branch.id} text={branch.name}/>
+              ))}
+            </Input.Select>
+          </Input.Root>
         </FooterSelect>
 
         <InputSubmit diabled={loading} className="mt-5 text-[#7C65B5]" name="Avançar" />
@@ -206,13 +232,4 @@ async function getCurrentPositionByIp(): Promise<PositionInfo> {
   const { latitude, longitude } = positionData;
 
   return { latitude, longitude };
-}
-
-/**
- * Storage position
- *
- * @param {LocationInfo} location
- */
-async function storagePosition(location: PositionInfo) {
-  console.log("Location: ", location);
 }

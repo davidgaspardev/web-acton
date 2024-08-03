@@ -8,6 +8,7 @@ export type UserData = {
   email: string;
   whatsapp: string;
   gender: GenderOptions;
+  branchId?: number;
   sessionCode?: string;
   inputs?: string[];
   prospectId?: number;
