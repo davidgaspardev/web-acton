@@ -20,6 +20,7 @@ export default function LoginStage(props: LoginStageProps) {
   const { onClick } = props;
 
   const [fullname, setFullname] = useState<string>("");
+  const [cpf, setCpf] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [whatsapp, setWhatsapp] = useState<string>("");
   const [gender, setGender] = useState<GenderOptions | undefined>();
@@ -43,6 +44,7 @@ export default function LoginStage(props: LoginStageProps) {
 
       const user: UserData = {
         fullname,
+        cpf,
         email,
         whatsapp,
         gender,
@@ -61,7 +63,7 @@ export default function LoginStage(props: LoginStageProps) {
 
       WarningNotificationController.show("ERROR", String(e));
     }
-  }, [fullname, email,  whatsapp, gender, branchId, onClick]);
+  }, [fullname, cpf, email, whatsapp, gender, branchId, onClick]);
 
   useEffect(() => {
     //@ts-ignore
@@ -138,6 +140,16 @@ export default function LoginStage(props: LoginStageProps) {
           placeholder="Nome Completo"
           value={fullname}
           onValue={setFullname}
+          required={true}
+        />
+
+        <InputBasic
+          className="mb-4 w-5/6"
+          placeholder="CPF 123.456.789-10"
+          pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+          maxLength={14}
+          value={cpf}
+          onValue={setCpf}
           required={true}
         />
 

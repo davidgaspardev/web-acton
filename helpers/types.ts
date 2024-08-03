@@ -5,6 +5,7 @@ export type Optional<T> = T | undefined;
 export type UserData = {
   id?: string;
   fullname: string;
+  cpf: string;
   email: string;
   whatsapp: string;
   gender: GenderOptions;
