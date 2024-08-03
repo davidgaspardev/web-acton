@@ -9,6 +9,7 @@ export type UserData = {
   email: string;
   whatsapp: string;
   gender: GenderOptions;
+  branchId?: number;
   sessionCode?: string;
   inputs?: string[];
   prospectId?: number;
@@ -132,6 +133,26 @@ export type QuizModel = {
   answer: string;
   date: Date;
   sessionCode: string;
+};
+
+export type BranchModel = {
+  id: number;
+  name: string;
+  cnpj: string | null;
+  phone: string | null;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  neighborhood: string;
+  slug: string;
+  imageUrl: string;
+  latitude: number;
+  longitude: number;
+  wppLink: string;
+  evoId: number;
+  evoDns: string;
+  evoToken: string;
 };
 
 export type MetricsInfo<T = number> = MetricInfo<T>[];

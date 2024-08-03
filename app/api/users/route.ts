@@ -24,6 +24,21 @@ export async function POST(request: Request) {
 
     const newUser: UserCreateData = await request.json();
     if (EVO_API_ENABLE) {
+      if (!newUser.branchId) {
+        throw new Error("Branch ID is required");
+      }
+
+      // Get branch of this new user
+      const branch = await prisma.branches.findFirst({
+        where: {
+          id: newUser.branchId,
+        },
+      });
+
+      if (!branch) {
+        throw new Error("Branch not found");
+      }
+
       const evoApi = EvoApi.getInstance();
       const prospectAlreadyExists = await evoApi.findByEmail(newUser.email);
 
@@ -31,7 +46,10 @@ export async function POST(request: Request) {
         newUser.prospectId =
           prospectAlreadyExists[prospectAlreadyExists.length - 1].idProspect;
       } else {
-        await evoApi.createUser(newUser);
+        await evoApi.createUser(newUser, {
+          username: branch.evoDns,
+          password: branch.evoToken,
+        });
       }
     }
 

@@ -3,10 +3,12 @@ import { Nullable } from "@/helpers/types";
 export type UserCreateData = {
   id: string;
   fullname: string;
+  cpf: string;
   email: string;
   whatsapp: string;
   gender: GenderOptions;
-  prospectId: number | null;
+  branchId: number;
+  prospectId: Nullable<number>;
 };
 
 // Gender Options of database
