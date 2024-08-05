@@ -23,7 +23,18 @@ export async function POST(request: Request) {
     }
 
     const newUser: UserCreateData = await request.json();
-    if (EVO_API_ENABLE) {
+
+    if (!newUser.cpf) {
+      throw new Error("CPF is required");
+    }
+
+    const userAlreadyExists = await prisma.users.findFirst({
+      where: {
+        cpf: newUser.cpf,
+      },
+    });
+
+    if (EVO_API_ENABLE && !userAlreadyExists?.prospectId) {
       if (!newUser.branchId) {
         throw new Error("Branch ID is required");
       }
@@ -51,6 +62,12 @@ export async function POST(request: Request) {
           password: branch.evoToken,
         });
       }
+    } else if (userAlreadyExists?.prospectId) {
+      if (DEBUG_MODE) {
+        console.log("User already exists in EVO:", userAlreadyExists);
+      }
+
+      newUser.prospectId = userAlreadyExists.prospectId;
     }
 
     const userCreated = await prisma.users.create({
