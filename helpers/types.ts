@@ -5,9 +5,11 @@ export type Optional<T> = T | undefined;
 export type UserData = {
   id?: string;
   fullname: string;
+  cpf: string;
   email: string;
   whatsapp: string;
   gender: GenderOptions;
+  branchId?: number;
   sessionCode?: string;
   inputs?: string[];
   prospectId?: number;
@@ -133,6 +135,26 @@ export type QuizModel = {
   sessionCode: string;
 };
 
+export type BranchModel = {
+  id: number;
+  name: string;
+  cnpj: string | null;
+  phone: string | null;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  neighborhood: string;
+  slug: string;
+  imageUrl: string;
+  latitude: number;
+  longitude: number;
+  wppLink: string;
+  evoId: number;
+  evoDns: string;
+  evoToken: string;
+};
+
 export type MetricsInfo<T = number> = MetricInfo<T>[];
 
 export type MetricInfo<T = number> = {
@@ -140,7 +162,7 @@ export type MetricInfo<T = number> = {
   quantity: T;
 };
 
-export type BrancheInfo = {
+export type BranchInfo = {
   name: string;
   address: string;
   city: string;
@@ -149,7 +171,6 @@ export type BrancheInfo = {
   neighborhood: string;
   slug: string;
   imageUrl: string;
-  plans: BranchePlan[];
 };
 
 export type PlanType =
@@ -158,9 +179,7 @@ export type PlanType =
   | "INFINITY MAX"
   | "ENGENHO DO MEIO CONTRATO DE ADESÃO – FIDELIDADE";
 
-export type BranchePlan = {
-  name: PlanType;
-  link: string;
-  value: number;
-  benefits: string[];
+export type PositionInfo = {
+  latitude: number;
+  longitude: number;
 };

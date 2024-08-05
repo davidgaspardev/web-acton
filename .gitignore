@@ -39,3 +39,6 @@ next-env.d.ts
 
 # patch files
 *.patch
+
+# sql test files
+/prisma/sql/*.sql

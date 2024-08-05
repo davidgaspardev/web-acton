@@ -23,25 +23,30 @@ export default class EvoApi {
     return this.instance;
   }
 
-  public createUser = async (userData: UserCreateData) => {
+  public createUser = async (
+    userData: UserCreateData,
+    auth?: { username: string; password: string }
+  ) => {
     const { loadGender } = this;
-    const { fullname: name, email, whatsapp: cellphone, gender } = userData;
+    const { fullname: name, cpf, email, whatsapp: cellphone, gender } = userData;
+    const { username, password } = auth || {};
 
     try {
       const body = JSON.stringify({
         name,
+        cpf,
         email,
         cellphone,
         gender: loadGender(gender),
-        notes: "Acton integration",
+        notes: "Usuário vindo do Acton",
       });
 
       const response = await fetch(`${EVO_API_BASE_URL}/v1/prospects`, {
         method: "POST",
         headers: {
           Authorization: loadBasicAuthHeaderValue(
-            EVO_API_USERNAME,
-            EVO_API_PASSWORD
+            username || EVO_API_USERNAME,
+            password || EVO_API_PASSWORD
           ),
           "Content-Type": "application/json",
           Accept: "application/json",
@@ -62,6 +67,52 @@ export default class EvoApi {
         const result: { idProspect: number } = await response.json();
         userData.prospectId = result.idProspect;
       } else {
+        throw Error(await response.text());
+      }
+    } catch (err) {
+      console.error(err);
+      // throw err;
+    }
+  };
+
+  public updateProspectById = async (
+    prospectId: number,
+    data: { [key: string]: string | number },
+    auth?: { username: string; password: string }
+  ) => {
+    try {
+      const body = JSON.stringify({
+        idProspect: prospectId,
+        ...data,
+      });
+      const { username, password } = auth || {};
+
+      const response = await fetch(`${EVO_API_BASE_URL}/v1/prospects`, {
+        method: "PUT",
+        headers: {
+          Authorization: loadBasicAuthHeaderValue(
+            username || EVO_API_USERNAME,
+            password || EVO_API_PASSWORD
+          ),
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body,
+      });
+
+      if (DEBUG_MODE) {
+        console.log(
+          "request auth:",
+          loadBasicAuthHeaderValue(EVO_API_USERNAME, EVO_API_PASSWORD)
+        );
+        console.log(
+          "request path:",
+          `${EVO_API_BASE_URL}/v1/prospects/${prospectId}`
+        );
+        console.log("request body:", body);
+      }
+
+      if (response.status !== 200) {
         throw Error(await response.text());
       }
     } catch (err) {

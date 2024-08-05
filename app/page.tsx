@@ -7,6 +7,7 @@ import ResultStage from "./ResultStage";
 import LoginStage from "./LoginStage";
 import StarterStage from "./StarterStage";
 import { ErrorNotification, InfoNotification, WarningNotification } from "@/components/Notification";
+import LocalStorage from "@/helpers/storage";
 
 /**
  *
