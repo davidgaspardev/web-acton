@@ -51,9 +51,9 @@ export async function POST(request: Request) {
       }
 
       const evoApi = EvoApi.getInstance();
-      const prospectAlreadyExists = await evoApi.findByEmail(newUser.email);
+      const prospectAlreadyExists = await evoApi.findUserByCpf(newUser.cpf);
 
-      if (prospectAlreadyExists) {
+      if (!!prospectAlreadyExists?.length) {
         newUser.prospectId =
           prospectAlreadyExists[prospectAlreadyExists.length - 1].idProspect;
       } else {
