@@ -121,10 +121,10 @@ export default class EvoApi {
     }
   };
 
-  public findByEmail = async (email: string): Promise<Optional<Prospect[]>> => {
+  public findUserByCpf = async (cpf: string): Promise<Optional<Prospect[]>> => {
     try {
       const response = await fetch(
-        `${EVO_API_BASE_URL}/v1/prospects?email=${email}`,
+        `${EVO_API_BASE_URL}/v1/prospects?document=${cpf}`,
         {
           method: "GET",
           headers: {
