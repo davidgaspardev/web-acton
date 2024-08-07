@@ -9,8 +9,10 @@ import { WarningNotificationController } from "@/components/Notification";
 import { twMerge } from "tailwind-merge";
 import BranchesApi from "@/helpers/api/branches";
 import { Input } from "@/components/composition/Input";
+import LocalStorage from "@/helpers/storage";
 
 const usersApi = UsersApi.getInstance();
+const localStorage = LocalStorage.getInstance();
 
 type LoginStageProps = {
   onClick: (user: UserData) => void;
@@ -66,6 +68,10 @@ export default function LoginStage(props: LoginStageProps) {
   }, [fullname, cpf, email, whatsapp, gender, branchId, onClick]);
 
   useEffect(() => {
+    if(branchId) localStorage.setBranchId(branchId);
+  }, [branchId]);
+
+  useEffect(() => {
     //@ts-ignore
     window.onCurrentLocation = (latitude: number, longitude: number) => {
       // Make something with latitude and longitude
@@ -115,7 +121,9 @@ export default function LoginStage(props: LoginStageProps) {
       const branches = await BranchesApi.getInstance().getBranches();
 
       setBranches(branches);
-      setBranchId(branches[0].id);
+
+      const defaultBranchId = localStorage.getBranchId();
+      setBranchId(defaultBranchId || branches[0].id);
     };
 
     getLocation();

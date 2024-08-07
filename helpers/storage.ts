@@ -10,6 +10,7 @@ export default class LocalStorage {
   // Address of data in local storage
   private readonly KEY_TOKEN = "TOKEN";
   private readonly KEY_CURRENT_LOCATION = "CURRENT_LOCATION";
+  private readonly KEY_BRANCH_ID = "BRANCH_ID";
 
   private constructor() {}
 
@@ -52,5 +53,19 @@ export default class LocalStorage {
     }
 
     return null;
+  }
+
+  public setBranchId(branchId: number) {
+    const { storage, KEY_BRANCH_ID } = this;
+
+    return storage().setItem(KEY_BRANCH_ID, branchId.toString());
+  }
+
+  public getBranchId(): Nullable<number> {
+    const { storage, KEY_BRANCH_ID } = this;
+
+    const branchIdString = storage().getItem(KEY_BRANCH_ID);
+
+    return branchIdString ? Number(branchIdString) : null;
   }
 }
