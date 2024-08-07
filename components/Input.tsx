@@ -126,12 +126,12 @@ export function InputSelect(props: InputSelectProps) {
         required={required}
       >
         {placeholder && (
-          <option key="" value="">
+          <option key="" value="" className="bg-[#9a7de3]">
             {placeholder}
           </option>
         )}
         {options.map((option) => (
-          <option key={option} value={option}>
+          <option key={option} value={option} className="bg-[#9a7de3]">
             {option}
           </option>
         ))}
