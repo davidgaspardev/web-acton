@@ -26,6 +26,7 @@ model Users {
   gender     Gender
   createdAt  DateTime  @default(now())
   prospectId Int?
+  memberId   Int?
   branchId   Int?
   quizzes    Quizzes[]
   results    Results[]
