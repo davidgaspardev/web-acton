@@ -121,7 +121,7 @@ export default class EvoApi {
     }
   };
 
-  public findUserByCpf = async (cpf: string): Promise<Optional<Prospect[]>> => {
+  public findProspectByCpf = async (cpf: string): Promise<Optional<Prospect[]>> => {
     try {
       const response = await fetch(
         `${EVO_API_BASE_URL}/v1/prospects?document=${cpf}`,

@@ -51,7 +51,7 @@ export async function POST(request: Request) {
       }
 
       const evoApi = EvoApi.getInstance();
-      const prospectAlreadyExists = await evoApi.findUserByCpf(newUser.cpf);
+      const prospectAlreadyExists = await evoApi.findProspectByCpf(newUser.cpf);
 
       if (!!prospectAlreadyExists?.length) {
         newUser.prospectId =
