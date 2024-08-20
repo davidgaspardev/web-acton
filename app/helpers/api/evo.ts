@@ -75,14 +75,18 @@ export default class EvoApi {
     }
   };
 
-  public updateProspectById = async (
+  public updateProspectByIdNameAndEmail = async (
     prospectId: number,
+    name: string,
+    email: string,
     data: { [key: string]: string | number },
     auth?: { username: string; password: string }
   ) => {
     try {
       const body = JSON.stringify({
         idProspect: prospectId,
+        name,
+        email,
         ...data,
       });
       const { username, password } = auth || {};
@@ -149,17 +153,16 @@ export default class EvoApi {
     }
   };
 
-  public findMemberByCpf = async (cpf: string,  auth?: { username: string; password: string }): Promise<Optional<Member[]>> => {
+  public findMemberByCpf = async (cpf: string): Promise<Optional<Member[]>> => {
     try {
-      const { username, password } = auth || {};
       const response = await fetch(
         `${EVO_API_BASE_URL}/v1/members?document=${cpf}`,
         {
           method: "GET",
           headers: {
             Authorization: loadBasicAuthHeaderValue(
-              username || EVO_API_USERNAME,
-              password || EVO_API_PASSWORD
+              EVO_API_USERNAME,
+              EVO_API_PASSWORD
             ),
             Accept: "application/json",
           },

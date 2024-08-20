@@ -21,8 +21,10 @@ export async function POST(request: Request) {
     if (user && user.prospectId && user.branch) {
       const evoApi = EvoApi.getInstance();
 
-      await evoApi.updateProspectById(
+      await evoApi.updateProspectByIdNameAndEmail(
         user.prospectId,
+        user.fullname,
+        user.email || "",
         {
           notes: `Acton produto: ${resultCreated.methodology} | Fase ${resultCreated.stage} - Nível ${resultCreated.level} (id: ${resultCreated.id})`,
         },

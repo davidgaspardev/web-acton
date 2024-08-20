@@ -107,5 +107,5 @@ function EvoLink(props: EvoLinkProps): JSX.Element {
 }
 
 export function loadLinkToEVO(id: number, type: "PROSTECT" | "MEMBER"): string {
-  return `https://evo-release.w12app.com.br/#/app/actoacademia/1/${type === "MEMBER" ? "clientes" : "oportunidades"}/${id}//perfil`;
+  return `https://evo-release.w12app.com.br/#/app/actoacademia/0/${type === "MEMBER" ? "clientes" : "oportunidades"}/${id}//perfil`;
 }
