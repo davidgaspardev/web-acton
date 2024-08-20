@@ -6,7 +6,7 @@ import {
 } from "@/helpers/env";
 import { Optional } from "@/helpers/types";
 import { loadBasicAuthHeaderValue } from "../utils/auth";
-import { Prospect, UserCreateData, GenderOptions } from "../utils/types";
+import { Prospect, UserCreateData, GenderOptions, Member } from "../utils/types";
 
 /**
  * EVO API client (integration)
@@ -121,7 +121,7 @@ export default class EvoApi {
     }
   };
 
-  public findUserByCpf = async (cpf: string): Promise<Optional<Prospect[]>> => {
+  public findProspectByCpf = async (cpf: string): Promise<Optional<Prospect[]>> => {
     try {
       const response = await fetch(
         `${EVO_API_BASE_URL}/v1/prospects?document=${cpf}`,
@@ -146,6 +146,34 @@ export default class EvoApi {
     } catch (err) {
       console.error(err);
       // throw err;
+    }
+  };
+
+  public findMemberByCpf = async (cpf: string,  auth?: { username: string; password: string }): Promise<Optional<Member[]>> => {
+    try {
+      const { username, password } = auth || {};
+      const response = await fetch(
+        `${EVO_API_BASE_URL}/v1/members?document=${cpf}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: loadBasicAuthHeaderValue(
+              username || EVO_API_USERNAME,
+              password || EVO_API_PASSWORD
+            ),
+            Accept: "application/json",
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        const result: Member[] = await response.json();
+        return result.length ? result : undefined;
+      } else {
+        throw Error(await response.text());
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 

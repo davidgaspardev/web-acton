@@ -34,7 +34,7 @@ export async function POST(request: Request) {
       },
     });
 
-    if (EVO_API_ENABLE && !userAlreadyExists?.prospectId) {
+    if (EVO_API_ENABLE && !userAlreadyExists?.prospectId && !userAlreadyExists?.memberId) {
       if (!newUser.branchId) {
         throw new Error("Branch ID is required");
       }
@@ -51,23 +51,37 @@ export async function POST(request: Request) {
       }
 
       const evoApi = EvoApi.getInstance();
-      const prospectAlreadyExists = await evoApi.findUserByCpf(newUser.cpf);
+      const prospectAlreadyExists = await evoApi.findProspectByCpf(newUser.cpf);
 
       if (!!prospectAlreadyExists?.length) {
         newUser.prospectId =
           prospectAlreadyExists[prospectAlreadyExists.length - 1].idProspect;
       } else {
-        await evoApi.createUser(newUser, {
-          username: branch.evoDns,
-          password: branch.evoToken,
-        });
+        const memberAlreadyExists = await evoApi.findMemberByCpf(newUser.cpf);
+
+        if (!!memberAlreadyExists?.length) {
+          newUser.memberId = memberAlreadyExists[memberAlreadyExists.length - 1].idMember;
+        } else {
+          await evoApi.createUser(newUser, {
+            username: branch.evoDns,
+            password: branch.evoToken,
+          });
+        }
       }
-    } else if (userAlreadyExists?.prospectId) {
+    }
+    else if (userAlreadyExists?.prospectId) {
       if (DEBUG_MODE) {
         console.log("User already exists in EVO:", userAlreadyExists);
       }
 
       newUser.prospectId = userAlreadyExists.prospectId;
+    }
+    else if (userAlreadyExists?.memberId) {
+      if (DEBUG_MODE) {
+        console.log("User already exists in EVO as member:", userAlreadyExists);
+      }
+
+      newUser.memberId = userAlreadyExists.memberId;
     }
 
     const userCreated = await prisma.users.create({

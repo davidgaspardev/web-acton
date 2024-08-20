@@ -103,15 +103,18 @@ function NoResult(): JSX.Element {
 
 
 type EVOPros = {
-  prospectId: number
+  prospectId: number,
+  memberId?: number
 }
 
 function EVO(props: EVOPros): JSX.Element {
-  const { prospectId } = props;
+  const { prospectId, memberId } = props;
+
+  const evoLink = !!memberId ? loadLinkToEVO(memberId, "MEMBER") : loadLinkToEVO(prospectId, 'PROSTECT');
 
   return (
     <Link
-      href={loadLinkToEVO(prospectId)}
+      href={evoLink}
       target="_blank"
       className="flex flex-col justify-center items-center h-full bg-[#8061ff48] hover:bg-[#8061ff75]">
       <Image

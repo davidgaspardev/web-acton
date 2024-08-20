@@ -78,14 +78,16 @@ function Methology(props: MethologyProps): JSX.Element {
 
 type EvoLinkProps = {
   prospectId: number;
+  memberId?: number;
 }
 
 function EvoLink(props: EvoLinkProps): JSX.Element {
-  const { prospectId } = props;
+  const { prospectId, memberId } = props;
 
   const openEvo = useCallback(() => {
-    window.open(loadLinkToEVO(prospectId), "_blank");
-  },[prospectId]);
+    const evoLink = !!memberId ? loadLinkToEVO(memberId, "MEMBER") : loadLinkToEVO(prospectId, "PROSTECT");
+    window.open(evoLink, "_blank");
+  },[prospectId, memberId]);
 
   return (
     <div className="w-full h-10 bg-[#262b2c] flex felx-row cursor-pointer rounded-b-md" onClick={openEvo}>
@@ -104,6 +106,6 @@ function EvoLink(props: EvoLinkProps): JSX.Element {
   );
 }
 
-export function loadLinkToEVO(prospectId: number): string {
-  return `https://evo-release.w12app.com.br/#/app/actoacademia/0/oportunidades/${prospectId}//perfil`;
+export function loadLinkToEVO(id: number, type: "PROSTECT" | "MEMBER"): string {
+  return `https://evo-release.w12app.com.br/#/app/actoacademia/1/${type === "MEMBER" ? "clientes" : "oportunidades"}/${id}//perfil`;
 }
