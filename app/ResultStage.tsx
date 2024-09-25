@@ -245,7 +245,7 @@ export default function ResultStage(props: ResultStageProps) {
 
   function printerResult(result: ResultToPrint) {
     // @ts-ignore
-    MessageInvoker.postMessage(JSON.stringify(result));
+    (MessageInvoker || window.MessageInvoker).postMessage(JSON.stringify(result));
   }
 }
 
