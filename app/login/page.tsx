@@ -107,36 +107,6 @@ export default function LoginPage(): JSX.Element {
                   className="fixed bottom-6 right-6"/>
               </div>
             </div>
-
-            {/* <form className="p-4"
-            onSubmit={async (event) => {
-                if (!event.defaultPrevented) event.preventDefault();
-                if (lockRef.current) return;
-                lockRef.current = true;
-
-                try {
-                    await toSignIn(username, password);
-                } catch(e) {
-                    console.error(e);
-                } finally {
-                    lockRef.current = false;
-                }
-            }}>
-                <Input
-                    label="Nome de usuário"
-                    value={username}
-                    onValue={setUsername} />
-
-                <Input
-                    label="Senha"
-                    type="password"
-                    value={password}
-                    onValue={setPassword}/>
-
-                <InputSubmit
-                className="mt-4"
-                    name="Logar"/>
-            </form> */}
         </main>
     );
 }
