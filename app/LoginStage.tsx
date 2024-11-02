@@ -32,6 +32,27 @@ export default function LoginStage(props: LoginStageProps) {
 
   const lockRef = useRef<boolean>(false);
 
+  const hnadleMaskCpf = useCallback((cpfInput: string) => {
+    if(cpfInput.length < cpf.length) {
+      return setCpf(cpfInput);
+    }
+    const onlyCpf = cpfInput.replace(/[^\d]/g, "");
+    let resultCpf;
+
+    // Formata a string conforme os exemplos fornecidos
+    if (onlyCpf.length <= 2) {
+      resultCpf = onlyCpf;
+    } else if (onlyCpf.length <= 5) {
+      resultCpf = onlyCpf.slice(0, 3) + '.' + onlyCpf.slice(3);
+    } else if (onlyCpf.length <= 8) {
+      resultCpf = onlyCpf.slice(0, 3) + '.' + onlyCpf.slice(3, 6) + '.' + onlyCpf.slice(6);
+    } else {
+      resultCpf = onlyCpf.slice(0, 3) + '.' + onlyCpf.slice(3, 6) + '.' + onlyCpf.slice(6, 9) + '-' + onlyCpf.slice(9);
+    }
+
+    setCpf(resultCpf);
+  }, [cpf]);
+
   const handleSubmitRegister = useCallback(async (event: FormEvent) => {
     if (!event.defaultPrevented) event.preventDefault();
     if (lockRef.current) return;
@@ -68,7 +89,7 @@ export default function LoginStage(props: LoginStageProps) {
   }, [fullname, cpf, email, whatsapp, gender, branchId, onClick]);
 
   useEffect(() => {
-    if(branchId) localStorage.setBranchId(branchId);
+    if (branchId) localStorage.setBranchId(branchId);
   }, [branchId]);
 
   useEffect(() => {
@@ -83,7 +104,7 @@ export default function LoginStage(props: LoginStageProps) {
       try {
         // @ts-ignore
         CurrentLocationInvoker?.postMessage("");
-      } catch(err) {
+      } catch (err) {
         try {
           if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
@@ -157,7 +178,7 @@ export default function LoginStage(props: LoginStageProps) {
           pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
           maxLength={14}
           value={cpf}
-          onValue={setCpf}
+          onValue={hnadleMaskCpf}
           required={true}
         />
 
@@ -182,7 +203,7 @@ export default function LoginStage(props: LoginStageProps) {
         />
 
         <InputSelect
-          className="mb-6 w-5/6"
+          className="mb-4 w-5/6"
           placeholder="Gênero"
           value={gender}
           onValue={(option) => setGender(option as GenderOptions)}
@@ -198,22 +219,20 @@ export default function LoginStage(props: LoginStageProps) {
           }
         />
 
-        <FooterSelect>
-          <Input.Root className="flex flex-row items-center gap-2">
-            <Input.Label text="Sua academia:" className="text-[#484848]"/>
-            <Input.Select
-              className="flex-1 border-none text-[#484848] bg-[#48484810] rounded-sm"
-              placeholder="Selecione uma unidade"
-              value={branchId}
-              onValue={(value) =>  setBranchId(value as number)}
-              required={true}
-            >
-              {branches.map((branch) => (
-                <Input.Option key={branch.id} value={branch.id} text={branch.name}/>
-              ))}
-            </Input.Select>
-          </Input.Root>
-        </FooterSelect>
+        <Input.Root className="mb-6 w-5/6 bg-[#FFFFFF26] py-3 rounded-md">
+          <Input.Label text="Sua academia:" className="text-[#FFFFFFAA]" />
+          <Input.Select
+            placeholder="Selecione uma unidade"
+            value={branchId}
+            onValue={(value) => setBranchId(value as number)}
+            required>
+            {
+              branches.map((branch) => (
+                <Input.Option key={branch.id} value={branch.id} text={branch.name} />
+              ))
+            }
+          </Input.Select>
+        </Input.Root>
 
         <InputSubmit diabled={loading} className="mt-5 text-[#7C65B5]" name="Avançar" />
       </form>
