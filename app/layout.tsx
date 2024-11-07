@@ -1,5 +1,6 @@
 import "./globals.css";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +19,9 @@ export default function RootLayout(props: RootLayoutProps) {
   return (
     <html lang="pt-br">
       <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-SK3K7H3XD3"></script>
-        <script
+        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-SK3K7H3XD3"></Script>
+        <Script
+          id="gtag"
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -43,27 +45,6 @@ export default function RootLayout(props: RootLayoutProps) {
             `,
           }}
         />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              !function(f,b,e,v,n,t,s)
-              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-              n.queue=[];t=b.createElement(e);t.async=!0;
-              t.src=v;s=b.getElementsByTagName(e)[0];
-              s.parentNode.insertBefore(t,s)}(window, document,'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '1271906727305977');
-              fbq('track', 'PageView');
-            `,
-          }}
-        />
-        <noscript>
-          <img height="1" width="1" style={{ display: 'none' }}
-            src="https://www.facebook.com/tr?id=1271906727305977&ev=PageView&noscript=1"
-          />
-        </noscript>
         <meta property="og:url" content="https://web-acton.vercel.app" />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="Acton: Mapeamento de Sintomas" />
@@ -77,15 +58,16 @@ export default function RootLayout(props: RootLayoutProps) {
         />
       </head>
       <body className={inter.className}>
-      <noscript>
-        <iframe
-          src="https://www.googletagmanager.com/ns.html?id=GTM-PMR2HNVH"
-          height="0"
-          width="0"
-          style={{ display: 'none', visibility: 'hidden' }}>
-        </iframe>
-      </noscript>
-      {children}</body>
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-PMR2HNVH"
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}>
+          </iframe>
+        </noscript>
+        {children}
+      </body>
     </html>
   );
 }
