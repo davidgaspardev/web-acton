@@ -110,7 +110,7 @@ export default function LoginPage(): JSX.Element {
             </div>
 
             <div className="hidden lg:block flex-[2] bg-cover bg-center bg-[url(https://firebasestorage.googleapis.com/v0/b/myself-dg.appspot.com/o/acton_background.JPG?alt=media&token=b223d5ee-5c4a-4118-be71-6f4385d3fde9)]">
-              <div className="w-full h-full bg-[#FFFFFF75] relative">
+              <div className="w-full h-full bg-[#FFFFFF75] relative border-opacity-20 border-l-4 border-white">
                 <Image
                   src={ActoLogo}
                   width={580}
