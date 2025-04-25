@@ -29,6 +29,8 @@ export default function UserPage(props: UserPageProps): JSX.Element {
     const [ user, setUser ] = useState<UserModel>();
     const [ quizzes, setQuizzes ] = useState<QuizModel[]>([]);
     const [ search, setSearch ] = useState<string>("");
+    const [aiOpinion, setAiOpinion] = useState<string>("");
+    const [loadingOpinion, setLoadingOpinion] = useState(false);
 
     const loadUserData = useCallback(async () => {
         if(!token) {
@@ -49,6 +51,27 @@ export default function UserPage(props: UserPageProps): JSX.Element {
 
         setQuizzes(quizzes);
     }, [ user, token ]);
+
+    const handleGenerateAIOpinion = useCallback(async () => {
+        setLoadingOpinion(true);
+        setAiOpinion("");
+        try {
+            const response = await fetch("/api/ai-opinion", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ quizzes, client_name: user?.fullname }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                setAiOpinion(data.result);
+            } else {
+                setAiOpinion("Erro ao gerar opinião da IA: " + (data.error || "Erro desconhecido"));
+            }
+        } catch (e) {
+            setAiOpinion("Erro ao conectar com a IA: " + (e?.toString() || ""));
+        }
+        setLoadingOpinion(false);
+    }, [quizzes, user]);
 
     useEffect(() => {
         loadQuizzesData();
@@ -87,8 +110,20 @@ export default function UserPage(props: UserPageProps): JSX.Element {
                         ))
                     }
                 </div>
-                <div className="flex-1 flex items-center justify-center">
+                <div className="flex-1 flex flex-col items-center justify-center">
                     { user && <UserInfoCard info={user} />}
+                    <button
+                        className="mt-6 px-6 py-2 bg-[#654C8D] text-white rounded hover:bg-[#4a3666]"
+                        onClick={handleGenerateAIOpinion}
+                        disabled={loadingOpinion}
+                    >
+                        {loadingOpinion ? "Gerando opinião da IA..." : "Gerar opinião da IA"}
+                    </button>
+                    {aiOpinion && (
+                        <pre className="mt-4 p-4 bg-gray-100 rounded text-xs whitespace-pre-wrap max-w-2xl overflow-x-auto">
+                            {aiOpinion}
+                        </pre>
+                    )}
                 </div>
             </div>
         </main>

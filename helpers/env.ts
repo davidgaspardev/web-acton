@@ -11,7 +11,7 @@ export const WPP_API_PHONE = process.env.WPP_API_PHONE!; // || MissingEnv("WPP_A
 export const WPP_API_FBCLID = process.env.WPP_API_FBCLID!; // || MissingEnv("EVO_API_PASSWORD");
 
 export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || "acton-jwt-screte-key";
-export const DEBUG_MODE = process.env.DEBUG_MODE === "true";
+export const DEBUG_MODE = process.env.NEXT_PUBLIC_DEBUG_MODE === "true";
 export const ORIGINS_ALLOWED = process.env.ORIGINS_ALLOWED || "*";
 export const USER_PAGE_SIZE =
   Number.isInteger(Number(process.env.USER_PAGE_SIZE)) &&
