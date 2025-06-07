@@ -13,7 +13,8 @@ import UserInfoCard from "./UserInfoCard";
 type UserPageProps = {
     params: {
         userId: string;
-    }
+    },
+    onAiOpinionGenerated?: (opinion: string) => void;
 };
 
 export default function UserPage(props: UserPageProps): JSX.Element {
@@ -63,15 +64,21 @@ export default function UserPage(props: UserPageProps): JSX.Element {
             });
             const data = await response.json();
             if (response.ok) {
-                setAiOpinion(data.result);
+                const result = data.result;
+                setAiOpinion(result);
+                props.onAiOpinionGenerated?.(result);
             } else {
-                setAiOpinion("Erro ao gerar opinião da IA: " + (data.error || "Erro desconhecido"));
+                const errorMessage = "Erro ao gerar opinião da IA: " + (data.error || "Erro desconhecido");
+                setAiOpinion(errorMessage);
+                props.onAiOpinionGenerated?.(errorMessage);
             }
         } catch (e) {
-            setAiOpinion("Erro ao conectar com a IA: " + (e?.toString() || ""));
+            const errorMessage = "Erro ao conectar com a IA: " + (e?.toString() || "");
+            setAiOpinion(errorMessage);
+            props.onAiOpinionGenerated?.(errorMessage);
         }
         setLoadingOpinion(false);
-    }, [quizzes, user]);
+    }, [quizzes, user, props.onAiOpinionGenerated]);
 
     useEffect(() => {
         loadQuizzesData();

@@ -1,0 +1,73 @@
+Tipo,Nível,Fase,Descrição
+viva_leve,1,01,"Treino para iniciantes, adaptação e consistência. Fase 01 foca em base física."
+viva_leve,1,02,"Treino para iniciantes, adaptação e consistência. Fase 02 foca em base física."
+viva_leve,1,03,"Treino para iniciantes, adaptação e consistência. Fase 03 foca em base física."
+viva_leve,2,04,Treino para evolução de controle corporal. Fase 04 aumenta volume e força.
+viva_leve,2,05,Treino para evolução de controle corporal. Fase 05 aumenta volume e força.
+viva_leve,2,06,Treino para evolução de controle corporal. Fase 06 aumenta volume e força.
+viva_leve,3,07,Treino progressivo para emagrecimento. Fase 07 ajusta intensidade e foco.
+viva_leve,3,08,Treino progressivo para emagrecimento. Fase 08 ajusta intensidade e foco.
+viva_leve,3,09,Treino progressivo para emagrecimento. Fase 09 ajusta intensidade e foco.
+viva_leve,4,10,Treino progressivo para emagrecimento. Fase 10 ajusta intensidade e foco.
+viva_leve,4,11,Treino progressivo para emagrecimento. Fase 11 ajusta intensidade e foco.
+viva_leve,4,12,Treino progressivo para emagrecimento. Fase 12 ajusta intensidade e foco.
+viva_leve,5,13,Treino progressivo para emagrecimento. Fase 13 ajusta intensidade e foco.
+viva_leve,5,14,Treino progressivo para emagrecimento. Fase 14 ajusta intensidade e foco.
+viva_leve,5,15,Treino progressivo para emagrecimento. Fase 15 ajusta intensidade e foco.
+viva_leve,6,16,Treino progressivo para emagrecimento. Fase 16 ajusta intensidade e foco.
+viva_leve,6,17,Treino progressivo para emagrecimento. Fase 17 ajusta intensidade e foco.
+viva_leve,6,18,Treino progressivo para emagrecimento. Fase 18 ajusta intensidade e foco.
+viva_leve,7,19,Treino progressivo para emagrecimento. Fase 19 ajusta intensidade e foco.
+viva_leve,7,20,Treino progressivo para emagrecimento. Fase 20 ajusta intensidade e foco.
+viva_leve,7,21,Treino progressivo para emagrecimento. Fase 21 ajusta intensidade e foco.
+viva_leve,8,22,Treino progressivo para emagrecimento. Fase 22 ajusta intensidade e foco.
+viva_leve,8,23,Treino progressivo para emagrecimento. Fase 23 ajusta intensidade e foco.
+viva_leve,8,24,Treino progressivo para emagrecimento. Fase 24 ajusta intensidade e foco.
+vida_ativa,1,01,Treino para ganho de massa e força. Fase 01 ajusta carga e técnicas.
+vida_ativa,1,02,Treino para ganho de massa e força. Fase 02 ajusta carga e técnicas.
+vida_ativa,1,03,Treino para ganho de massa e força. Fase 03 ajusta carga e técnicas.
+vida_ativa,2,04,Treino para ganho de massa e força. Fase 04 ajusta carga e técnicas.
+vida_ativa,2,05,Treino para ganho de massa e força. Fase 05 ajusta carga e técnicas.
+vida_ativa,2,06,Treino para ganho de massa e força. Fase 06 ajusta carga e técnicas.
+vida_ativa,3,07,Treino para ganho de massa e força. Fase 07 ajusta carga e técnicas.
+vida_ativa,3,08,Treino para ganho de massa e força. Fase 08 ajusta carga e técnicas.
+vida_ativa,3,09,Treino para ganho de massa e força. Fase 09 ajusta carga e técnicas.
+vida_ativa,4,10,Treino para ganho de massa e força. Fase 10 ajusta carga e técnicas.
+vida_ativa,4,11,Treino para ganho de massa e força. Fase 11 ajusta carga e técnicas.
+vida_ativa,4,12,Treino para ganho de massa e força. Fase 12 ajusta carga e técnicas.
+vida_ativa,5,13,Treino para ganho de massa e força. Fase 13 ajusta carga e técnicas.
+vida_ativa,5,14,Treino para ganho de massa e força. Fase 14 ajusta carga e técnicas.
+vida_ativa,5,15,Treino para ganho de massa e força. Fase 15 ajusta carga e técnicas.
+vida_ativa,6,16,Treino para ganho de massa e força. Fase 16 ajusta carga e técnicas.
+vida_ativa,6,17,Treino para ganho de massa e força. Fase 17 ajusta carga e técnicas.
+vida_ativa,6,18,Treino para ganho de massa e força. Fase 18 ajusta carga e técnicas.
+vida_ativa,7,19,Treino para ganho de massa e força. Fase 19 ajusta carga e técnicas.
+vida_ativa,7,20,Treino para ganho de massa e força. Fase 20 ajusta carga e técnicas.
+vida_ativa,7,21,Treino para ganho de massa e força. Fase 21 ajusta carga e técnicas.
+vida_ativa,8,22,Treino para ganho de massa e força. Fase 22 ajusta carga e técnicas.
+vida_ativa,8,23,Treino para ganho de massa e força. Fase 23 ajusta carga e técnicas.
+vida_ativa,8,24,Treino para ganho de massa e força. Fase 24 ajusta carga e técnicas.
+viva_bem,1,01,Treino para qualidade de vida e manutenção. Fase 01 com estímulos adaptados.
+viva_bem,1,02,Treino para qualidade de vida e manutenção. Fase 02 com estímulos adaptados.
+viva_bem,1,03,Treino para qualidade de vida e manutenção. Fase 03 com estímulos adaptados.
+viva_bem,2,04,Treino para qualidade de vida e manutenção. Fase 04 com estímulos adaptados.
+viva_bem,2,05,Treino para qualidade de vida e manutenção. Fase 05 com estímulos adaptados.
+viva_bem,2,06,Treino para qualidade de vida e manutenção. Fase 06 com estímulos adaptados.
+viva_bem,3,07,Treino para qualidade de vida e manutenção. Fase 07 com estímulos adaptados.
+viva_bem,3,08,Treino para qualidade de vida e manutenção. Fase 08 com estímulos adaptados.
+viva_bem,3,09,Treino para qualidade de vida e manutenção. Fase 09 com estímulos adaptados.
+viva_bem,4,10,Treino para qualidade de vida e manutenção. Fase 10 com estímulos adaptados.
+viva_bem,4,11,Treino para qualidade de vida e manutenção. Fase 11 com estímulos adaptados.
+viva_bem,4,12,Treino para qualidade de vida e manutenção. Fase 12 com estímulos adaptados.
+viva_bem,5,13,Treino para qualidade de vida e manutenção. Fase 13 com estímulos adaptados.
+viva_bem,5,14,Treino para qualidade de vida e manutenção. Fase 14 com estímulos adaptados.
+viva_bem,5,15,Treino para qualidade de vida e manutenção. Fase 15 com estímulos adaptados.
+viva_bem,6,16,Treino para qualidade de vida e manutenção. Fase 16 com estímulos adaptados.
+viva_bem,6,17,Treino para qualidade de vida e manutenção. Fase 17 com estímulos adaptados.
+viva_bem,6,18,Treino para qualidade de vida e manutenção. Fase 18 com estímulos adaptados.
+viva_bem,7,19,Treino para qualidade de vida e manutenção. Fase 19 com estímulos adaptados.
+viva_bem,7,20,Treino para qualidade de vida e manutenção. Fase 20 com estímulos adaptados.
+viva_bem,7,21,Treino para qualidade de vida e manutenção. Fase 21 com estímulos adaptados.
+viva_bem,8,22,Treino para qualidade de vida e manutenção. Fase 22 com estímulos adaptados.
+viva_bem,8,23,Treino para qualidade de vida e manutenção. Fase 23 com estímulos adaptados.
+viva_bem,8,24,Treino para qualidade de vida e manutenção. Fase 24 com estímulos adaptados.

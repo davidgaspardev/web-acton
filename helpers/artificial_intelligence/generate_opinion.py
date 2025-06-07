@@ -3,6 +3,7 @@ import sys
 import warnings
 import json
 from typing import List, Dict
+from enum import Enum
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain.prompts import ChatPromptTemplate
@@ -31,6 +32,19 @@ QUESTION_TO_DOC = {
     'medicamentos': 'Medicamentos.pdf',
 }
 
+class Objetivos(Enum):
+    """Enum for different training objectives."""
+    emagrecimento = "Perder Peso"
+    ganho_massa_muscular = "Ganho de massa muscular"
+    condicionamento_fisico = "Qualidade de vida"
+
+class Tipos_treino(Enum):
+    """Indica qual o tipo de treino recomendado, baseando no objetivo do cliente."""
+    viva_leve = "Para quem quer perder peso (emagrecimento)"
+    vida_ativa = "Para os que possuem objetivo de Ganho de massa muscular"
+    viver_bem = "Para os que buscam Qualidade de vida"
+
+
 class CondicoesQuiz(BaseModel):
     """Indica se o usuário possui cada condição de saúde relevante para o treino"""
     diabetes: bool = Field(description="Possui diabetes?")
@@ -40,8 +54,10 @@ class CondicoesQuiz(BaseModel):
     idoso: bool = Field(description="É idoso (acima de 60 anos)?")
     medicamentos: bool = Field(description="Utiliza medicamentos frequentes?")
     sedentario: bool = Field(description="É sedentário?")
-    atividade_fisica: str = Field(description="Qual o nível de atividade física que o aluno já pratica regularmente?")
     possui_dores_ou_limitações: str = Field(description="Possui dores ou limitações físicas que possam modificar a estrutura dos treinos? Se sim, quais?")
+    atividade_fisica: str = Field(description="De acordo com a pergunta 'Você está treinando atualmente ?', deve trazer a resposta informada no quiz.")
+    objetivo: Objetivos = Field(description="Qual o objetivo principal do aluno com os treinos?")
+    observacoes_extras: bool = Field(description="Possui alguma nova condição de saúde relevante?")
 
 def create_vectorstore(pdf_paths: List[str]) -> FAISS:
     """Creates a vectorstore from the loaded documents."""
@@ -92,6 +108,65 @@ def load_relevant_docs(condicoes: Dict[str, bool], base_dir: str) -> List[str]:
     
     return pdfs_relevantes
 
+def carrega_treinos(base_dir: str, condicoes: Dict) -> Dict:
+    """
+    Carrega o arquivo treinos.csv e define tipo, nível e fase do aluno com base nas condições do quiz.
+    condicoes: dicionário com pelo menos os campos 'objetivo' e 'atividade_fisica'.
+    Retorna um dicionário com tipo, nível, fase e descrição.
+    """
+    import csv
+    # Mapear objetivo para tipo
+    objetivo = condicoes.get('objetivo', '').lower()
+    atividade_fisica = condicoes.get('atividade_fisica', '').lower()
+
+    # Mapeamento de objetivo para tipo
+    objetivo_tipo = {
+        'perder peso': 'viver_bem',
+        'ganho de massa muscular': 'vida_ativa',
+        'qualidade de vida': 'viva_leve',
+    }
+    tipo = objetivo_tipo.get(objetivo, 'viva_leve')
+
+    # Mapeamento de atividade física para nível
+    nivel_map = {
+        'nunca treinei': 1,
+        'iniciante': 1,
+        'treino há 6 meses': 2,
+        'treino há 1 ano': 3,
+        'treino há 1,5 anos': 4,
+        'treino há 2 anos': 5,
+        'treino há 3 anos': 6,
+    }
+    nivel = 1
+    for chave, val in nivel_map.items():
+        if chave in atividade_fisica:
+            nivel = val
+            break
+
+    # Carregar treinos.csv
+    treinos_path = os.path.join(base_dir, 'treinos.csv')
+    treinos = []
+    with open(treinos_path, newline='', encoding='utf-8') as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            if row['Tipo'] == tipo and int(row['Nível']) == nivel:
+                treinos.append(row)
+
+    # Selecionar a fase mais adequada (por padrão, a primeira disponível)
+    if treinos:
+        fase = treinos[0]['Fase']
+        descricao = treinos[0]['Descrição']
+    else:
+        fase = '01'
+        descricao = 'Treino padrão para adaptação.'
+
+    return {
+        'tipo': tipo,
+        'nivel': nivel,
+        'fase': fase,
+        'descricao': descricao
+    }
+
 def inferir_condicoes_com_ia(quizzes: List[Dict]) -> Dict[str, bool]:
     """Analyzes the quiz and infers user conditions using AI."""
     prompt = ChatPromptTemplate.from_messages([
@@ -134,6 +209,12 @@ def generate_ai_opinion(quizzes: List[Dict], client_name: str, base_dir: str = N
     # 3. Prepare data for prompt
     quiz_text = "\n".join([f"Pergunta: {q['question']}\nResposta: {q['answer']}" for q in quizzes])
     condicoes_str = ", ".join([k for k, v in condicoes.items() if v]) or "Nenhuma condição especial identificada"
+
+    treino = carrega_treinos(base_dir, condicoes)
+
+    tipo = treino['tipo']
+    nivel = treino['nivel']
+    fase = treino['fase']
     
     # 4. Generate response with exact format
     prompt = ChatPromptTemplate.from_template(
@@ -148,27 +229,32 @@ def generate_ai_opinion(quizzes: List[Dict], client_name: str, base_dir: str = N
         
         Condições identificadas:
         {condicoes}
+
+       Gere um programa de treino completo em Markdown com EXATAMENTE este formato:
+
+        ## TIPO
+        {tipo}
         
-        Gere um programa de treino completo em Markdown com EXATAMENTE este formato:
+        ## NÍVEL
+        {nivel}
         
-        ## Resumo do Treino do aluno {name}
-        - Tipos de exercícios recomendados:
-        - Quantidade de exercícios por treino:
-        - Séries e repetições recomendadas:
-        - Intensidade: (Baseada em % de 1 RM)
-        - Percepção de Esforço (ex: leve a moderada)
-        - Intervalo entre repetições e entre exercícios:
-        - Frequência semanal indicada:
-        - Progressão indicada de treinos:
-        
+        ## FASE
+        {fase}
+
+        ## EXPLICAÇÃO
+        Explique o porquê do tipo, nível e fase escolhidos, considerando as condições de saúde do aluno e suas condições inferidas pelas respostas do quiz.
+
         ## CUIDADOS
-        Neste campo você deve usar sua habilidade para listar os pontos mais importantes a serem considerados para o aluno, principalmente no que diz respeito aos cuidados a serem tomados nas execuções dos exercícios. Se baseie nessas condições previamente geradas.
-        
-        ## Explicação sobre o treino
-        Neste campo você deve usar sua habilidade para explicar o porquê do treino que você indicou. O texto deve ser claro e objetivo, com uma linguagem simples, como se você tivesse explicando a um educador físico recém-formado o porquê desse treino.
-        
+        - Realizar todos os exercícios com atenção à postura e execução correta.
+        - Respeitar os limites do corpo, evitando sobrecarga.
+        - Manter hidratação e alimentação adequadas.
+        - Caso sinta dores fora do normal, interromper o treino e buscar orientação.
+
+
         ## Observações
-        Neste campo você deve usar sua habilidade para listar os pontos mais importantes a serem considerados para um educador físico recém-formado o porquê desse treino.
+        - Acompanhar a evolução do aluno e ajustar o treino conforme adaptação.
+        - Reforçar a importância do aquecimento e alongamento.
+        - Monitorar sinais de fadiga excessiva ou desconforto.
         """
     )
     
@@ -177,7 +263,11 @@ def generate_ai_opinion(quizzes: List[Dict], client_name: str, base_dir: str = N
         "context": context,
         "quiz": quiz_text,
         "condicoes": condicoes_str,
-        "name": client_name
+        "name": client_name,
+        "treino": treino,
+        "tipo": tipo,
+        "nivel": nivel,
+        "fase": fase
     })
     
     return response.content
