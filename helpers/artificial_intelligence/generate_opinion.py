@@ -58,6 +58,7 @@ class CondicoesQuiz(BaseModel):
     atividade_fisica: str = Field(description="De acordo com a pergunta 'Você está treinando atualmente ?', deve trazer a resposta informada no quiz.")
     objetivo: Objetivos = Field(description="Qual o objetivo principal do aluno com os treinos?")
     observacoes_extras: bool = Field(description="Possui alguma nova condição de saúde relevante?")
+    
 
 def create_vectorstore(pdf_paths: List[str]) -> FAISS:
     """Creates a vectorstore from the loaded documents."""
@@ -182,19 +183,17 @@ def inferir_condicoes_com_ia(quizzes: List[Dict]) -> Dict[str, bool]:
     texto = '\n'.join([f"Pergunta: {q.get('question')}\nResposta: {q.get('answer')}" for q in quizzes])
     return chain.invoke({'input': texto})
 
-def generate_ai_opinion(quizzes: List[Dict], client_name: str, base_dir: str = None) -> str:
+def generate_ai_opinion(quizzes: List[Dict], client_name: str, base_dir: str = None) -> dict:
     """Generates a personalized opinion based on quiz and user conditions."""
     if base_dir is None:
         base_dir = os.path.join(os.path.dirname(__file__), 'base_documents')
     
     # 1. Infer conditions from quiz
     condicoes = inferir_condicoes_com_ia(quizzes)
-    print(f"[DEBUG] Condições inferidas: {condicoes}")
     
     # 2. Load relevant documents
     pdf_paths = load_relevant_docs(condicoes, base_dir)
-    print(f"[DEBUG] PDFs relevantes: {pdf_paths}")
-    
+
     # Create context from documents or use generic context
     context = "Documentos base para prescrição de exercícios físicos."
     if pdf_paths:
@@ -218,43 +217,28 @@ def generate_ai_opinion(quizzes: List[Dict], client_name: str, base_dir: str = N
     
     # 4. Generate response with exact format
     prompt = ChatPromptTemplate.from_template(
-        """Você é um educador físico profissional com experiência em prescrição de treinos personalizados.
-        Utilize o contexto técnico e científico abaixo para embasar sua resposta.
+        """
+        Você é um educador físico profissional com experiência em prescrição de treinos personalizados.\n
+        Utilize o contexto técnico e científico abaixo para embasar sua resposta.\n\n
         
-        Contexto técnico:
-        {context}
+        Contexto técnico:\n{context}\n\n
+            
+        Questionário do aluno:\n{quiz}\n\n
         
-        Questionário do aluno:
-        {quiz}
-        
-        Condições identificadas:
-        {condicoes}
+        Condições identificadas:\n{condicoes}\n\n
 
-       Gere um programa de treino completo em Markdown com EXATAMENTE este formato:
-
-        ## TIPO
-        {tipo}
         
-        ## NÍVEL
-        {nivel}
+        #### OUTPUT FORMAT ####   
         
-        ## FASE
-        {fase}
-
-        ## EXPLICAÇÃO
+        ##EXPLICAÇÃO
         Explique o porquê do tipo, nível e fase escolhidos, considerando as condições de saúde do aluno e suas condições inferidas pelas respostas do quiz.
-
+        Importante: Nunca defina um treino, com repetições, cargas, etc. APENAS defina o tipo, nível e fase do treino.\n
+        
         ## CUIDADOS
-        - Realizar todos os exercícios com atenção à postura e execução correta.
-        - Respeitar os limites do corpo, evitando sobrecarga.
-        - Manter hidratação e alimentação adequadas.
-        - Caso sinta dores fora do normal, interromper o treino e buscar orientação.
+        Liste os cuidados que o aluno deve ter com base nas condições de saúde identificadas. Lembre-se sempre de embasar suas respostas nas condicoes do aluno e práticas recomendadas.
 
-
-        ## Observações
-        - Acompanhar a evolução do aluno e ajustar o treino conforme adaptação.
-        - Reforçar a importância do aquecimento e alongamento.
-        - Monitorar sinais de fadiga excessiva ou desconforto.
+        ## OBSERVAÇÕES DA IA
+        Informe novas observações que você encontrar e que não foram ainda analisadas.
         """
     )
     
@@ -270,7 +254,11 @@ def generate_ai_opinion(quizzes: List[Dict], client_name: str, base_dir: str = N
         "fase": fase
     })
     
-    return response.content
+    return {
+        "treino": treino,
+        "condicoes": condicoes,
+        "ai_opinion": response.content
+    }
 
 if __name__ == "__main__":
     try:
@@ -279,7 +267,7 @@ if __name__ == "__main__":
         client_name = input_data["client_name"]
         
         response = generate_ai_opinion(quizzes, client_name)
-        print(response)
+        print(json.dumps(response, ensure_ascii=False))
         
     except Exception as e:
         # Filter out 'Ignoring wrong pointing object' from stderr output

@@ -97,7 +97,14 @@ export async function POST(req: NextRequest) {
           return;
         }
 
-        resolve(NextResponse.json({ result }));
+        // Parse result if it's a JSON string
+        let parsedResult = result;
+        try {
+          parsedResult = JSON.parse(result);
+        } catch (e) {
+          // fallback: retorna string mesmo
+        }
+        resolve(NextResponse.json(parsedResult));
       });
 
       // Handle timeout
@@ -109,7 +116,7 @@ export async function POST(req: NextRequest) {
             { status: 504 }
           )
         );
-      }, 30000); // 30 second timeout
+      }, 60000); // 30 second timeout
     });
   } catch (e) {
     console.error("AI opinion route error:", e);

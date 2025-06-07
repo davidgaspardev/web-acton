@@ -51,6 +51,24 @@ function Methology(props: MethologyProps): JSX.Element {
         }
     }, [ result ]);
 
+    // needs pode ser string (antigo), array de string, ou objeto (novo)
+    let needsList: string[] = [];
+    if (Array.isArray(result.needs)) {
+        // Se for array de objetos {campo: boolean}, pega só as chaves com valor true
+        if (result.needs.length > 0 && typeof result.needs[0] === 'object' && !Array.isArray(result.needs[0])) {
+            needsList = Object.entries(result.needs[0])
+                .filter(([_, v]) => v === true)
+                .map(([k]) => k);
+        } else {
+            needsList = result.needs.filter(Boolean);
+        }
+    } else if (typeof result.needs === 'object' && result.needs !== null) {
+        needsList = Object.entries(result.needs)
+            .filter(([_, v]) => v === true)
+            .map(([k]) => k);
+    } else if (typeof result.needs === 'string') {
+        needsList = result.needs.split(',').map(s => s.trim()).filter(Boolean);
+    }
 
     return (
         <div className="my-2">
@@ -60,18 +78,21 @@ function Methology(props: MethologyProps): JSX.Element {
                     height={64}
                     alt="Methology logo"/>
                 <h1 className="ps-4 text-xl"><strong>{result.methodology}</strong> |  NIVEL {result.level} FASE {result.stage}</h1>
-
             </div>
-            {
-              result.needs.length > 0 && (
+            {needsList.length > 0 && (
                 <div className="mt-2">
                   <h4><strong>Necessidades especiais</strong></h4>
-                  {result.needs.split(",").map((need, index) => (
+                  {needsList.map((need, index) => (
                     <h3 key={`${index}-${need}`}>{need}</h3>
                   ))}
                 </div>
-              )
-            }
+            )}
+            {result.ai_opinion && (
+                <div className="mt-4 p-2 bg-white rounded shadow">
+                  <h4 className="font-bold mb-1">Opinião da IA</h4>
+                  <div style={{whiteSpace: 'pre-line'}}>{result.ai_opinion}</div>
+                </div>
+            )}
         </div>
     )
 }
