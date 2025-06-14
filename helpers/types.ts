@@ -117,6 +117,7 @@ export type UserModel = {
   gender: string;
   results: ResultModel[];
   prospectId: number | null;
+  branchId: Nullable<number>;
 };
 
 export type ResultModel = {
