@@ -18,6 +18,10 @@ export default function UserList(props: UserListProps) {
                   <h1>CLIENTE</h1>
                   <p className="text-xs opacity-75">Nome e email do cliente</p>
                 </div>
+                <div className="flex-1 pl-2 flex flex-col justify-center">
+                  <h1>UNIDADE</h1>
+                  <p className="text-xs opacity-75">Unidade do cliente</p>
+                </div>
                 <div className="w-[25%] pl-2 flex flex-col justify-center">
                   <h1>PRODUTO</h1>
                   <p className="text-xs opacity-75">Resultado do questionario</p>
@@ -56,6 +60,9 @@ function UserCard(props: UserCardProps): JSX.Element {
                     { (email && email.length > 0) && (
                         <p className="text-xs opacity-40"><a href={`mailto:${email}`}>{email}</a></p>
                     )}
+                </div>
+                <div className="flex flex-1 flex-col justify-center pl-2">
+                    <h2>{}</h2>
                 </div>
                 <div className="w-[29.4%]">
                     { hasResult ? (

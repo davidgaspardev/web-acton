@@ -33,7 +33,7 @@ export default function DashboardPage() {
             return router.push("/login");
         }
 
-        const usersApi = UsersApi.getInstance();
+        const usersApi = UsersApi.getInstance(); 
         const {users, total } = await usersApi.getUsersByPage(page, { token, search: search.length > 0 ? search : undefined });
 
         usersTotal.current = total;

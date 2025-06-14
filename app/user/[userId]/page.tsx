@@ -119,18 +119,6 @@ export default function UserPage(props: UserPageProps): JSX.Element {
                 </div>
                 <div className="flex-1 flex flex-col items-center justify-center">
                     { user && <UserInfoCard info={user} />}
-                    <button
-                        className="mt-6 px-6 py-2 bg-[#654C8D] text-white rounded hover:bg-[#4a3666]"
-                        onClick={handleGenerateAIOpinion}
-                        disabled={loadingOpinion}
-                    >
-                        {loadingOpinion ? "Gerando opinião da IA..." : "Gerar opinião da IA"}
-                    </button>
-                    {aiOpinion && (
-                        <pre className="mt-4 p-4 bg-gray-100 rounded text-xs whitespace-pre-wrap max-w-2xl overflow-x-auto">
-                            {aiOpinion}
-                        </pre>
-                    )}
                 </div>
             </div>
         </main>

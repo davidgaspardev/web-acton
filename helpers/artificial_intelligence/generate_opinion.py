@@ -254,8 +254,16 @@ def generate_ai_opinion(quizzes: List[Dict], client_name: str, base_dir: str = N
         "fase": fase
     })
     
+    treino_final = treino
+    if treino['tipo'] == 'vida_ativa':
+        treino_final['tipo'] = "VIDA ATIVA"
+    elif treino['tipo'] == 'viva_leve':
+        treino_final['tipo'] = "VIVA LEVE"
+    elif treino['tipo'] == 'viver_bem':
+        treino_final['tipo'] = "VIVER BEM"
+     
     return {
-        "treino": treino,
+        "treino": treino_final,
         "condicoes": condicoes,
         "ai_opinion": response.content
     }

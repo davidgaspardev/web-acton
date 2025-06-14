@@ -71,7 +71,7 @@ function Methology(props: MethologyProps): JSX.Element {
     }
 
     return (
-        <div className="my-2">
+        <div className="my-1">
             <div className="flex flex-row items-center">
                 <Image
                     src={loadImage()}
