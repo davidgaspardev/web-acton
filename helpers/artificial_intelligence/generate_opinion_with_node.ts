@@ -99,7 +99,6 @@ async function createVectorStore(pdfPaths: string[]): Promise<MemoryVectorStore>
 }
 
 async function inferirCondicoesComIA(quizzes: { question: string; answer: string }[]): Promise<CondicoesQuiz> {
-    console.log("Inferindo condições com IA ->", JSON.stringify(quizzes, null, 2));
     
     const prompt = ChatPromptTemplate.fromMessages([
         ["system", "Você é um educador físico profissional experiente. Analise o questionário e identifique as condições de saúde do usuário."],
@@ -146,7 +145,6 @@ async function inferirCondicoesComIA(quizzes: { question: string; answer: string
     
     try {
         const result = await chain.invoke({ input: texto });
-        console.log("Condições inferidas pela IA:", JSON.stringify(result, null, 2));
         return result as CondicoesQuiz;
     } catch (error) {
         console.error("Erro ao inferir condições com IA:", error);
@@ -204,7 +202,6 @@ async function carregaTreinos(baseDir: string, condicoes: Record<string, any>) {
     const treino = treinos.find(
         (row) => row.Tipo === tipo && parseInt(row["Nível"], 10) === nivel
     );
-    console.log(`Treino encontrado: ${JSON.stringify(treino)}`);
     if (treino) {
         return {
             tipo,
@@ -218,7 +215,6 @@ async function carregaTreinos(baseDir: string, condicoes: Record<string, any>) {
 }
 
 export async function generateAiOpinionWithNode(quizzes: { question: string; answer: string }[], clientName: string, baseDir: string): Promise<any> {
-    console.log("Gerando opinião da IA com Node.js -> quizzes:", quizzes, "clientName:", clientName, "baseDir:", baseDir);
     
     // 1. Infer conditions using AI (matching Python behavior)
     const condicoes = await inferirCondicoesComIA(quizzes);
@@ -262,15 +258,31 @@ export async function generateAiOpinionWithNode(quizzes: { question: string; ans
         
         Condições identificadas:\n{condicoes}\n\n
 
+        Treino: 
+        Tipo: {tipo}\n
+        Nível: {nivel}\n
+        Fase: {fase}\n\n
+
         
         #### OUTPUT FORMAT ####   
         
         ##EXPLICAÇÃO
         Explique o porquê do tipo, nível e fase escolhidos, considerando as condições de saúde do aluno e suas condições inferidas pelas respostas do quiz.
+        O tipo de treino deve ser explicado com base no objetivo do aluno, que pode ser emagrecimento, ganho de massa muscular ou condicionamento físico.\n
+        O nível deve ser justificado com base no tempo de atividade física do aluno, baseando-se nessas informações:
+        "nunca treinei": 1,
+        "iniciante": 1,
+        "treino há 6 meses": 2,
+        "treino há 1 ano": 3,
+        "treino há 1,5 anos": 4,
+        "treino há 2 anos": 5,
+        "treino há 3 anos": 6,
+        A fase fique mais livre para explicar, levando em consideração as condições do aluno e o que é mais adequado para ele.\n
         Importante: Nunca defina um treino, com repetições, cargas, etc. APENAS defina o tipo, nível e fase do treino.\n
         
         ## CUIDADOS
         Liste os cuidados que o aluno deve ter com base nas condições de saúde identificadas. Lembre-se sempre de embasar suas respostas nas condicoes do aluno e práticas recomendadas.
+        Para cada cuidado que você listar, informe também o porquê desse cuidado ser importante para este aluno, baseado em suas condições.\n
 
         ## OBSERVAÇÕES DA IA
         Informe novas observações que você encontrar e que não foram ainda analisadas.

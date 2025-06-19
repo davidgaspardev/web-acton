@@ -53,7 +53,6 @@ export default function ResultStage(props: ResultStageProps) {
         
         const { treino, condicoes, ai_opinion } = data;
 
-        console.log(`Ai Result -> treino: ${JSON.stringify(treino)}, condicoes: ${JSON.stringify(condicoes)}, ai_opinion: ${ai_opinion}`);
         // needs: garantir string para o banco
         let needsString = "";
         if (condicoes && typeof condicoes === "object") {
@@ -80,15 +79,6 @@ export default function ResultStage(props: ResultStageProps) {
         };
         setResult(resultData);
         resultsApi.save(resultData, user);
-        printerResult({
-          name: user.fullname,
-          ...resultData,
-          specialNeeds: needsString
-            .split(",")
-            .map((n) => n.trim())
-            .filter(Boolean)
-            .map((n) => ({ name: n, priority: 0, showName: n })),
-        });
       } catch (err) {
         console.error(`error in fetching AI result: ${err}`);
       } finally {
