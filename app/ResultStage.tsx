@@ -126,8 +126,10 @@ export default function ResultStage(props: ResultStageProps) {
             image={(() => {
               switch (result.methodology) {
                 case "viva_leve":
+                case "VIVA LEVE":
                   return VivaLeve;
                 case "vida_ativa":
+                case "VIDA ATIVA":
                   return VidaAtiva;
                 default:
                   return ViverBem;

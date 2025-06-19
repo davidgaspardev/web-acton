@@ -13,8 +13,7 @@ import UserInfoCard from "./UserInfoCard";
 type UserPageProps = {
     params: {
         userId: string;
-    },
-    onAiOpinionGenerated?: (opinion: string) => void;
+    }
 };
 
 export default function UserPage(props: UserPageProps): JSX.Element {
@@ -30,8 +29,6 @@ export default function UserPage(props: UserPageProps): JSX.Element {
     const [ user, setUser ] = useState<UserModel>();
     const [ quizzes, setQuizzes ] = useState<QuizModel[]>([]);
     const [ search, setSearch ] = useState<string>("");
-    const [aiOpinion, setAiOpinion] = useState<string>("");
-    const [loadingOpinion, setLoadingOpinion] = useState(false);
 
     const loadUserData = useCallback(async () => {
         if(!token) {
@@ -52,33 +49,6 @@ export default function UserPage(props: UserPageProps): JSX.Element {
 
         setQuizzes(quizzes);
     }, [ user, token ]);
-
-    const handleGenerateAIOpinion = useCallback(async () => {
-        setLoadingOpinion(true);
-        setAiOpinion("");
-        try {
-            const response = await fetch("/api/ai-opinion", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ quizzes, client_name: user?.fullname }),
-            });
-            const data = await response.json();
-            if (response.ok) {
-                const result = data.result;
-                setAiOpinion(result);
-                props.onAiOpinionGenerated?.(result);
-            } else {
-                const errorMessage = "Erro ao gerar opinião da IA: " + (data.error || "Erro desconhecido");
-                setAiOpinion(errorMessage);
-                props.onAiOpinionGenerated?.(errorMessage);
-            }
-        } catch (e) {
-            const errorMessage = "Erro ao conectar com a IA: " + (e?.toString() || "");
-            setAiOpinion(errorMessage);
-            props.onAiOpinionGenerated?.(errorMessage);
-        }
-        setLoadingOpinion(false);
-    }, [quizzes, user, props.onAiOpinionGenerated]);
 
     useEffect(() => {
         loadQuizzesData();
