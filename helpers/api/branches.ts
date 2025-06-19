@@ -34,34 +34,4 @@ export default class BranchesApi {
       throw e;
     }
   };
-
-  public getBrancheById = async (id: number): Promise<BranchModel | undefined> => {
-    try {
-      const response = await fetch("/api/branches", {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        const responseBody = await response.json();
-        throw new Error(responseBody);
-      }
-
-      const responseBody = await response.json();
-      if (!Array.isArray(responseBody["data"])) {
-        throw new Error("Branches not received");
-      }
-
-      const branches = responseBody["data"];
-      const branch = branches.find((b: BranchModel) => b.id === id);
-      if (!branch) {
-        throw new Error(`Branch with id ${id} not found`);
-      }
-      return branch;
-    } catch (e) {
-      throw e;
-    }
-  };
 }

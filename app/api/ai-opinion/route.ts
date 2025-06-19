@@ -116,7 +116,7 @@ export async function POST(req: NextRequest) {
             { status: 504 }
           )
         );
-      }, 60000); // 30 second timeout
+      }, 60000); // 60 second timeout
     });
   } catch (e) {
     console.error("AI opinion route error:", e);
