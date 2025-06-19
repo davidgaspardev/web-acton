@@ -55,7 +55,7 @@ export type ResultData = {
   level: number;
   stage: number;
   date: Date;
-  needs: SpecialNeedData[] | string | any; // agora aceita string ou objeto
+  needs: SpecialNeedData[] | string; // Refined to exclude 'any' for better type safety
   ai_opinion?: string;
   condicoes?: any;
 };
