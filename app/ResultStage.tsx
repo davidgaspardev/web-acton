@@ -79,6 +79,16 @@ export default function ResultStage(props: ResultStageProps) {
         };
         setResult(resultData);
         resultsApi.save(resultData, user);
+        printerResult({
+          name: user.fullname,
+          ...resultData,
+          specialNeeds: needsString
+            .split(",")
+            .map((n) => n.trim())
+            .filter(Boolean)
+            .map((n) => ({ name: n, priority: 0, showName: n })),
+        });
+
       } catch (err) {
         console.error(`error in fetching AI result: ${err}`);
       } finally {
@@ -138,12 +148,10 @@ export default function ResultStage(props: ResultStageProps) {
   );
 
   function printerResult(result: ResultToPrint) {
-    // Só envie para MessageInvoker se ele existir (mobile/webview). Caso contrário, ignore.
-    if (typeof window !== 'undefined' && (window as any).MessageInvoker) {
-      (window as any).MessageInvoker.postMessage(JSON.stringify(result));
-    } else {
-      // Ambiente web normal: apenas loga para debug
-      console.log("printerResult (web):", result);
+   const MessageInvoker = (window as any).MessageInvoker;
+    if (MessageInvoker) {
+      // There is a MessageInvoker (only for: webview and desktop), so we can send the result
+      MessageInvoker.postMessage(JSON.stringify(result));
     }
   }
 }
