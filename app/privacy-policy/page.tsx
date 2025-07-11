@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
         <li>Você pode solicitar a atualização ou exclusão dos seus dados a qualquer momento.</li>
       </ul>
       <h2 className="text-xl font-semibold mt-6 mb-2">5. Dúvidas</h2>
-      <p>Em caso de dúvidas, entre em contato pelo e-mail: suporte@acton.com.br</p>
+      <p>Em caso de dúvidas, entre em contato pelo e-mail: <a href="mailto:suporte@acton.com.br">suporte@acton.com.br</a></p>
     </main>
   );
 }
