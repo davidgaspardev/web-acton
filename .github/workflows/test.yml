@@ -15,6 +15,16 @@ jobs:
       with:
         node-version: 20
 
+    - name: Create .env file
+      run: |
+        echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+        echo "NEXT_PUBLIC_DEBUG_MODE=${{ secrets.NEXT_PUBLIC_DEBUG_MODE }}" >> .env
+        echo "LANGSMITH_TRACING=${{ secrets.LANGSMITH_TRACING }}" >> .env
+        echo "LANGSMITH_ENDPOINT=${{ secrets.LANGSMITH_ENDPOINT }}" >> .env
+        echo "LANGSMITH_API_KEY=${{ secrets.LANGSMITH_API_KEY }}" >> .env
+        echo "LANGSMITH_PROJECT=${{ secrets.LANGSMITH_PROJECT }}" >> .env
+        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
+
     - name: Install dependencies
       run: yarn install
 

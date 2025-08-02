@@ -40,9 +40,27 @@ export default class ResultsApi {
     resultData: ResultData,
     userData: UserData
   ): ResultFromDatabase => {
+    // needs já vem como string do fluxo IA, mas pode ser array antigo
+    let needsString = "";
+    if (Array.isArray(resultData.needs)) {
+      // compatibilidade: se for array de objetos (antigo), extrai showName
+      if (resultData.needs.length > 0 && typeof resultData.needs[0] === 'object' && 'showName' in resultData.needs[0]) {
+        needsString = resultData.needs.map((need: any) => need.showName).join(", ");
+      } else {
+        needsString = resultData.needs.join(", ");
+      }
+    } else if (typeof resultData.needs === 'string') {
+      needsString = resultData.needs;
+    } else if (typeof resultData.needs === 'object' && resultData.needs !== null) {
+      // objeto condicoes IA: pega só as chaves true
+      needsString = Object.entries(resultData.needs)
+        .filter(([_, v]) => v === true)
+        .map(([k]) => k)
+        .join(", ");
+    }
     return {
       ...resultData,
-      needs: resultData.needs.map((need) => need.showName).join(", "),
+      needs: needsString,
       userId: userData.id!,
       sessionCode: userData.sessionCode!,
     };

@@ -1,15 +1,16 @@
-import { ResultModel, UserModel } from "@/helpers/types";
+import { ResultModel, UserModel, BranchModel } from "@/helpers/types";
 import EvoPurpleIcon from "@/assets/svg/ic-evo-purple.svg";
 import Link from "next/link";
 import Image from "next/image";
 import { loadLinkToEVO } from "../user/[userId]/UserInfoCard";
 
 type UserListProps = {
-    users: UserModel[]
+    users: UserModel[],
+    branches?: BranchModel[]
 }
 
 export default function UserList(props: UserListProps) {
-    const { users } = props;
+    const { users, branches } = props;
 
 	return (
 		<div className="flex flex-col  h-[calc(100vh-114px)] overflow-y-auto">
@@ -17,6 +18,10 @@ export default function UserList(props: UserListProps) {
                 <div className="flex-1 pl-2 flex flex-col justify-center">
                   <h1>CLIENTE</h1>
                   <p className="text-xs opacity-75">Nome e email do cliente</p>
+                </div>
+                <div className="flex-1 pl-2 flex flex-col justify-center">
+                  <h1>UNIDADE</h1>
+                  <p className="text-xs opacity-75">Unidade do cliente</p>
                 </div>
                 <div className="w-[25%] pl-2 flex flex-col justify-center">
                   <h1>PRODUTO</h1>
@@ -29,7 +34,7 @@ export default function UserList(props: UserListProps) {
             </div>
             {
                 users.map((user) => (
-                    <UserCard data={user} key={user.id} />
+                    <UserCard data={user} key={user.id} branch={branches?.find(e => e.id == user.branchId)} />
                 ))
             }
         </div>
@@ -38,7 +43,8 @@ export default function UserList(props: UserListProps) {
 
 
 type UserCardProps = {
-    data: UserModel;
+    data: UserModel,
+    branch?: BranchModel
 }
 
 function UserCard(props: UserCardProps): JSX.Element {
@@ -56,6 +62,9 @@ function UserCard(props: UserCardProps): JSX.Element {
                     { (email && email.length > 0) && (
                         <p className="text-xs opacity-40"><a href={`mailto:${email}`}>{email}</a></p>
                     )}
+                </div>
+                <div className="flex flex-1 flex-col justify-center pl-2">
+                    <h2>{props.branch?.name ?? ""}</h2>
                 </div>
                 <div className="w-[29.4%]">
                     { hasResult ? (

@@ -55,7 +55,9 @@ export type ResultData = {
   level: number;
   stage: number;
   date: Date;
-  needs: SpecialNeedData[];
+  needs: SpecialNeedData[] | string; 
+  ai_opinion?: string;
+  condicoes?: any;
 };
 
 export type ResultToPrint = {
@@ -115,6 +117,7 @@ export type UserModel = {
   gender: string;
   results: ResultModel[];
   prospectId: number | null;
+  branchId: Nullable<number>;
 };
 
 export type ResultModel = {
@@ -122,9 +125,10 @@ export type ResultModel = {
   methodology: string;
   level: number;
   stage: number;
-  needs: string;
+  needs: string | Record<string, boolean>;
   date: Date;
   sessionCode: string;
+  ai_opinion?: string;
 };
 
 export type QuizModel = {

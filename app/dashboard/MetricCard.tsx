@@ -16,9 +16,12 @@ export default function MetricMethoCard(props: MetricMethoCardProps): JSX.Elemen
 
     const loadImage = useCallback(() => {
         switch (methodology) {
-            case "VIDA ATIVA": return VidaAtiva;
+            case "VIDA ATIVA" : return VidaAtiva;
+            case "vida_ativa": return VidaAtiva;
             case "VIVA LEVE": return VivaLeve;
+            case "viva_leve": return VivaLeve;
             case "VIVER BEM": return ViverBem;
+            case "viver_bem": return ViverBem;
             default: throw Error(`'${methodology}' invalid for load image`);
         }
     }, [ methodology ]);

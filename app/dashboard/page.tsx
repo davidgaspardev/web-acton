@@ -2,7 +2,7 @@
 
 import UsersApi from "@/helpers/api/users";
 import LocalStorage from "@/helpers/storage";
-import { MetricsInfo, UserModel } from "@/helpers/types";
+import { BranchModel, MetricsInfo, UserModel } from "@/helpers/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import ResultsApi from "@/helpers/api/results";
@@ -10,6 +10,7 @@ import MetricMethoCard, { MetricCountCard } from "./MetricCard";
 import Header from "../../components/Header";
 import PageControl from "./PageControl";
 import UserList from "./UserList";
+import BranchesApi from "@/helpers/api/branches";
 
 export default function DashboardPage() {
     const router = useRouter();
@@ -23,6 +24,7 @@ export default function DashboardPage() {
         return token;
     });
     const [ users, setUsers ] = useState<UserModel[]>([]);
+    const [branches, setBranches] = useState<BranchModel[]>([]);
     const usersTotal = useRef<number>();
 
     const [ metrics, setMetrics ] = useState<MetricsInfo>([]);
@@ -33,7 +35,7 @@ export default function DashboardPage() {
             return router.push("/login");
         }
 
-        const usersApi = UsersApi.getInstance();
+        const usersApi = UsersApi.getInstance(); 
         const {users, total } = await usersApi.getUsersByPage(page, { token, search: search.length > 0 ? search : undefined });
 
         usersTotal.current = total;
@@ -51,10 +53,23 @@ export default function DashboardPage() {
         setMetrics(metrics);
     }, [ token, router ]);
 
+
+    const loadBranches = useCallback(async () => {
+        if(!token) {
+            return router.push("/login");
+        }
+
+        const branchesApi = BranchesApi.getInstance();
+        const branches = await branchesApi.getBranches();
+        setBranches(branches);
+
+    }, [ token, page, router, search ]);
+
     useEffect(() => {
         loadUsers();
         loadMetrics();
-    }, [ loadUsers, loadMetrics ]);
+        loadBranches();
+    }, [ loadUsers, loadMetrics, loadBranches ]);
 
     return (
         <main className="flex flex-col min-h-screen">
@@ -76,7 +91,7 @@ export default function DashboardPage() {
 
                 {/** Render user list */}
                 <section className="flex-1">
-                    <UserList users={users} />
+                    <UserList users={users} branches={branches} />
 
                     {/** Footer with page count */}
                     {

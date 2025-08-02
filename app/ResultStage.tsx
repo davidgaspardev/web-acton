@@ -30,187 +30,89 @@ export default function ResultStage(props: ResultStageProps) {
   const { user, result: responses, onFinish } = props;
   const [result, setResult] = useState<ResultData>();
   const [hasPopUp, setHasPopUp] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    try {
-      if (result === undefined) {
-        const whatDoYouWant = (() => {
-          const reponse = responses.find((response) => response.id === 18)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-        const trainerTime = (() => {
-          const reponse = responses.find((response) => response.id === 19)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-        const level = (() => {
-          switch (trainerTime) {
-            case "Nunca Treinei":
-              return 1;
-            case "Treino há 6 meses":
-              return 2;
-            case "Treino há 1 ano":
-              return 4;
-            case "Treino há 2 anos":
-              return 5;
-            case "Treino há 3 anos":
-              return 6;
-            default:
-              throw Error("trainerTime expection");
-          }
-        })();
-        const stage = (() => {
-          switch (trainerTime) {
-            case "Nunca Treinei":
-              return 1;
-            case "Treino há 6 meses":
-              return 6;
-            case "Treino há 1 ano":
-              return 11;
-            case "Treino há 2 anos":
-              return 13;
-            case "Treino há 3 anos":
-              return 16;
-            default:
-              throw Error("trainerTime expection");
-          }
-        })();
-        const methodology = (() => {
-          switch (whatDoYouWant) {
-            case "Perder peso":
-              return level === 1 ? "VIVA LEVE" : "VIVER BEM";
-            case "Qualidade de Vida":
-              return "VIVA LEVE";
-            case "Ganhar Massa Muscular":
-              return level === 1 ? "VIVA LEVE" : "VIDA ATIVA";
-            default:
-              throw Error("trainerTime expection");
-          }
-        })();
+    console.log("Starting UseEffect in ResultStage")
+    async function fetchAIResult() {
+      setLoading(true);
+      try {
+        const response = await fetch("/api/ai-opinion", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            quizzes: responses.map((q) => ({
+              question: q.question,
+              answer: q.selected ? q.answers[q.selected[0]] : "",
+            })),
+            client_name: user.fullname,
+          }),
+        });
+        const data = await response.json();
+        if (data.error) throw new Error(data.error);
+        
+        const { treino, condicoes, ai_opinion } = data;
 
-        const specialNeedsSelected = new Array<SpecialNeedData>();
-
-        const questionId4 = (() => {
-          const reponse = responses.find((response) => response.id === 4)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-
-        if (questionId4 === "Sim") {
-          specialNeedsSelected.push(
-            specialNeeds.find(
-              (it) => it.name === "Problemas Cardíacos ou Pressão Alta"
-            )!
-          );
+        // needs: garantir string para o banco
+        let needsString = "";
+        if (condicoes && typeof condicoes === "object") {
+         Object.entries(condicoes).forEach(([key, value]) => {
+            if (typeof value === "boolean" && value) {
+              needsString += `${key}, `;
+            } else if (typeof value === "string" && value) {
+              needsString += `${value}, `;
+            }
+          });
         }
-
-        const questionId5 = (() => {
-          const reponse = responses.find((response) => response.id === 5)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-
-        if (questionId5 === "Sim") {
-          specialNeedsSelected.push(
-            specialNeeds.find((it) => it.name === "Diabetes")!
-          );
-        }
-
-        const questionId8 = (() => {
-          const reponse = responses.find((response) => response.id === 8)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-
-        if (questionId8 !== "Boa") {
-          specialNeedsSelected.push(
-            specialNeeds.find((it) => it.name === "Qualidade de Vida")!
-          );
-        }
-
-        const questionId10 = (() => {
-          const reponse = responses.find((response) => response.id === 10)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-
-        if (questionId10 === "Sim") {
-          console.log(specialNeeds);
-          specialNeedsSelected.push(
-            specialNeeds.find((it) => it.name === "Disposição")!
-          );
-        }
-
-        const questionId11 = (() => {
-          const reponse = responses.find((response) => response.id === 11)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-
-        if (questionId11 === "Sim" && questionId10 === "Não") {
-          specialNeedsSelected.push(
-            specialNeeds.find((it) => it.name === "Disposição")!
-          );
-        }
-
-        const questionId12 = (() => {
-          const reponse = responses.find((response) => response.id === 12)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-
-        if (questionId12 === "Sim") {
-          specialNeedsSelected.push(
-            specialNeeds.find((it) => it.name === "Ansiedade")!
-          );
-        }
-
-        const questionId14 = (() => {
-          const reponse = responses.find((response) => response.id === 14)!;
-          return reponse.answers[reponse.selected![0]];
-        })();
-
-        if (questionId14 === "Sim") {
-          specialNeedsSelected.push(
-            specialNeeds.find((it) => it.name === "Qualidade do Sono")!
-          );
-        }
-
-        const questionId15 = (() => {
-          const response = responses.find((response) => response.id === 15)!;
-          return response.answers[response.selected![0]];
-        })();
-
-        if (questionId15 === "Sim" && questionId14 === "Não") {
-          specialNeedsSelected.push(
-            specialNeeds.find((it) => it.name === "Qualidade do Sono")!
-          );
-        }
+        var nivel = typeof treino?.nivel == "number" ? treino?.nivel : parseInt(treino?.nivel, 10) || 1;
+        var fase = typeof treino?.fase == "number" ? treino?.fase : parseInt(treino?.fase, 10) || 1;
+        
 
         const resultData = {
-          methodology,
-          level,
-          stage,
-          needs: specialNeedsSelected
-            .sort((a, b) => b.priority - a.priority)
-            .slice(0, 3)
-            .concat(user.inputs?.map(input => ({
-              name: input,
-              priority: 0,
-              showName: input
-            })) || []),
+          methodology: treino?.tipo || "",
+          level: nivel,
+          stage: fase,
+          needs: needsString,
+          ai_opinion: ai_opinion ? ai_opinion : "",
+          condicoes,
           date: new Date(),
         };
-
         setResult(resultData);
         resultsApi.save(resultData, user);
-
         printerResult({
           name: user.fullname,
           ...resultData,
-          specialNeeds: resultData.needs,
+          specialNeeds: needsString
+            .split(",")
+            .map((n) => n.trim())
+            .filter(Boolean)
+            .map((n) => ({ name: n, priority: 0, showName: n })),
         });
+
+      } catch (err) {
+        console.error(`error in fetching AI result: ${err}`);
+      } finally {
+        setLoading(false);
+        if (!isInSpecificAndroidWebView())
+          setTimeout(() => setHasPopUp(true), 1 * 1000);
+        setTimeout(onFinish, 60 * 1000);
       }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      if(!isInSpecificAndroidWebView()) setTimeout(() => setHasPopUp(true), 1 * 1000);
-      setTimeout(onFinish, 30 * 1000);
+    }
+    if (result === undefined) {
+      fetchAIResult();
     }
   }, [user, responses, result, onFinish]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full w-full">
+        <h2 className="text-2xl font-bold text-[#40444D] mb-4">
+          gerando análise do seu treino
+        </h2>
+        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#40444D]" />
+      </div>
+    );
+  }
 
   return (
     <div className="h-full w-full">
@@ -223,8 +125,10 @@ export default function ResultStage(props: ResultStageProps) {
             stage={result.stage}
             image={(() => {
               switch (result.methodology) {
+                case "viva_leve":
                 case "VIVA LEVE":
                   return VivaLeve;
+                case "vida_ativa":
                 case "VIDA ATIVA":
                   return VidaAtiva;
                 default:
@@ -234,7 +138,7 @@ export default function ResultStage(props: ResultStageProps) {
           />
           <SpecialNeeds
             className="flex-[4]"
-            needs={result.needs.map((specialNeed) => specialNeed.showName)}
+            needs={typeof result.needs === 'string' ? result.needs.split(',').map(n => n.trim()).filter(Boolean) : []}
           />
         </div>
       )}
@@ -244,8 +148,11 @@ export default function ResultStage(props: ResultStageProps) {
   );
 
   function printerResult(result: ResultToPrint) {
-    // @ts-ignore
-    (MessageInvoker || window.MessageInvoker).postMessage(JSON.stringify(result));
+   const MessageInvoker = (window as any).MessageInvoker;
+    if (MessageInvoker) {
+      // There is a MessageInvoker (only for: webview and desktop), so we can send the result
+      MessageInvoker.postMessage(JSON.stringify(result));
+    }
   }
 }
 

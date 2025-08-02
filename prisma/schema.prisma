@@ -45,6 +45,8 @@ model Results {
   sessionCode String   @db.VarChar(32)
   userId      String
   user        Users    @relation(fields: [userId], references: [id])
+  ai_opinion  String?  @db.Text
+  condicoes   Json?
 
   @@index([userId], map: "Results_userId_fkey")
 }
