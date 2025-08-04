@@ -46,7 +46,7 @@ export default function MetricMethoCard(props: MetricMethoCardProps): JSX.Elemen
 
     return (
         <Container
-          className={methodology === "VIDA ATIVA" ? "bg-[#F7C3C0]" : methodology === "VIVER BEM" ? "bg-[#FDE6BD]" : "bg-[#BEECF5]"}>
+          className={methodology_fixed() === "VIDA ATIVA" ? "bg-[#F7C3C0]" : methodology_fixed() === "VIVER BEM" ? "bg-[#FDE6BD]" : "bg-[#BEECF5]"}>
             <Image
                 src={loadImage()}
                 alt="Methodology logo"
@@ -55,7 +55,7 @@ export default function MetricMethoCard(props: MetricMethoCardProps): JSX.Elemen
 
             <h2 className={twMerge(
               "font-bold text-lg mt-3",
-              methodology === "VIDA ATIVA" ? "text-[#E9645B]" : methodology === "VIVER BEM" ? "text-[#FABE54]" : "text-[#56CDE6]"
+              methodology_fixed() === "VIDA ATIVA" ? "text-[#E9645B]" : methodology_fixed() === "VIVER BEM" ? "text-[#FABE54]" : "text-[#56CDE6]"
             )}>{quantity} {quantity > 1 ? "clientes" : "cliente"}</h2>
         </Container>
     )
