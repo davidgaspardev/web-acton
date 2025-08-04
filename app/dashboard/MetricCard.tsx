@@ -14,7 +14,7 @@ export default function MetricMethoCard(props: MetricMethoCardProps): JSX.Elemen
     const { quantity, methodology } = props.data;
     const logoWidth = 145;
 
-      const methodology_fixed = useCallback(() => {
+    const methodology_fixed = useCallback(() => {
         switch (methodology) {
             case "VIDA ATIVA":
             case "vida_ativa":
@@ -44,9 +44,11 @@ export default function MetricMethoCard(props: MetricMethoCardProps): JSX.Elemen
         }
     }, [ methodology ]);
 
+    const fixedMethodology = methodology_fixed();
+
     return (
         <Container
-          className={methodology_fixed() === "VIDA ATIVA" ? "bg-[#F7C3C0]" : methodology_fixed() === "VIVER BEM" ? "bg-[#FDE6BD]" : "bg-[#BEECF5]"}>
+          className={fixedMethodology === "VIDA ATIVA" ? "bg-[#F7C3C0]" : fixedMethodology === "VIVER BEM" ? "bg-[#FDE6BD]" : "bg-[#BEECF5]"}>
             <Image
                 src={loadImage()}
                 alt="Methodology logo"
@@ -55,7 +57,7 @@ export default function MetricMethoCard(props: MetricMethoCardProps): JSX.Elemen
 
             <h2 className={twMerge(
               "font-bold text-lg mt-3",
-              methodology_fixed() === "VIDA ATIVA" ? "text-[#E9645B]" : methodology_fixed() === "VIVER BEM" ? "text-[#FABE54]" : "text-[#56CDE6]"
+              fixedMethodology === "VIDA ATIVA" ? "text-[#E9645B]" : fixedMethodology === "VIVER BEM" ? "text-[#FABE54]" : "text-[#56CDE6]"
             )}>{quantity} {quantity > 1 ? "clientes" : "cliente"}</h2>
         </Container>
     )
