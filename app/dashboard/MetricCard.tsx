@@ -27,7 +27,7 @@ export default function MetricMethoCard(props: MetricMethoCardProps): JSX.Elemen
             case "viva_bem":
                 return "VIVER BEM";
             default:
-                throw Error(`'${methodology}' invalid for methodology_fixed`);
+                throw Error(`Unsupported methodology: '${methodology}'`);
         }
     }, [methodology]);
 
