@@ -14,6 +14,23 @@ export default function MetricMethoCard(props: MetricMethoCardProps): JSX.Elemen
     const { quantity, methodology } = props.data;
     const logoWidth = 145;
 
+      const methodology_fixed = useCallback(() => {
+        switch (methodology) {
+            case "VIDA ATIVA":
+            case "vida_ativa":
+                return "VIDA ATIVA";
+            case "VIVA LEVE":
+            case "viva_leve":
+                return "VIVA LEVE";
+            case "VIVER BEM":
+            case "viver_bem":
+            case "viva_bem":
+                return "VIVER BEM";
+            default:
+                throw Error(`'${methodology}' invalid for methodology_fixed`);
+        }
+    }, [methodology]);
+
     const loadImage = useCallback(() => {
         switch (methodology) {
             case "VIDA ATIVA" : return VidaAtiva;
@@ -22,6 +39,7 @@ export default function MetricMethoCard(props: MetricMethoCardProps): JSX.Elemen
             case "viva_leve": return VivaLeve;
             case "VIVER BEM": return ViverBem;
             case "viver_bem": return ViverBem;
+            case "viva_bem": return ViverBem;
             default: throw Error(`'${methodology}' invalid for load image`);
         }
     }, [ methodology ]);
