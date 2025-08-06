@@ -243,7 +243,7 @@ export async function generateAiOpinionWithNode(quizzes: { question: string; ans
         treino_final.tipo = "VIDA ATIVA";
     } else if (treino.tipo === "viva_leve") {
         treino_final.tipo = "VIVA LEVE";
-    } else if (treino.tipo === "viver_bem") {
+    } else if (treino.tipo === "viver_bem" || treino.tipo === "viva_bem") {
         treino_final.tipo = "VIVER BEM";
     }
 

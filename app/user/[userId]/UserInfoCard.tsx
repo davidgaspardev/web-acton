@@ -44,9 +44,16 @@ function Methology(props: MethologyProps): JSX.Element {
 
     const loadImage = useCallback(() => {
         switch (result.methodology) {
-            case "VIDA ATIVA": return VidaAtiva;
-            case "VIVA LEVE": return VivaLeve;
-            case "VIVER BEM": return ViverBem;
+            case "VIDA ATIVA":
+            case "vida_ativa": 
+              return VidaAtiva;
+            case "VIVA LEVE": 
+            case "viva_leve":
+              return VivaLeve;
+            case "VIVER BEM": 
+            case "viver_bem":
+            case "viva_bem":
+              return ViverBem;
             default: throw Error(`invalid for load image`);
         }
     }, [ result ]);
