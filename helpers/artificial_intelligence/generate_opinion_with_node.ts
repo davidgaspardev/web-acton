@@ -101,7 +101,9 @@ async function createVectorStore(pdfPaths: string[]): Promise<MemoryVectorStore>
 async function inferirCondicoesComIA(quizzes: { question: string; answer: string }[]): Promise<CondicoesQuiz> {
     
     const prompt = ChatPromptTemplate.fromMessages([
-        ["system", "Você é um educador físico profissional experiente. Analise o questionário e identifique as condições de saúde do usuário."],
+        ["system", `Você é um educador físico profissional experiente. Analise o questionário e identifique as condições de saúde do usuário.
+            Sempre pegue as informações apenas do quiz.
+            Nunca, em nenhuma hipótese, diga que uma condição não foi mencionada se ela estiver presente no quiz`],
         ["user", "{input}"]
     ]);
     
@@ -110,25 +112,26 @@ async function inferirCondicoesComIA(quizzes: { question: string; answer: string
     // Create a function definition for the schema
     const functionDef = {
         name: "CondicoesQuiz",
-        description: "Identifica as condições de saúde do usuário com base no questionário",
+        description: `Identifica as condições de saúde do usuário com base no questionário. Sempre pegue as informações apenas do quiz.
+        Nunca, em nenhuma hipótese, diga que uma condição não foi mencionada se ela estiver presente no quiz.`,
         parameters: {
             type: "object" as const,
             properties: {
-                diabetes: { type: "boolean" as const, description: "Possui diabetes?" },
-                hipertensao: { type: "boolean" as const, description: "Possui hipertensão?" },
-                obesidade: { type: "boolean" as const, description: "Possui obesidade?" },
-                ansiedade: { type: "boolean" as const, description: "Possui ansiedade?" },
-                idoso: { type: "boolean" as const, description: "É idoso (acima de 60 anos)?" },
-                medicamentos: { type: "boolean" as const, description: "Utiliza medicamentos frequentes?" },
-                sedentario: { type: "boolean" as const, description: "É sedentário?" },
-                possui_dores_ou_limitações: { type: "string" as const, description: "Possui dores ou limitações físicas que possam modificar a estrutura dos treinos? Se sim, quais?" },
+                diabetes: { type: "boolean" as const, description: "Possui diabetes? Apenas será positivo se o campo diabetes do quiz for respondido como 'sim'" },
+                hipertensao: { type: "boolean" as const, description: "Possui hipertensão? Apenas será positivo se o campo hipertensao do quiz for respondido como 'sim'" },
+                obesidade: { type: "boolean" as const, description: "Possui obesidade? Apenas será positivo se o campo obesidade do quiz for respondido como 'sim'" },
+                ansiedade: { type: "boolean" as const, description: "Possui ansiedade? Apenas será positivo se o campo ansiedade do quiz for respondido como 'sim'" },
+                idoso: { type: "boolean" as const, description: "É idoso (acima de 60 anos)? Apenas será positivo se você conseguir identificar isso nas respostas" },
+                medicamentos: { type: "boolean" as const, description: "Utiliza medicamentos frequentes? Apenas será positivo se o campo medicamentos estiver preenchidos com medicamentos coerentes" },
+                sedentario: { type: "boolean" as const, description: "É sedentário? Analise pela resposta do quiz relativa há quanto tempo está treinando" },
+                possui_dores_ou_limitações: { type: "string" as const, description: "Possui dores ou limitações físicas que possam modificar a estrutura dos treinos? Se sim, quais? Sempre se baseie no Quiz e Nunca diga o que não está expressamente dito no quiz" },
                 atividade_fisica: { type: "string" as const, description: "De acordo com a pergunta 'Você está treinando atualmente ?', deve trazer a resposta informada no quiz." },
                 objetivo: { 
                     type: "string" as const, 
                     enum: ["Perder Peso", "Ganho de massa muscular", "Qualidade de vida"],
                     description: "Qual o objetivo principal do aluno com os treinos?" 
                 },
-                observacoes_extras: { type: "boolean" as const, description: "Possui alguma nova condição de saúde relevante?" }
+                observacoes_extras: { type: "boolean" as const, description: "Possui alguma nova condição de saúde relevante? Só diga que sim se for expressamente identificado nas respostas do quiz. Nunca, em hipótese alguma, afirme ter sem estar no quiz" }
             },
             required: ["diabetes", "hipertensao", "obesidade", "ansiedade", "idoso", "medicamentos", "sedentario", "possui_dores_ou_limitações", "atividade_fisica", "objetivo", "observacoes_extras"]
         }
