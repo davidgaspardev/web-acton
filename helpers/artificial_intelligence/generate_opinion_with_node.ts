@@ -29,9 +29,9 @@ enum Objetivos {
 }
 
 enum TiposTreino {
-    viva_leve = "Para quem quer perder peso (emagrecimento)",
+    viva_leve = "Para os que buscam Qualidade de vida",
     vida_ativa = "Para os que possuem objetivo de Ganho de massa muscular",
-    viver_bem = "Para os que buscam Qualidade de vida"
+    viver_bem = "Para quem quer perder peso (emagrecimento)"
 }
 
 // Schema for conditions matching Python CondicoesQuiz class
@@ -173,9 +173,9 @@ async function carregaTreinos(baseDir: string, condicoes: Record<string, any>) {
     const objetivo = (condicoes.objetivo || "").toString().toLowerCase();
     const atividade_fisica = (condicoes.atividade_fisica || "").toString().toLowerCase();
     const objetivoTipo: Record<string, string> = {
-        "perder peso": "viva_leve",
+        "perder peso": "viva_bem",
         "ganho de massa muscular": "vida_ativa",
-        "qualidade de vida": "viva_bem",
+        "qualidade de vida": "viva_leve",
     };
     const tipo = objetivoTipo[objetivo] || "viva_leve";
     const nivelMap: Record<string, number> = {
