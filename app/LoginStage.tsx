@@ -10,6 +10,8 @@ import { twMerge } from "tailwind-merge";
 import BranchesApi from "@/helpers/api/branches";
 import { Input } from "@/components/composition/Input";
 import LocalStorage from "@/helpers/storage";
+import { DEBUG_MODE } from "@/helpers/env";
+import { validarCPF } from "../app/helpers/utils/cpfValidation";
 
 const usersApi = UsersApi.getInstance();
 const localStorage = LocalStorage.getInstance();
@@ -73,6 +75,27 @@ export default function LoginStage(props: LoginStageProps) {
         gender,
         branchId
       };
+
+      const isCpfValid = validarCPF(cpf);
+      if (DEBUG_MODE) {
+        console.log("isCpfValid: ", isCpfValid);
+      }
+      if (!isCpfValid) {
+        WarningNotificationController.show("ERROR", "CPF inválido.");
+        setLoading(false);
+        return;
+      }
+
+      const userExists = await usersApi.getUserByCpf(cpf);
+      if (DEBUG_MODE) {
+        console.log("User exists: ", userExists);
+      }
+
+      if (userExists) {
+        WarningNotificationController.show("ERROR", "CPF de usuário já cadastrado.");
+        setLoading(false)
+        return;
+      }
 
       const userId = await usersApi.register(user);
       user.id = userId;

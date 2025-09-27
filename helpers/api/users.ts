@@ -1,4 +1,4 @@
-import { DEBUG_MODE } from "../env";
+import { DEBUG_MODE, JWT_SECRET_KEY} from "../env";
 import { GenderOptions, UserData, UserModel } from "../types";
 
 export default class UsersApi {
@@ -132,4 +132,36 @@ export default class UsersApi {
       throw e;
     }
   };
+
+  public getUserByCpf = async (
+    cpf: string,
+  ): Promise<UserModel> => {
+    try {
+
+      if (DEBUG_MODE) console.log("starting getUserByCPF");
+
+      const auth = JWT_SECRET_KEY;
+
+      const response = await fetch(`/api/users/cpf/${cpf}`, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${auth}`,
+        },
+      });
+
+      const responseBody = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseBody);
+      }
+
+      if (DEBUG_MODE) console.log("getUserByCPF -> responseBody", responseBody);
+
+      return responseBody["data"] as UserModel;
+    } catch (e) {
+      throw e;
+    }
+  };
+
 }
