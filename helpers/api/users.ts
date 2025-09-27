@@ -1,4 +1,4 @@
-import { DEBUG_MODE } from "../env";
+import { DEBUG_MODE, JWT_SECRET_KEY} from "../env";
 import { GenderOptions, UserData, UserModel } from "../types";
 
 export default class UsersApi {
@@ -140,10 +140,13 @@ export default class UsersApi {
 
       if (DEBUG_MODE) console.log("starting getUserByCPF");
 
+      const auth = JWT_SECRET_KEY;
+
       const response = await fetch(`/api/users/cpf/${cpf}`, {
         method: "GET",
         headers: {
           Accept: "application/json",
+          Authorization: `Bearer ${auth}`,
         },
       });
 
