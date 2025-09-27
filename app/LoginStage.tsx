@@ -76,6 +76,16 @@ export default function LoginStage(props: LoginStageProps) {
         branchId
       };
 
+      const isCpfValid = validarCPF(cpf);
+      if (DEBUG_MODE) {
+        console.log("isCpfValid: ", isCpfValid);
+      }
+      if (!isCpfValid) {
+        WarningNotificationController.show("ERROR", "CPF inválido.");
+        setLoading(false);
+        return;
+      }
+
       const userExists = await usersApi.getUserByCpf(cpf);
       if (DEBUG_MODE) {
         console.log("User exists: ", userExists);
@@ -83,16 +93,6 @@ export default function LoginStage(props: LoginStageProps) {
 
       if (userExists) {
         WarningNotificationController.show("ERROR", "CPF de usuário já cadastrado.");
-        setLoading(false)
-        return;
-      }
-
-      const isCpfValid = validarCPF(cpf);
-      if (DEBUG_MODE) {
-        console.log("isCpfValid: ", isCpfValid);
-      }
-      if (!isCpfValid) {
-        WarningNotificationController.show("ERROR", "CPF inválido.");
         setLoading(false)
         return;
       }
