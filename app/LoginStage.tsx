@@ -76,12 +76,12 @@ export default function LoginStage(props: LoginStageProps) {
         branchId
       };
 
-      const userExsists = await usersApi.getUserByCpf(cpf);
+      const userExists = await usersApi.getUserByCpf(cpf);
       if (DEBUG_MODE) {
-        console.log("User exsists: ", userExsists);
+        console.log("User exists: ", userExists);
       }
 
-      if (userExsists) {
+      if (userExists) {
         WarningNotificationController.show("ERROR", "CPF de usuário já cadastrado.");
         setLoading(false)
         return;
